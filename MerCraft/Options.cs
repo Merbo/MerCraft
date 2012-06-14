@@ -25,31 +25,36 @@ namespace MerCraft
         private void Options_Load(object sender, EventArgs e)
         {
             StreamReader Reader = null;
-            if (File.Exists(Updater.appdata + "\\.mercraft\\config"))
+            if (Directory.Exists(Updater.appdata + "\\.mercraft"))
             {
-                Reader = new StreamReader(Updater.appdata + "\\.mercraft\\config");
-                Jar = Reader.ReadLine();
-                Reader.Close();
-                Reader = null;
-            }
+                if (File.Exists(Updater.appdata + "\\.mercraft\\config"))
+                {
+                    Reader = new StreamReader(Updater.appdata + "\\.mercraft\\config");
+                    Jar = Reader.ReadLine();
+                    Reader.Close();
+                    Reader = null;
+                }
 
-            switch (Jar)
-            {
-                case "Vanilla":
-                    radioButton1.Checked = true;
-                    break;
-                case "OptiFine":
-                    radioButton2.Checked = true;
-                    break;
-                case "Shaders":
-                    radioButton3.Checked = true;
-                    break;
+                switch (Jar)
+                {
+                    case "Vanilla":
+                        radioButton1.Checked = true;
+                        break;
+                    case "OptiFine":
+                        radioButton2.Checked = true;
+                        break;
+                    case "Shaders":
+                        radioButton3.Checked = true;
+                        break;
+                }
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             StreamWriter Writer = null;
+            if (!Directory.Exists(Updater.appdata + "\\.mercraft"))
+                Directory.CreateDirectory(Updater.appdata + "\\.mercraft");
             FileStream file = File.Open(Updater.appdata + "\\.mercraft\\config", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             Writer = new StreamWriter(file, Encoding.UTF8);
