@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 
 namespace MerCraft
@@ -52,11 +53,26 @@ namespace MerCraft
         {
             try
             {
-                Launcher.Launch(textBox1.Text, textBox2.Text);
+                if (
+                    Directory.Exists(Updater.appdata + "\\.mercraft") &&
+                    Directory.Exists(Updater.appdata + "\\.mercraft\\ModPack") &&
+                    Directory.Exists(Updater.appdata + "\\.mercraft\\ModPack\\bin") &&
+                    File.Exists(Updater.appdata + "\\.mercraft\\ModPack\\bin\\minecraft.jar") &&
+                    File.Exists(Updater.appdata + "\\.mercraft\\ModPack\\bin\\lwjgl.jar") &&
+                    File.Exists(Updater.appdata + "\\.mercraft\\ModPack\\bin\\lwjgl_util.jar") &&
+                    File.Exists(Updater.appdata + "\\.mercraft\\ModPack\\bin\\jinput.jar")
+                    )
+                {
+                    Launcher.Launch(textBox1.Text, textBox2.Text);
+                }
+                else
+                {
+                    MessageBox.Show("You must have MerCraft installed in order to play offline. To install, launch in Online mode at least once.");
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //
+                Console.WriteLine(ex.ToString());
             }
         }
         
