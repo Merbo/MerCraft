@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace MerCraft
+{
+    public partial class MainForm : Form
+    {
+        public MainForm()
+        {
+            InitializeComponent();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Options O = new Options();
+            O.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Updater.UpToDate())
+                {
+                    if (Updater.CorrectJar())
+                    {
+                        Launcher.Launch(textBox1.Text, textBox2.Text);
+                    }
+                }
+                else
+                {
+                    Updater U = new Updater();
+                    U.UpdateVersion(textBox1.Text, textBox2.Text);
+                }
+            }
+            catch (System.Net.Sockets.SocketException)
+            {
+                MessageBox.Show("It seems as if the server is offline. Check y'all connection.");
+                Launcher.Launch(textBox1.Text, textBox2.Text);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Launcher.Launch(textBox1.Text, textBox2.Text);
+            }
+            catch (Exception)
+            {
+                //
+            }
+        }
+        
+    }
+}
