@@ -75,5 +75,10 @@ namespace MerCraft
                 Console.WriteLine(ex.ToString());
             }
         }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -129,10 +129,11 @@
             this.label3.ForeColor = System.Drawing.Color.Gold;
             this.label3.Location = new System.Drawing.Point(12, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(182, 52);
+            this.label3.Size = new System.Drawing.Size(243, 52);
             this.label3.TabIndex = 7;
-            this.label3.Text = "MerbosMagic MerCraft\r\nCurrent developers: Merbo, Icedream\r\n\r\nhttp://173.48.92.80/" +
-                "MerCraft.aspx";
+            this.label3.Text = "MerbosMagic MerCraft\r\nCurrent developers: Merbo, Icedream, Triclops200\r\n\r\nhttp://" +
+    "173.48.92.80/MerCraft.aspx";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // MainForm
             // 
