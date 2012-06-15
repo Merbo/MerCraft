@@ -11,6 +11,8 @@ namespace MerCraft
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        public static MainForm M;
+
         [STAThread]
         static void Main()
         {
@@ -26,7 +28,8 @@ namespace MerCraft
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            M = new MainForm();
+            Application.Run(M);
         }
     }
 }

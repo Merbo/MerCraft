@@ -13,7 +13,7 @@ namespace MerCraft
     {
         public static string ProgramFiles = Environment.GetEnvironmentVariable("PROGRAMFILES");
         public static string path;
-        private static string JavaProcessFileName()
+        private static string JavaProcessFileName(bool debug = false)
         {
             path = "";
 
@@ -22,32 +22,36 @@ namespace MerCraft
 
 
             //Java installation defaults
-            PathTries.Add("C:\\Program Files\\Java\\jdk1.7.0_04\\bin\\javaw.exe");
-            PathTries.Add("C:\\Program Files\\Java\\jre7\\bin\\javaw.exe");
-            PathTries.Add("C:\\Program Files\\Java\\jre6\\bin\\javaw.exe");
-            PathTries.Add(ProgramFiles + "\\Java\\jdk1.7.0_04\\bin\\javaw.exe");
-            PathTries.Add(ProgramFiles + "\\Java\\jre7\\bin\\javaw.exe");
-            PathTries.Add(ProgramFiles + "\\Java\\jre6\\bin\\javaw.exe");
-            PathTries.Add("C:\\Progs\\Java\\jdk1.7.0_04\\bin\\javaw.exe");
-            PathTries.Add("C:\\Progs\\Java\\jre7\\bin\\javaw.exe");
-            PathTries.Add("C:\\Progs\\Java\\jre6\\bin\\javaw.exe");
+            PathTries.Add("C:\\Program Files\\Java\\jdk1.7.0_04\\bin");
+            PathTries.Add("C:\\Program Files\\Java\\jre7\\bin");
+            PathTries.Add("C:\\Program Files\\Java\\jre6\\bin");
+            PathTries.Add(ProgramFiles + "\\Java\\jdk1.7.0_04\\bin");
+            PathTries.Add(ProgramFiles + "\\Java\\jre7\\bin");
+            PathTries.Add(ProgramFiles + "\\Java\\jre6\\bin");
+            PathTries.Add("C:\\Progs\\Java\\jdk1.7.0_04\\bin");
+            PathTries.Add("C:\\Progs\\Java\\jre7\\bin");
+            PathTries.Add("C:\\Progs\\Java\\jre6\\bin");
 
             //On x64 machines, but a x86 java installation
-            PathTries_x86.Add("C:\\Program Files (x86)\\Java\\jdk1.7.0_04\\bin\\javaw.exe");
-            PathTries_x86.Add("C:\\Program Files (x86)\\Java\\jre7\\bin\\javaw.exe");
-            PathTries_x86.Add("C:\\Program Files (x86)\\Java\\jre6\\bin\\javaw.exe");
-            PathTries_x86.Add(ProgramFiles + "\\Java\\jdk1.7.0_04\\bin\\javaw.exe");
-            PathTries_x86.Add(ProgramFiles + "\\Java\\jre7\\bin\\javaw.exe");
-            PathTries_x86.Add(ProgramFiles + "\\Java\\jre6\\bin\\javaw.exe");
-            PathTries_x86.Add("C:\\Progs\\Java\\jdk1.7.0_04\\bin\\javaw.exe");
-            PathTries_x86.Add("C:\\Progs\\Java\\jre7\\bin\\javaw.exe");
-            PathTries_x86.Add("C:\\Progs\\Java\\jre6\\bin\\javaw.exe");
+            PathTries_x86.Add("C:\\Program Files (x86)\\Java\\jdk1.7.0_04\\bin");
+            PathTries_x86.Add("C:\\Program Files (x86)\\Java\\jre7\\bin");
+            PathTries_x86.Add("C:\\Program Files (x86)\\Java\\jre6\\bin");
+            PathTries_x86.Add(ProgramFiles + "\\Java\\jdk1.7.0_04\\bin");
+            PathTries_x86.Add(ProgramFiles + "\\Java\\jre7\\bin");
+            PathTries_x86.Add(ProgramFiles + "\\Java\\jre6\\bin");
+            PathTries_x86.Add("C:\\Progs\\Java\\jdk1.7.0_04\\bin");
+            PathTries_x86.Add("C:\\Progs\\Java\\jre7\\bin");
+            PathTries_x86.Add("C:\\Progs\\Java\\jre6\\bin");
 
             foreach (string s in PathTries)
             {
-                if (File.Exists(s))
+                if (Directory.Exists(s))
                 {
-                    path = s;
+                    if (debug && File.Exists(s + "\\java.exe"))
+                        path = s + "\\java.exe";
+                    else if (!debug && File.Exists(s + "\\javaw.exe"))
+                        path = s + "\\javaw.exe";
+                    else continue;
                 }
             }
 
@@ -55,9 +59,13 @@ namespace MerCraft
             {
                 foreach (string s in PathTries_x86)
                 {
-                    if (File.Exists(s))
+                    if (Directory.Exists(s))
                     {
-                        path = s;
+                        if (debug && File.Exists(s + "\\java.exe"))
+                            path = s + "\\java.exe";
+                        else if (!debug && File.Exists(s + "\\javaw.exe"))
+                            path = s + "\\javaw.exe";
+                        else continue;
                     }
                 }
             }
@@ -111,19 +119,21 @@ namespace MerCraft
 
             return path;
         }
-        private static Process GetJavaProcess(string U, string P)
+        private static Process GetJavaProcess(string U, string P, bool debug = false)
         {
             Process Java = new Process();
 
-            string JPath = JavaProcessFileName();
+            string JPath = debug ? JavaProcessFileName(true) : JavaProcessFileName(false);
 
             if (JPath != "")
                 Java.StartInfo.FileName = JPath;
             else
                 return null;
 
+            string MaxRam = Environment.Is64BitOperatingSystem ? "-Xmx2048M " : "-Xmx1024M";
+
             Java.StartInfo.Arguments = 
-                Environment.Is64BitOperatingSystem ? "-Xmx2048M " : "-Xmx1024M" +
+                MaxRam + " " +
                 "-Xincgc " +
                 "-Xmn256M " +
                 "-cp \"" + Updater.appdata + "\\.mercraft\\ModPack\\bin\\minecraft.jar;" + Updater.appdata + "\\.mercraft\\ModPack\\bin\\lwjgl.jar;" + Updater.appdata + "\\.mercraft\\ModPack\\bin\\lwjgl_util.jar;" + Updater.appdata + "\\.mercraft\\ModPack\\bin\\jinput.jar\" " +
@@ -144,12 +154,14 @@ namespace MerCraft
         {
             try
             {
-                Process Java = GetJavaProcess(U, P);
+                Process Java = null;
+                Java = Options.debug ? GetJavaProcess(U, P, true) : GetJavaProcess(U, P, false);
                 Java.Start();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("You might not have java installed in the right place for MerCraft. Try asking Merbo about it.");
+                MessageBox.Show(ex.ToString());
                 Console.WriteLine(ex.ToString());
             }
         }
@@ -159,7 +171,8 @@ namespace MerCraft
             {
                 LF.lblCurrentAction.Text = "Opening MerCraft...";
                 LF.Close();
-                Process Java = GetJavaProcess(U, P);
+                Process Java = null;
+                Java = Options.debug ? GetJavaProcess(U, P, true) : GetJavaProcess(U, P, false);
                 Java.Start();
             }
             catch (Exception ex)

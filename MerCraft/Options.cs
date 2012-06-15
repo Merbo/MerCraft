@@ -21,6 +21,7 @@ namespace MerCraft
         }
 
         public static string Jar = "";
+        public static bool debug = false;
 
         private void Options_Load(object sender, EventArgs e)
         {
@@ -31,6 +32,16 @@ namespace MerCraft
                 {
                     Reader = new StreamReader(Updater.appdata + "\\.mercraft\\config");
                     Jar = Reader.ReadLine();
+                    string s = Reader.ReadLine();
+                    switch (s)
+                    {
+                        case "true":
+                            debug = true;
+                            break;
+                        default:
+                            debug = false;
+                            break;
+                    }
                     Reader.Close();
                     Reader = null;
                 }
@@ -47,6 +58,8 @@ namespace MerCraft
                         radioButton3.Checked = true;
                         break;
                 }
+                checkBox1.Checked = debug ? true : false;
+
             }
         }
 
@@ -74,6 +87,17 @@ namespace MerCraft
             else
             {
                 Writer.WriteLine("Vanilla");
+            }
+
+            if (checkBox1.Checked)
+            {
+                Writer.WriteLine("true");
+                debug = true;
+            }
+            else
+            {
+                Writer.WriteLine("false");
+                debug = false;
             }
 
             Writer.Close();
