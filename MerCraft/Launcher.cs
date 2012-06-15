@@ -22,6 +22,7 @@ namespace MerCraft
             else
                 return null;
 
+            // TODO: Try to do automatic RAM adjust on computers with more or less then 2 GB RAM.
             Java.StartInfo.Arguments = "" +
                 "-Xincgc " +
                 "-Xmn256M " +
@@ -57,7 +58,7 @@ namespace MerCraft
         {
             try
             {
-                LF.label3.Text = "Opening MerCraft...";
+                LF.lblCurrentAction.Text = "Opening MerCraft...";
                 LF.Close();
                 Process Java = GetJavaProcess(U, P);
                 Java.Start();

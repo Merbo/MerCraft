@@ -103,7 +103,7 @@ namespace MerCraft
             LF.Show();
             if (Directory.Exists(appdata + "\\.mercraft\\ModPack"))
             {
-                LF.label3.Text = "Backing up saves, options, stats, texture packs, and screenshots...";
+                LF.lblCurrentAction.Text = "Backing up saves, options, stats, texture packs, and screenshots...";
                 
                 List<string> BackupFiles = new List<string>();
                 List<string> BackupDirs = new List<string>();
@@ -134,11 +134,11 @@ namespace MerCraft
                     }
                 }
 
-                LF.label3.Text = "Removing old MerCraft installation...";
+                LF.lblCurrentAction.Text = "Removing old MerCraft installation...";
                 Directory.Delete(appdata + "\\.mercraft\\ModPack", true);
             }
             Directory.CreateDirectory(appdata + "\\.mercraft\\ModPack");
-            LF.label3.Text = "Downloading Update...";
+            LF.lblCurrentAction.Text = "Downloading Update...";
             //Download the update
             DownloadUpdate(new Uri("http://173.48.92.80/MerCraft/ModPack.zip"), appdata + "\\.mercraft\\Update.zip");
         }
@@ -158,7 +158,7 @@ namespace MerCraft
         private void Completed(object sender, AsyncCompletedEventArgs e)
         {
             //Extract the update
-            LF.label3.Text = "Extracting Update...";
+            LF.lblCurrentAction.Text = "Extracting Update...";
             if (UnZipFile(appdata + "\\.mercraft\\Update.zip") == true)
             {
                 //Restore backup
