@@ -122,10 +122,10 @@ namespace MerCraft
             else
                 return null;
 
-            Java.StartInfo.Arguments = "" +
+            Java.StartInfo.Arguments = 
+                Environment.Is64BitOperatingSystem ? "-Xmx2048M " : "-Xmx1024M" +
                 "-Xincgc " +
                 "-Xmn256M " +
-                "-Xmx2048M " +
                 "-cp \"" + Updater.appdata + "\\.mercraft\\ModPack\\bin\\minecraft.jar;" + Updater.appdata + "\\.mercraft\\ModPack\\bin\\lwjgl.jar;" + Updater.appdata + "\\.mercraft\\ModPack\\bin\\lwjgl_util.jar;" + Updater.appdata + "\\.mercraft\\ModPack\\bin\\jinput.jar\" " +
                 "-Djava.library.path=\"" + Updater.appdata + "\\.mercraft\\ModPack\\bin\\natives\" " +
                 "net.minecraft.client.Minecraft " +
