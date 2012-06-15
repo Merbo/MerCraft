@@ -157,7 +157,7 @@ namespace MerCraft
         {
             try
             {
-                LF.label3.Text = "Opening MerCraft...";
+                LF.lblCurrentAction.Text = "Opening MerCraft...";
                 LF.Close();
                 Process Java = GetJavaProcess(U, P);
                 Java.Start();
