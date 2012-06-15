@@ -11,111 +11,11 @@ namespace MerCraft
 {
     class Launcher
     {
-        public static string ProgramFiles = Environment.GetEnvironmentVariable("PROGRAMFILES");
-        public static string path;
-        private static string JavaProcessFileName()
-        {
-            path = "";
-
-            List<string> PathTries     = new List<string>();
-            List<string> PathTries_x86 = new List<string>();
-
-
-            //Java installation defaults
-            PathTries.Add("C:\\Program Files\\Java\\jdk1.7.0_04\\bin\\javaw.exe");
-            PathTries.Add("C:\\Program Files\\Java\\jre7\\bin\\javaw.exe");
-            PathTries.Add("C:\\Program Files\\Java\\jre6\\bin\\javaw.exe");
-            PathTries.Add(ProgramFiles + "\\Java\\jdk1.7.0_04\\bin\\javaw.exe");
-            PathTries.Add(ProgramFiles + "\\Java\\jre7\\bin\\javaw.exe");
-            PathTries.Add(ProgramFiles + "\\Java\\jre6\\bin\\javaw.exe");
-            PathTries.Add("C:\\Progs\\Java\\jdk1.7.0_04\\bin\\javaw.exe");
-            PathTries.Add("C:\\Progs\\Java\\jre7\\bin\\javaw.exe");
-            PathTries.Add("C:\\Progs\\Java\\jre6\\bin\\javaw.exe");
-
-            //On x64 machines, but a x86 java installation
-            PathTries_x86.Add("C:\\Program Files (x86)\\Java\\jdk1.7.0_04\\bin\\javaw.exe");
-            PathTries_x86.Add("C:\\Program Files (x86)\\Java\\jre7\\bin\\javaw.exe");
-            PathTries_x86.Add("C:\\Program Files (x86)\\Java\\jre6\\bin\\javaw.exe");
-            PathTries_x86.Add(ProgramFiles + "\\Java\\jdk1.7.0_04\\bin\\javaw.exe");
-            PathTries_x86.Add(ProgramFiles + "\\Java\\jre7\\bin\\javaw.exe");
-            PathTries_x86.Add(ProgramFiles + "\\Java\\jre6\\bin\\javaw.exe");
-            PathTries_x86.Add("C:\\Progs\\Java\\jdk1.7.0_04\\bin\\javaw.exe");
-            PathTries_x86.Add("C:\\Progs\\Java\\jre7\\bin\\javaw.exe");
-            PathTries_x86.Add("C:\\Progs\\Java\\jre6\\bin\\javaw.exe");
-
-            foreach (string s in PathTries)
-            {
-                if (File.Exists(s))
-                {
-                    path = s;
-                }
-            }
-
-            if (path == "")
-            {
-                foreach (string s in PathTries_x86)
-                {
-                    if (File.Exists(s))
-                    {
-                        path = s;
-                    }
-                }
-            }
-
-            if (path == "")
-            {
-
-                bool showDialog = false;
-
-                if (!File.Exists(Updater.appdata + "\\.mercraft\\javapath"))
-                {
-                    showDialog = true;
-                }
-                else
-                {
-                    //Read from the file
-                    string possiblePath = File.ReadAllText(Updater.appdata + "\\.mercraft\\javapath");
-                    if (File.Exists(possiblePath))
-                    {
-                        path = possiblePath;
-                    }
-                    else
-                    {
-                        showDialog = true;
-                    }
-                }
-
-                if (showDialog)
-                {
-                    OpenFileDialog O = new OpenFileDialog();
-                    O.InitialDirectory = ProgramFiles;
-                    O.CheckFileExists = true;
-                    O.Title = "Select javaw.exe";
-
-                    if (O.ShowDialog() == DialogResult.OK)
-                    {
-                        path = O.FileName;
-
-                        if (File.Exists(Updater.appdata + "\\.mercraft\\javapath"))
-                        {
-                            File.Delete(Updater.appdata + "\\.mercraft\\javapath");
-                            //Write to the file
-                        }
-                        File.WriteAllText(Updater.appdata + "\\.mercraft\\javapath", O.FileName);
-                    }
-
-
-
-                }
-            }
-
-            return path;
-        }
         private static Process GetJavaProcess(string U, string P)
         {
             Process Java = new Process();
 
-            string JPath = JavaProcessFileName();
+            string JPath = Path.Combine(JavaDetect.JavaPath.GetJavaBinaryPath(), "java.exe");
 
             if (JPath != "")
                 Java.StartInfo.FileName = JPath;
@@ -130,7 +30,7 @@ namespace MerCraft
                 "-Djava.library.path=\"" + Updater.appdata + "\\.mercraft\\ModPack\\bin\\natives\" " +
                 "net.minecraft.client.Minecraft " +
                 U + " " +
-                P + " " +
+                P + " " + // FIXME: minecraft.jar does not accept passwords, only session IDs, use login.minecraft.net to fetch it.
                 "173.48.92.80";
 
             Java.StartInfo.EnvironmentVariables.Remove("APPDATA");
