@@ -36,7 +36,7 @@ namespace MerCraft
                 }
                 ret = true;
             }
-            catch (Exception)
+            catch
             {
                 ret = false;
             }

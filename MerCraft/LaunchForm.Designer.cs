@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.lblRate = new System.Windows.Forms.Label();
+            this.lblCurrentAction = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // progressBar1
@@ -41,44 +41,44 @@
             this.progressBar1.Size = new System.Drawing.Size(588, 23);
             this.progressBar1.TabIndex = 0;
             // 
-            // label1
+            // lblStatus
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(120, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(102, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Updating MerCraft...";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(120, 9);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(102, 13);
+            this.lblStatus.TabIndex = 1;
+            this.lblStatus.Text = "Updating MerCraft...";
+            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label2
+            // lblRate
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(391, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(33, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Rate:";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblRate.AutoSize = true;
+            this.lblRate.Location = new System.Drawing.Point(391, 9);
+            this.lblRate.Name = "lblRate";
+            this.lblRate.Size = new System.Drawing.Size(33, 13);
+            this.lblRate.TabIndex = 2;
+            this.lblRate.Text = "Rate:";
+            this.lblRate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label3
+            // lblCurrentAction
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(258, 35);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Current Action:";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblCurrentAction.AutoSize = true;
+            this.lblCurrentAction.Location = new System.Drawing.Point(258, 35);
+            this.lblCurrentAction.Name = "lblCurrentAction";
+            this.lblCurrentAction.Size = new System.Drawing.Size(77, 13);
+            this.lblCurrentAction.TabIndex = 3;
+            this.lblCurrentAction.Text = "Current Action:";
+            this.lblCurrentAction.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // LaunchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(612, 77);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblCurrentAction);
+            this.Controls.Add(this.lblRate);
+            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.progressBar1);
             this.Name = "LaunchForm";
             this.Text = "MerCraft Updater";
@@ -90,8 +90,8 @@
         #endregion
 
         public System.Windows.Forms.ProgressBar progressBar1;
-        public System.Windows.Forms.Label label1;
-        public System.Windows.Forms.Label label2;
-        public System.Windows.Forms.Label label3;
+        public System.Windows.Forms.Label lblStatus;
+        public System.Windows.Forms.Label lblRate;
+        public System.Windows.Forms.Label lblCurrentAction;
     }
 }

@@ -75,6 +75,5 @@ namespace MerCraft
                 Console.WriteLine(ex.ToString());
             }
         }
-        
     }
 }
