@@ -44,8 +44,18 @@ namespace MerCraft
             }
             catch (System.Net.Sockets.SocketException)
             {
-                MessageBox.Show("It seems as if the server is offline. Check y'all connection.");
+                MessageBox.Show("It seems as if the server is offline. Check your connection.");
                 Launcher.Launch(textBox1.Text, textBox2.Text);
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                MessageBox.Show("You don't seem to have MerCraft fully installed. Try again after I reset your install dir for you.");
+                FileIO.Uninstall();
+            }
+            catch (System.IO.DirectoryNotFoundException)
+            {
+                MessageBox.Show("You don't seem to have MerCraft fully installed. Try again after I reset your install dir for you.");
+                FileIO.Uninstall();
             }
         }
 
@@ -53,15 +63,13 @@ namespace MerCraft
         {
             try
             {
-                if (
-                    Directory.Exists(Updater.appdata + "\\.mercraft") &&
+                if (Directory.Exists(Updater.appdata + "\\.mercraft") &&
                     Directory.Exists(Updater.appdata + "\\.mercraft\\ModPack") &&
                     Directory.Exists(Updater.appdata + "\\.mercraft\\ModPack\\bin") &&
                     File.Exists(Updater.appdata + "\\.mercraft\\ModPack\\bin\\minecraft.jar") &&
                     File.Exists(Updater.appdata + "\\.mercraft\\ModPack\\bin\\lwjgl.jar") &&
                     File.Exists(Updater.appdata + "\\.mercraft\\ModPack\\bin\\lwjgl_util.jar") &&
-                    File.Exists(Updater.appdata + "\\.mercraft\\ModPack\\bin\\jinput.jar")
-                    )
+                    File.Exists(Updater.appdata + "\\.mercraft\\ModPack\\bin\\jinput.jar"))
                 {
                     Launcher.Launch(textBox1.Text, textBox2.Text);
                 }
@@ -74,11 +82,6 @@ namespace MerCraft
             {
                 Console.WriteLine(ex.ToString());
             }
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

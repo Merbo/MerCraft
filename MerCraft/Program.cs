@@ -17,14 +17,14 @@ namespace MerCraft
         static void Main()
         {
             // Java check
-            try
+            /*try
             {
                 string java = JavaDetect.JavaPath.GetJavaVersion();
             }
             catch (JavaDetect.JavaNotFoundException)
             {
                 MessageBox.Show("You need to have Java installed to use MerCraft!", "MerCraft", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            }*/
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

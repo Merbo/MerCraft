@@ -4,11 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Windows.Forms;
 
 namespace MerCraft
 {
     class FileIO
     {
+        public static void Uninstall()
+        {
+            try
+            {
+                if (Directory.Exists(Updater.appdata + "\\.mercraft"))
+                    Directory.Delete(Updater.appdata + "\\.mercraft", true);
+            }
+            catch (System.IO.IOException)
+            {
+                MessageBox.Show(
+                    "It appears the install dir is in use. Please terminate any programs using it. \r\n" +
+                    "You may need to delete \"" + Updater.appdata + "\\.mercraft\" by yourself.");
+            }
+        }
+
         public static bool CopyDirectory(string SourcePath, string DestinationPath, bool overwriteexisting)
         {
             bool ret = false;

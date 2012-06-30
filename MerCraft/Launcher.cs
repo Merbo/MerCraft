@@ -130,18 +130,16 @@ namespace MerCraft
             else
                 return null;
 
-            string MaxRam = Environment.Is64BitOperatingSystem ? "-Xmx2048M " : "-Xmx1024M";
+            string MaxRam = Environment.Is64BitOperatingSystem ? "-Xmx2048M " : "-Xmx512M";
 
             Java.StartInfo.Arguments = 
                 MaxRam + " " +
                 "-Xincgc " +
-                "-Xmn256M " +
+                "-Xms256M " +
                 "-cp \"" + Updater.appdata + "\\.mercraft\\ModPack\\bin\\minecraft.jar;" + Updater.appdata + "\\.mercraft\\ModPack\\bin\\lwjgl.jar;" + Updater.appdata + "\\.mercraft\\ModPack\\bin\\lwjgl_util.jar;" + Updater.appdata + "\\.mercraft\\ModPack\\bin\\jinput.jar\" " +
                 "-Djava.library.path=\"" + Updater.appdata + "\\.mercraft\\ModPack\\bin\\natives\" " +
                 "net.minecraft.client.Minecraft " +
-                U + " " +
-                P + " " +
-                "173.48.92.80";
+                U + " " + P;
 
             Java.StartInfo.EnvironmentVariables.Remove("APPDATA");
             Java.StartInfo.EnvironmentVariables.Add("APPDATA", Updater.appdata + "\\.mercraft\\ModPack");
