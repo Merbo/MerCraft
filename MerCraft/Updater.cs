@@ -38,7 +38,8 @@ namespace MerCraft
                 J = "Vanilla";
             }
                     
-            File.Delete(appdata + "\\.mercraft\\ModPack\\bin\\minecraft.jar");
+            if (File.Exists(appdata + "\\.mercraft\\ModPack\\bin\\minecraft.jar"))
+                File.Delete(appdata + "\\.mercraft\\ModPack\\bin\\minecraft.jar");
             switch (J)
             {
                 case "Vanilla":
@@ -57,7 +58,14 @@ namespace MerCraft
         public static bool UpToDate()
         {
 
-            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://173.48.92.80/MerCraft/Default.aspx");
+            if (Options.SMPChanged)
+            {
+                Options.SMPChanged = false;
+                return false;
+            }
+
+
+            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://merbosmagic.co.cc/MerCraft/Default.aspx");
             myRequest.Method = "GET";
             WebResponse myResponse = myRequest.GetResponse();
             StreamReader sr = new StreamReader(myResponse.GetResponseStream(), System.Text.Encoding.UTF8);
@@ -140,7 +148,10 @@ namespace MerCraft
             Directory.CreateDirectory(appdata + "\\.mercraft\\ModPack");
             LF.lblCurrentAction.Text = "Downloading Update...";
             //Download the update
-            DownloadUpdate(new Uri("http://173.48.92.80/MerCraft/ModPack.zip"), appdata + "\\.mercraft\\Update.zip");
+            if (Options.SMP)
+                DownloadUpdate(new Uri("http://merbosmagic.co.cc/MerCraft/ModPack.zip"), appdata + "\\.mercraft\\Update.zip");
+            else
+                DownloadUpdate(new Uri("http://merbosmagic.co.cc/MerCraft/ModPackSSP.zip"), appdata + "\\.mercraft\\Update.zip");
         }
         private void DownloadUpdate(Uri DownloadFile, string SaveFile)
         {

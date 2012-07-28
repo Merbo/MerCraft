@@ -22,6 +22,8 @@ namespace MerCraft
 
         public static string Jar = "";
         public static bool debug = false;
+        public static bool SMP = true;
+        public static bool SMPChanged = false;
 
         private void Options_Load(object sender, EventArgs e)
         {
@@ -32,8 +34,8 @@ namespace MerCraft
                 {
                     Reader = new StreamReader(Updater.appdata + "\\.mercraft\\config");
                     Jar = Reader.ReadLine();
-                    string s = Reader.ReadLine();
-                    switch (s)
+                    string d = Reader.ReadLine();
+                    switch (d)
                     {
                         case "true":
                             debug = true;
@@ -41,6 +43,20 @@ namespace MerCraft
                         default:
                             debug = false;
                             break;
+                    }
+                    string smp = Reader.ReadLine();
+                    switch (smp)
+                    {
+                        case "true":
+                            SMP = true;
+                            break;
+                        case "false":
+                            SMP = false;
+                            break;
+                        default:
+                            SMP = true;
+                            break;
+                           
                     }
                     Reader.Close();
                     Reader = null;
@@ -59,7 +75,7 @@ namespace MerCraft
                         break;
                 }
                 checkBox1.Checked = debug ? true : false;
-
+                checkBox2.Checked = SMP ? true : false;
             }
         }
 
@@ -100,10 +116,41 @@ namespace MerCraft
                 debug = false;
             }
 
+            if (checkBox2.Checked)
+            {
+                Writer.WriteLine("true");
+                SMP = true;
+            }
+            else
+            {
+                Writer.WriteLine("false");
+                SMP = false;
+            }
+
             Writer.Close();
             Writer = null;
 
             this.Close();
+        }
+
+        private void checkBox2_Click(object sender, EventArgs e)
+        {
+            SMPChanged = true;
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkBox2.Checked)
+            {
+                radioButton1.Checked = true;
+                radioButton2.Enabled = false;
+                radioButton3.Enabled = false;
+            }
+            else
+            {
+                radioButton2.Enabled = true;
+                radioButton3.Enabled = true;
+            }
         }
 
     }

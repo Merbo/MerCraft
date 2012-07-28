@@ -138,7 +138,7 @@
             this.label3.Size = new System.Drawing.Size(243, 52);
             this.label3.TabIndex = 7;
             this.label3.Text = "MerbosMagic MerCraft\r\nCurrent developers: Merbo, Icedream, Triclops200\r\n\r\nhttp://" +
-    "173.48.92.80/MerCraft.aspx";
+    "merbosmagic.co.cc/MerCraft.aspx";
             // 
             // MainForm
             // 
