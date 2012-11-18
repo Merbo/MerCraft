@@ -10,6 +10,9 @@ namespace MerCraft
 {
     class FileIO
     {
+        /// <summary>
+        /// Uninstalls mercraft by deleting it and stuff.
+        /// </summary>
         public static void Uninstall()
         {
             try
@@ -25,6 +28,13 @@ namespace MerCraft
             }
         }
 
+        /// <summary>
+        /// Copies an entire directory and its contents.
+        /// </summary>
+        /// <param name="SourcePath">Directory to copy.</param>
+        /// <param name="DestinationPath">Directory to output to.</param>
+        /// <param name="overwriteexisting">Overwrite?</param>
+        /// <returns>Successfyl</returns>
         public static bool CopyDirectory(string SourcePath, string DestinationPath, bool overwriteexisting)
         {
             bool ret = false;

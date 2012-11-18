@@ -15,6 +15,9 @@ namespace MerCraft
 {
     public partial class Options : Form
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public Options()
         {
             InitializeComponent();
@@ -25,6 +28,11 @@ namespace MerCraft
         public static bool SMP = true;
         public static bool SMPChanged = false;
 
+        /// <summary>
+        /// Load up the options and apply them to the form.
+        /// </summary>
+        /// <param name="sender">The object that caused this. Usually of type Form.</param>
+        /// <param name="e">Event Arguments.</param>
         private void Options_Load(object sender, EventArgs e)
         {
             StreamReader Reader = null;
@@ -79,6 +87,11 @@ namespace MerCraft
             }
         }
 
+        /// <summary>
+        /// What to do when button1 is clicked.
+        /// </summary>
+        /// <param name="sender">The object that caused this. Should be of type Button.</param>
+        /// <param name="e">Event Arguments.</param>
         private void button1_Click(object sender, EventArgs e)
         {
             StreamWriter Writer = null;
@@ -133,11 +146,21 @@ namespace MerCraft
             this.Close();
         }
 
+        /// <summary>
+        /// What happens when checkbox2 is clicked.
+        /// </summary>
+        /// <param name="sender">The object that caused this. Should be of type checkBox.</param>
+        /// <param name="e">The event arguments.</param>
         private void checkBox2_Click(object sender, EventArgs e)
         {
             SMPChanged = true;
         }
 
+        /// <summary>
+        /// What happens when checkbox2 is changed.
+        /// </summary>
+        /// <param name="sender">The sender of it. Usually a CheckBox type.</param>
+        /// <param name="e">Event Arguments.</param>
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             if (!checkBox2.Checked)

@@ -12,6 +12,9 @@ namespace MerCraft
 {
     public partial class LaunchForm : Form
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public LaunchForm()
         {
             InitializeComponent();

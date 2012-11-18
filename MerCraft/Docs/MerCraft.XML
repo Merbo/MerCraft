@@ -1,0 +1,457 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MerCraft</name>
+    </assembly>
+    <members>
+        <member name="M:MerCraft.FileIO.Uninstall">
+            <summary>
+            Uninstalls mercraft by deleting it and stuff.
+            </summary>
+        </member>
+        <member name="M:MerCraft.FileIO.CopyDirectory(System.String,System.String,System.Boolean)">
+            <summary>
+            Copies an entire directory and its contents.
+            </summary>
+            <param name="SourcePath">Directory to copy.</param>
+            <param name="DestinationPath">Directory to output to.</param>
+            <param name="overwriteexisting">Overwrite?</param>
+            <returns>Successfyl</returns>
+        </member>
+        <member name="F:MerCraft.GameForm.childHandle">
+            <summary>
+            Panel1's child. (MerCraft)
+            </summary>
+        </member>
+        <member name="M:MerCraft.GameForm.#ctor">
+            <summary>
+            The form that will contain the game.
+            </summary>
+        </member>
+        <member name="M:MerCraft.GameForm.GameForm_FormClosed(System.Object,System.Windows.Forms.FormClosedEventArgs)">
+            <summary>
+            What happens when the form closes.
+            </summary>
+            <param name="sender">The sender. Always of type Form.</param>
+            <param name="e">EventArgs.</param>
+        </member>
+        <member name="M:MerCraft.GameForm.panel1_Resize(System.Object,System.EventArgs)">
+            <summary>
+            What happens when panel1 is resized.
+            </summary>
+            <param name="sender">The sender. Will be of type Panel.</param>
+            <param name="e">EventArgs.</param>
+        </member>
+        <member name="M:MerCraft.GameForm.timer1_Tick(System.Object,System.EventArgs)">
+            <summary>
+            What happens when Timer1 ticks.
+            </summary>
+            <param name="sender">The sender. Will be of type Timer.</param>
+            <param name="e">EventArgs.</param>
+        </member>
+        <member name="F:MerCraft.GameForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:MerCraft.GameForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:MerCraft.GameForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JavaDetect.JavaPath">
+            <summary>
+            Functions for java path detection
+            </summary>
+        </member>
+        <member name="M:JavaDetect.JavaPath.GetJavaBinaryPath">
+            <summary>
+            Fetches the bin folder of java (the folder where the installed java.exe is).
+            </summary>
+            <returns>Java binary folder.</returns>
+            <exception cref="T:JavaDetect.JavaNotFoundException"/>
+        </member>
+        <member name="M:JavaDetect.JavaPath.GetJavaHome">
+            <summary>
+            Fetches the java home directory.
+            </summary>
+            <returns>Java home path.</returns>
+            <exception cref="T:JavaDetect.JavaNotFoundException"/>
+        </member>
+        <member name="M:JavaDetect.JavaPath.GetJavaRegistry">
+            <summary>
+            Fetches the java registry node in following order:
+            
+            64-bit JDK, 64-bit JRE, 32-bit JDK, 32-bit JRE
+            </summary>
+            <returns>The registry node of the detected java installation.</returns>
+            <exception cref="T:JavaDetect.JavaNotFoundException"/>
+        </member>
+        <member name="M:JavaDetect.JavaPath.GetJavaVersion">
+            <summary>
+            Fetches the installed java version string.
+            </summary>
+            <returns>Java version string.</returns>
+            <exception cref="T:JavaDetect.JavaNotFoundException"/>
+        </member>
+        <member name="M:MerCraft.MainForm.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:MerCraft.MainForm.button2_Click(System.Object,System.EventArgs)">
+            <summary>
+            What happens when button2 is clicked.
+            </summary>
+            <param name="sender">Sender. Usually of type Button.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="M:MerCraft.MainForm.button1_Click(System.Object,System.EventArgs)">
+            <summary>
+            What happens when button1 is clicked.
+            </summary>
+            <param name="sender">Sender. Usually of type Button.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="M:MerCraft.MainForm.button3_Click(System.Object,System.EventArgs)">
+            <summary>
+            What happens when button3 is clicked.
+            </summary>
+            <param name="sender">Sender. Usually of type Button.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="F:MerCraft.MainForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:MerCraft.MainForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:MerCraft.MainForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:MerCraft.Launcher.JavaProcessFileName(System.Boolean)">
+            <summary>
+            Get the filesname of the java process.
+            </summary>
+            <param name="debug">Whether or not to launch in debug mode.</param>
+            <returns>The filename of the java process.</returns>
+        </member>
+        <member name="M:MerCraft.Launcher.GetJavaProcess(System.String,System.String,System.Boolean)">
+            <summary>
+            Get the process of java, with arguments.
+            </summary>
+            <param name="U">Passed username.</param>
+            <param name="P">Passed password.</param>
+            <param name="debug">Whther or not we're in debug mode.</param>
+            <returns>A Process for launching, runs to Java.</returns>
+        </member>
+        <member name="M:MerCraft.Launcher.Launch(System.String,System.String)">
+            <summary>
+            Launch the game normally.
+            </summary>
+            <param name="U">Username.</param>
+            <param name="P">Password.</param>
+        </member>
+        <member name="M:MerCraft.Launcher.LaunchAfterUpdate(MerCraft.LaunchForm,System.String,System.String)">
+            <summary>
+            Launch the game after an update.
+            </summary>
+            <param name="LF">The LaunchForm.</param>
+            <param name="U">Username.</param>
+            <param name="P">Password.</param>
+        </member>
+        <member name="M:MerCraft.Launcher.Run(System.String,System.String,MerCraft.LaunchForm)">
+            <summary>
+            Runs mercraft and compresses all the windows together.
+            </summary>
+            <param name="U">Username.</param>
+            <param name="P">Password.</param>
+            <param name="LF">LaunchForm if we updated, null if not.</param>
+            <returns>Successful</returns>
+        </member>
+        <member name="M:MerCraft.LaunchForm.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="F:MerCraft.LaunchForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:MerCraft.LaunchForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:MerCraft.LaunchForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:MerCraft.Options.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:MerCraft.Options.Options_Load(System.Object,System.EventArgs)">
+            <summary>
+            Load up the options and apply them to the form.
+            </summary>
+            <param name="sender">The object that caused this. Usually of type Form.</param>
+            <param name="e">Event Arguments.</param>
+        </member>
+        <member name="M:MerCraft.Options.button1_Click(System.Object,System.EventArgs)">
+            <summary>
+            What to do when button1 is clicked.
+            </summary>
+            <param name="sender">The object that caused this. Should be of type Button.</param>
+            <param name="e">Event Arguments.</param>
+        </member>
+        <member name="M:MerCraft.Options.checkBox2_Click(System.Object,System.EventArgs)">
+            <summary>
+            What happens when checkbox2 is clicked.
+            </summary>
+            <param name="sender">The object that caused this. Should be of type checkBox.</param>
+            <param name="e">The event arguments.</param>
+        </member>
+        <member name="M:MerCraft.Options.checkBox2_CheckedChanged(System.Object,System.EventArgs)">
+            <summary>
+            What happens when checkbox2 is changed.
+            </summary>
+            <param name="sender">The sender of it. Usually a CheckBox type.</param>
+            <param name="e">Event Arguments.</param>
+        </member>
+        <member name="F:MerCraft.Options.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:MerCraft.Options.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:MerCraft.Options.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:MerCraft.Program.M">
+            <summary>
+            The main form of the application.
+            </summary>
+        </member>
+        <member name="M:MerCraft.Program.Main">
+            <summary>
+            The main entry point for the application.
+            </summary>
+        </member>
+        <member name="M:MerCraft.Updater.CorrectJar">
+            <summary>
+            Determines if the jar is the correct jar. Blocks thread, pretty bad at the moment.
+            Needs some revision.
+            </summary>
+            <returns>If the jar used is correct.</returns>
+        </member>
+        <member name="M:MerCraft.Updater.UpToDate">
+            <summary>
+            Determines if MerCraft ModPack is up to date.
+            </summary>
+            <returns>If MerCraft ModPack is up to date.</returns>
+        </member>
+        <member name="M:MerCraft.Updater.UpdateVersion(System.String,System.String)">
+            <summary>
+            Updates MerCraft.
+            </summary>
+            <param name="U">Username to pass forth.</param>
+            <param name="P">Password to pass forth.</param>
+        </member>
+        <member name="M:MerCraft.Updater.DownloadUpdate(System.Uri,System.String)">
+            <summary>
+            Downloads a file and saves it.
+            </summary>
+            <param name="DownloadFile">Link to the file on the internet.</param>
+            <param name="SaveFile">Local file save path.</param>
+        </member>
+        <member name="M:MerCraft.Updater.ProgressChanged(System.Object,System.Net.DownloadProgressChangedEventArgs)">
+            <summary>
+            What happens when the progress of the download changes.
+            </summary>
+            <param name="sender">The object that caused this. Should be a WebClient.</param>
+            <param name="e">Event Arguments.</param>
+        </member>
+        <member name="M:MerCraft.Updater.Completed(System.Object,System.ComponentModel.AsyncCompletedEventArgs)">
+            <summary>
+            What to do when the download completes.
+            </summary>
+            <param name="sender">The object that caused this. Should be a WebClient.</param>
+            <param name="e">Event Arguments.</param>
+        </member>
+        <member name="M:MerCraft.Updater.UnZipFile(System.String)">
+            <summary>
+            Unzips a file.
+            </summary>
+            <param name="InputPathOfZipFile">Path to the file.</param>
+            <returns>Successful</returns>
+        </member>
+        <member name="M:MerCraft.WinAPI.SetParent(System.IntPtr,System.IntPtr)">
+            <summary>
+            Sets the parent window of another.
+            </summary>
+            <param name="hWndChild">Handle to the window.</param>
+            <param name="hWndNewParent">Handle to the new parent.</param>
+            <returns>Handle to the previous parent, if any.</returns>
+        </member>
+        <member name="M:MerCraft.WinAPI.SetWindowLong(System.IntPtr,System.Int32,System.Int32)">
+            <summary>
+            Allows styles to be changed and such.
+            </summary>
+            <param name="hWnd">Handle to the window.</param>
+            <param name="nIndex">Style index? Use WinAPI.GWL_STYLE here.</param>
+            <param name="dwNewLong">The new style. See WinAPI.WS.</param>
+            <returns>The old style.</returns>
+        </member>
+        <member name="M:MerCraft.WinAPI.MoveWindow(System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Moves a window.
+            </summary>
+            <param name="Handle">Handle to the window.</param>
+            <param name="x">New X position on the window. 0 for no change.</param>
+            <param name="y">New Y position on the window. 0 for no change.</param>
+            <param name="w">New width. 0 for no change.</param>
+            <param name="h">New width. 0 for no change.</param>
+            <param name="repaint">Redraw?</param>
+            <returns>Successful</returns>
+        </member>
+        <member name="M:MerCraft.WinAPI.ShowWindow(System.IntPtr,System.Int32)">
+            <summary>
+            Shows a window.
+            </summary>
+            <param name="hWnd">Window handle.</param>
+            <param name="nCmdShow">Show style.</param>
+            <returns>Successful</returns>
+        </member>
+        <member name="M:MerCraft.WinAPI.BringWindowToTop(System.IntPtr)">
+            <summary>
+            Brings window to the front of the screen.
+            </summary>
+            <param name="hWnd">Window handle.</param>
+            <returns>Successful</returns>
+        </member>
+        <member name="M:MerCraft.WinAPI.GetWindowLong(System.IntPtr,System.Int32)">
+            <summary>
+            Gets a window's style.
+            </summary>
+            <param name="hWnd">Handle to the window.</param>
+            <param name="nIndex">Style index. See WinAPI.GWL_STYLE.</param>
+            <returns>Nonzero if successful.</returns>
+        </member>
+        <member name="M:MerCraft.WinAPI.FindWindowByCaption(System.IntPtr,System.String)">
+            <summary>
+            Gets a window handle by its caption.
+            </summary>
+            <param name="ZeroOnly">Always use InPtr.Zero here.</param>
+            <param name="lpWindowName">Caption to find.</param>
+            <returns>A handle to the first found matching window.</returns>
+        </member>
+        <member name="M:MerCraft.WinAPI.GetMenu(System.IntPtr)">
+            <summary>
+            Gets a window's menu.
+            </summary>
+            <param name="hWnd">Handle to the window.</param>
+            <returns>Handle to the menu.</returns>
+        </member>
+        <member name="M:MerCraft.WinAPI.GetMenuItemCount(System.IntPtr)">
+            <summary>
+            Gets the amount of items in a menu.
+            </summary>
+            <param name="hMenu">Handle to the menu.</param>
+            <returns>The amount of items found.</returns>
+        </member>
+        <member name="M:MerCraft.WinAPI.DrawMenuBar(System.IntPtr)">
+            <summary>
+            Redraws the menu bar of a window.
+            </summary>
+            <param name="hWnd">Handle to the window.</param>
+            <returns>Successful</returns>
+        </member>
+        <member name="M:MerCraft.WinAPI.RemoveMenu(System.IntPtr,System.UInt32,System.UInt32)">
+            <summary>
+            Removes a menu button.
+            </summary>
+            <param name="hMenu">Handle to the menu.</param>
+            <param name="uPosition">Position of the button.</param>
+            <param name="uFlags">Removal flags.</param>
+            <returns></returns>
+        </member>
+        <member name="M:MerCraft.WinAPI.GetWindow(System.IntPtr,System.UInt32)">
+            <summary>
+            Gets a window handle, but applies flags.
+            </summary>
+            <param name="hWnd">Window handle to start with.</param>
+            <param name="uCmd">Flags.</param>
+            <returns>The returned handle.</returns>
+        </member>
+        <member name="F:MerCraft.WinAPI.GWL_STYLE">
+            <summary>
+            More readable way to write -16. :)
+            </summary>
+        </member>
+        <member name="T:MerCraft.WinAPI.MF">
+            <summary>
+            Enum for Menu Flags.
+            </summary>
+        </member>
+        <member name="T:MerCraft.WinAPI.WS">
+            <summary>
+            Enum for window states.
+            </summary>
+        </member>
+        <member name="T:MerCraft.WinAPI.GW">
+            <summary>
+            Enum for Window Hierarchy.
+            </summary>
+        </member>
+        <member name="T:MerCraft.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:MerCraft.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:MerCraft.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:MerCraft.Properties.Resources.ServerSpawn">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+    </members>
+</doc>

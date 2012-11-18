@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace MerCraft
 {
     class Launcher
-    {
-        //public static string ProgramFiles = Environment.GetEnvironmentVariable("PROGRAMFILES");
+    { 
         public static string path;
+
+        /// <summary>
+        /// Get the filesname of the java process.
+        /// </summary>
+        /// <param name="debug">Whether or not to launch in debug mode.</param>
+        /// <returns>The filename of the java process.</returns>
         private static string JavaProcessFileName(bool debug = false)
         {
             if (debug)
@@ -22,6 +28,14 @@ namespace MerCraft
 
             return path;
         }
+
+        /// <summary>
+        /// Get the process of java, with arguments.
+        /// </summary>
+        /// <param name="U">Passed username.</param>
+        /// <param name="P">Passed password.</param>
+        /// <param name="debug">Whther or not we're in debug mode.</param>
+        /// <returns>A Process for launching, runs to Java.</returns>
         private static Process GetJavaProcess(string U, string P, bool debug = false)
         {
             Process Java = new Process();
@@ -33,7 +47,7 @@ namespace MerCraft
             else
                 return null;
 
-            string MaxRam = Environment.Is64BitOperatingSystem ? "-Xmx2048M " : "-Xmx512M";
+            string MaxRam = Environment.Is64BitOperatingSystem ? "-Xmx1024M" : "-Xmx256M";
 
             Java.StartInfo.Arguments = 
                 MaxRam + " " +
@@ -51,14 +65,35 @@ namespace MerCraft
 
             return Java;
         }
+
+        /// <summary>
+        /// Launch the game normally.
+        /// </summary>
+        /// <param name="U">Username.</param>
+        /// <param name="P">Password.</param>
         public static void Launch(string U, string P)
         {
             Run(U, P, null);
         }
+
+        /// <summary>
+        /// Launch the game after an update.
+        /// </summary>
+        /// <param name="LF">The LaunchForm.</param>
+        /// <param name="U">Username.</param>
+        /// <param name="P">Password.</param>
         public static void LaunchAfterUpdate(LaunchForm LF, string U, string P)
         {
             Run(U, P, LF);
         }
+
+        /// <summary>
+        /// Runs mercraft and compresses all the windows together.
+        /// </summary>
+        /// <param name="U">Username.</param>
+        /// <param name="P">Password.</param>
+        /// <param name="LF">LaunchForm if we updated, null if not.</param>
+        /// <returns>Successful</returns>
         static bool Run(string U, string P, LaunchForm LF = null)
         {
             IntPtr originalHandle;
@@ -69,6 +104,7 @@ namespace MerCraft
                 if (LF != null)
                 {
                     LF.lblCurrentAction.Text = "Opening MerCraft...";
+                    
                     LF.Close();
                 }
                 Java = Options.debug ? GetJavaProcess(U, P, true) : GetJavaProcess(U, P, false);

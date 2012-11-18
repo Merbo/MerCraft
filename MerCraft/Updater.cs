@@ -23,6 +23,11 @@ namespace MerCraft
         public string Us, Pa;
         DateTime now; 
 
+        /// <summary>
+        /// Determines if the jar is the correct jar. Blocks thread, pretty bad at the moment.
+        /// Needs some revision.
+        /// </summary>
+        /// <returns>If the jar used is correct.</returns>
         public static bool CorrectJar()
         {
             string J = "";
@@ -56,6 +61,10 @@ namespace MerCraft
             return true;
         }
 
+        /// <summary>
+        /// Determines if MerCraft ModPack is up to date.
+        /// </summary>
+        /// <returns>If MerCraft ModPack is up to date.</returns>
         public static bool UpToDate()
         {
 
@@ -105,6 +114,11 @@ namespace MerCraft
             return false;
         }
 
+        /// <summary>
+        /// Updates MerCraft.
+        /// </summary>
+        /// <param name="U">Username to pass forth.</param>
+        /// <param name="P">Password to pass forth.</param>
         public void UpdateVersion(string U, string P)
         {
             Us = U;
@@ -151,6 +165,11 @@ namespace MerCraft
             //Download the update
             DownloadUpdate((Options.SMP ? new Uri("http://173.48.92.80/MerCraft/ModPack.zip") : new Uri("http://173.48.92.80/MerCraft/ModPackSSP.zip")), appdata + "\\.mercraft\\Update.zip");
         }
+        /// <summary>
+        /// Downloads a file and saves it.
+        /// </summary>
+        /// <param name="DownloadFile">Link to the file on the internet.</param>
+        /// <param name="SaveFile">Local file save path.</param>
         private void DownloadUpdate(Uri DownloadFile, string SaveFile)
         {
             WebClient webClient = new WebClient();
@@ -160,6 +179,11 @@ namespace MerCraft
             webClient.DownloadFileAsync(DownloadFile, SaveFile);
         }
 
+        /// <summary>
+        /// What happens when the progress of the download changes.
+        /// </summary>
+        /// <param name="sender">The object that caused this. Should be a WebClient.</param>
+        /// <param name="e">Event Arguments.</param>
         private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             LF.progressBar1.Value = e.ProgressPercentage;
@@ -185,6 +209,11 @@ namespace MerCraft
             }
         }
 
+        /// <summary>
+        /// What to do when the download completes.
+        /// </summary>
+        /// <param name="sender">The object that caused this. Should be a WebClient.</param>
+        /// <param name="e">Event Arguments.</param>
         private void Completed(object sender, AsyncCompletedEventArgs e)
         {
             //Extract the update
@@ -206,8 +235,13 @@ namespace MerCraft
                 if (CorrectJar())
                     Launcher.LaunchAfterUpdate(LF, Us, Pa);
             }
-
         }
+
+        /// <summary>
+        /// Unzips a file.
+        /// </summary>
+        /// <param name="InputPathOfZipFile">Path to the file.</param>
+        /// <returns>Successful</returns>
         private bool UnZipFile(string InputPathOfZipFile)
         {
             bool ret = true;
