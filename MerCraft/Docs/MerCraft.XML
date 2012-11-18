@@ -23,6 +23,11 @@
             Panel1's child. (MerCraft)
             </summary>
         </member>
+        <member name="F:MerCraft.GameForm.javaProcess">
+            <summary>
+            The java process associated with the child handle.
+            </summary>
+        </member>
         <member name="M:MerCraft.GameForm.#ctor">
             <summary>
             The form that will contain the game.
@@ -411,6 +416,20 @@
             <param name="hWnd">Window handle to start with.</param>
             <param name="uCmd">Flags.</param>
             <returns>The returned handle.</returns>
+        </member>
+        <member name="M:MerCraft.WinAPI.DestroyWindow(System.IntPtr)">
+            <summary>
+            Closes a window and kills its application.
+            </summary>
+            <param name="hWnd">Handle to the window.</param>
+            <returns>Successful</returns>
+        </member>
+        <member name="M:MerCraft.WinAPI.GetTopWindow(System.IntPtr)">
+            <summary>
+            Gets the window at the top.
+            </summary>
+            <param name="OptHWnd">Can be IntPtr.Zero. If specified, examines the handle's children.</param>
+            <returns>The top window.</returns>
         </member>
         <member name="F:MerCraft.WinAPI.GWL_STYLE">
             <summary>

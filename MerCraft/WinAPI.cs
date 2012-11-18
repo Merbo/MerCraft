@@ -119,6 +119,22 @@ namespace MerCraft
         public static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
 
         /// <summary>
+        /// Closes a window and kills its application.
+        /// </summary>
+        /// <param name="hWnd">Handle to the window.</param>
+        /// <returns>Successful</returns>
+        [DllImport("user32.dll")]
+        public static extern bool DestroyWindow(IntPtr hWnd);
+
+        /// <summary>
+        /// Gets the window at the top.
+        /// </summary>
+        /// <param name="OptHWnd">Can be IntPtr.Zero. If specified, examines the handle's children.</param>
+        /// <returns>The top window.</returns>
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetTopWindow(IntPtr OptHWnd);
+
+        /// <summary>
         /// Enum for Menu Flags.
         /// </summary>
         public enum MF : uint

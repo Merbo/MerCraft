@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace MerCraft
 {
@@ -17,12 +18,18 @@ namespace MerCraft
         public IntPtr childHandle;
 
         /// <summary>
+        /// The java process associated with the child handle.
+        /// </summary>
+        public Process javaProcess;
+
+        /// <summary>
         /// The form that will contain the game.
         /// </summary>
         public GameForm()
         {
             InitializeComponent();
             childHandle = IntPtr.Zero;
+            javaProcess = null;
         }
 
         /// <summary>
@@ -32,6 +39,19 @@ namespace MerCraft
         /// <param name="e">EventArgs.</param>
         private void GameForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            if (childHandle != IntPtr.Zero)
+            {
+                if (WinAPI.GetWindow(this.panel1.Handle, (uint)WinAPI.GW.GW_CHILD) == childHandle)
+                {
+                    WinAPI.DestroyWindow(childHandle);
+                }
+            }
+
+            if (javaProcess != null)
+            {
+                if (!javaProcess.HasExited)
+                    javaProcess.Kill();
+            }
             Application.Exit();
         }
 
@@ -65,6 +85,14 @@ namespace MerCraft
                     childHandle = IntPtr.Zero;
                     Application.Exit();
                 }
+            }
+        }
+
+        private void GameForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (WinAPI.GetTopWindow(IntPtr.Zero) != childHandle)
+            {
+                WinAPI.BringWindowToTop(childHandle);
             }
         }
     }
