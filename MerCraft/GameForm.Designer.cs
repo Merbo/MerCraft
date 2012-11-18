@@ -40,6 +40,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 450);
             this.panel1.TabIndex = 0;
+            this.panel1.Enter += new System.EventHandler(this.panel1_Enter);
             this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
             // 
             // timer1

@@ -54,6 +54,20 @@
             <param name="sender">The sender. Will be of type Timer.</param>
             <param name="e">EventArgs.</param>
         </member>
+        <member name="M:MerCraft.GameForm.GameForm_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
+            <summary>
+            What happens when the form detects a keypress.
+            </summary>
+            <param name="sender">The sender. Will be of type Form.</param>
+            <param name="e">EventArgs</param>
+        </member>
+        <member name="M:MerCraft.GameForm.panel1_Enter(System.Object,System.EventArgs)">
+            <summary>
+            What happens when the panel gets focus.
+            </summary>
+            <param name="sender">The sender. Will be of type panel.</param>
+            <param name="e">EventArgs</param>
+        </member>
         <member name="F:MerCraft.GameForm.components">
             <summary>
             Required designer variable.

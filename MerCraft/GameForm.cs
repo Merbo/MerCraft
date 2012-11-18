@@ -88,7 +88,25 @@ namespace MerCraft
             }
         }
 
+        /// <summary>
+        /// What happens when the form detects a keypress.
+        /// </summary>
+        /// <param name="sender">The sender. Will be of type Form.</param>
+        /// <param name="e">EventArgs</param>
         private void GameForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (WinAPI.GetTopWindow(IntPtr.Zero) != childHandle)
+            {
+                WinAPI.BringWindowToTop(childHandle);
+            }
+        }
+
+        /// <summary>
+        /// What happens when the panel gets focus.
+        /// </summary>
+        /// <param name="sender">The sender. Will be of type panel.</param>
+        /// <param name="e">EventArgs</param>
+        private void panel1_Enter(object sender, EventArgs e)
         {
             if (WinAPI.GetTopWindow(IntPtr.Zero) != childHandle)
             {
