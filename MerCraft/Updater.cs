@@ -21,6 +21,7 @@ namespace MerCraft
         public LaunchForm LF = new LaunchForm();
         public static string appdata = Environment.GetEnvironmentVariable("APPDATA");
         public string Us, Pa;
+        DateTime now; 
 
         public static bool CorrectJar()
         {
@@ -65,7 +66,7 @@ namespace MerCraft
             }
 
 
-            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://merbosmagic.co.cc/MerCraft/Default.aspx");
+            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://173.48.92.80/MerCraft/Default.aspx");
             myRequest.Method = "GET";
             WebResponse myResponse = myRequest.GetResponse();
             StreamReader sr = new StreamReader(myResponse.GetResponseStream(), System.Text.Encoding.UTF8);
@@ -148,22 +149,40 @@ namespace MerCraft
             Directory.CreateDirectory(appdata + "\\.mercraft\\ModPack");
             LF.lblCurrentAction.Text = "Downloading Update...";
             //Download the update
-            if (Options.SMP)
-                DownloadUpdate(new Uri("http://merbosmagic.co.cc/MerCraft/ModPack.zip"), appdata + "\\.mercraft\\Update.zip");
-            else
-                DownloadUpdate(new Uri("http://merbosmagic.co.cc/MerCraft/ModPackSSP.zip"), appdata + "\\.mercraft\\Update.zip");
+            DownloadUpdate((Options.SMP ? new Uri("http://173.48.92.80/MerCraft/ModPack.zip") : new Uri("http://173.48.92.80/MerCraft/ModPackSSP.zip")), appdata + "\\.mercraft\\Update.zip");
         }
         private void DownloadUpdate(Uri DownloadFile, string SaveFile)
         {
             WebClient webClient = new WebClient();
             webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
             webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
+            now = DateTime.Now;
             webClient.DownloadFileAsync(DownloadFile, SaveFile);
         }
 
         private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             LF.progressBar1.Value = e.ProgressPercentage;
+            if (now != null)
+            {
+                double kbPerSecond = 0d;
+                double remainingTimeSeconds = double.PositiveInfinity;
+                string retText = "";
+                if ((DateTime.Now - now).Seconds > 0)
+                {
+                    kbPerSecond = (e.BytesReceived / 1000) / (DateTime.Now - now).Seconds;
+                }
+                if (kbPerSecond > 0)
+                    remainingTimeSeconds = (((e.TotalBytesToReceive - e.BytesReceived) / (kbPerSecond > 1000 ? 1000000 : 1000)) / kbPerSecond);
+
+                retText += "Now downloading: " + (Options.SMP ? "http://173.48.92.80/MerCraft/ModPack.zip" : "http://173.48.92.80/MerCraft/ModPackSSP.zip") + Environment.NewLine;
+                retText += "Download size: " + Math.Round((double)(Convert.ToDouble(e.TotalBytesToReceive) / 1000000), 2) + " MB" + Environment.NewLine;
+                retText += "Download progress: " + Math.Round((double)(Convert.ToDouble(e.BytesReceived) / 1000000), 2) + " MB (" + e.ProgressPercentage + "%)" + Environment.NewLine;
+                retText += "Download rate: " + (kbPerSecond > 1000 ? (kbPerSecond / 1000) + " MB/s" : kbPerSecond + " KB/s") + Environment.NewLine;
+                retText += "Time remaining: ~" + Math.Round(remainingTimeSeconds, 2) + " Seconds";
+
+                LF.lblRate.Text = retText;
+            }
         }
 
         private void Completed(object sender, AsyncCompletedEventArgs e)

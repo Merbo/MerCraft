@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace JavaDetect
 {
@@ -48,17 +49,14 @@ namespace JavaDetect
             }
 
             // Registry (only on windows)
-            if (Environment.OSVersion.Platform.HasFlag(PlatformID.Win32NT | PlatformID.Win32Windows))
-            {
-                cver = GetJavaRegistry().OpenSubKey(GetJavaVersion());
-                if (cver == null)
-                    throw new JavaNotFoundException();
+            cver = GetJavaRegistry().OpenSubKey(GetJavaVersion());
+            if (cver == null)
+                throw new JavaNotFoundException();
 
-                cver = ((RegistryKey)cver).GetValue("JavaHome", null);
-                if (cver != null)
-                    return cver.ToString();
-            }
-            
+            cver = ((RegistryKey)cver).GetValue("JavaHome", null);
+            if (cver != null)
+                return cver.ToString();
+
             // No possibilites left.
             throw new JavaNotFoundException();
         }
@@ -88,11 +86,9 @@ namespace JavaDetect
                 .OpenSubKey("Java Runtime Environment");
 
             // 32-bit node on 64-bit systems
-            if (
-                Registry.LocalMachine
+            if (Registry.LocalMachine
                 .OpenSubKey("Software")
-                .OpenSubKey("Wow6432Node") != null
-                )
+                .OpenSubKey("Wow6432Node") != null)
             {
                 // JRE
                 if (cver == null)

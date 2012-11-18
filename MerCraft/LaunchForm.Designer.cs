@@ -36,15 +36,15 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 51);
+            this.progressBar1.Location = new System.Drawing.Point(15, 51);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(588, 23);
+            this.progressBar1.Size = new System.Drawing.Size(318, 23);
             this.progressBar1.TabIndex = 0;
             // 
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(120, 9);
+            this.lblStatus.Location = new System.Drawing.Point(12, 9);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(102, 13);
             this.lblStatus.TabIndex = 1;
@@ -54,17 +54,17 @@
             // lblRate
             // 
             this.lblRate.AutoSize = true;
-            this.lblRate.Location = new System.Drawing.Point(391, 9);
+            this.lblRate.Location = new System.Drawing.Point(349, 9);
             this.lblRate.Name = "lblRate";
-            this.lblRate.Size = new System.Drawing.Size(33, 13);
+            this.lblRate.Size = new System.Drawing.Size(258, 13);
             this.lblRate.TabIndex = 2;
-            this.lblRate.Text = "Rate:";
+            this.lblRate.Text = "ERROR DISPLAYING DOWNLOAD INFORMATION";
             this.lblRate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblCurrentAction
             // 
             this.lblCurrentAction.AutoSize = true;
-            this.lblCurrentAction.Location = new System.Drawing.Point(258, 35);
+            this.lblCurrentAction.Location = new System.Drawing.Point(12, 35);
             this.lblCurrentAction.Name = "lblCurrentAction";
             this.lblCurrentAction.Size = new System.Drawing.Size(77, 13);
             this.lblCurrentAction.TabIndex = 3;
@@ -75,7 +75,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(612, 77);
+            this.ClientSize = new System.Drawing.Size(662, 84);
             this.Controls.Add(this.lblCurrentAction);
             this.Controls.Add(this.lblRate);
             this.Controls.Add(this.lblStatus);

@@ -11,111 +11,14 @@ namespace MerCraft
 {
     class Launcher
     {
-        public static string ProgramFiles = Environment.GetEnvironmentVariable("PROGRAMFILES");
+        //public static string ProgramFiles = Environment.GetEnvironmentVariable("PROGRAMFILES");
         public static string path;
         private static string JavaProcessFileName(bool debug = false)
         {
-            path = "";
-
-            List<string> PathTries     = new List<string>();
-            List<string> PathTries_x86 = new List<string>();
-
-
-            //Java installation defaults
-            PathTries.Add("C:\\Program Files\\Java\\jdk1.7.0_04\\bin");
-            PathTries.Add("C:\\Program Files\\Java\\jre7\\bin");
-            PathTries.Add("C:\\Program Files\\Java\\jre6\\bin");
-            PathTries.Add(ProgramFiles + "\\Java\\jdk1.7.0_04\\bin");
-            PathTries.Add(ProgramFiles + "\\Java\\jre7\\bin");
-            PathTries.Add(ProgramFiles + "\\Java\\jre6\\bin");
-            PathTries.Add("C:\\Progs\\Java\\jdk1.7.0_04\\bin");
-            PathTries.Add("C:\\Progs\\Java\\jre7\\bin");
-            PathTries.Add("C:\\Progs\\Java\\jre6\\bin");
-
-            //On x64 machines, but a x86 java installation
-            PathTries_x86.Add("C:\\Program Files (x86)\\Java\\jdk1.7.0_04\\bin");
-            PathTries_x86.Add("C:\\Program Files (x86)\\Java\\jre7\\bin");
-            PathTries_x86.Add("C:\\Program Files (x86)\\Java\\jre6\\bin");
-            PathTries_x86.Add(ProgramFiles + "\\Java\\jdk1.7.0_04\\bin");
-            PathTries_x86.Add(ProgramFiles + "\\Java\\jre7\\bin");
-            PathTries_x86.Add(ProgramFiles + "\\Java\\jre6\\bin");
-            PathTries_x86.Add("C:\\Progs\\Java\\jdk1.7.0_04\\bin");
-            PathTries_x86.Add("C:\\Progs\\Java\\jre7\\bin");
-            PathTries_x86.Add("C:\\Progs\\Java\\jre6\\bin");
-
-            foreach (string s in PathTries)
-            {
-                if (Directory.Exists(s))
-                {
-                    if (debug && File.Exists(s + "\\java.exe"))
-                        path = s + "\\java.exe";
-                    else if (!debug && File.Exists(s + "\\javaw.exe"))
-                        path = s + "\\javaw.exe";
-                    else continue;
-                }
-            }
-
-            if (path == "")
-            {
-                foreach (string s in PathTries_x86)
-                {
-                    if (Directory.Exists(s))
-                    {
-                        if (debug && File.Exists(s + "\\java.exe"))
-                            path = s + "\\java.exe";
-                        else if (!debug && File.Exists(s + "\\javaw.exe"))
-                            path = s + "\\javaw.exe";
-                        else continue;
-                    }
-                }
-            }
-
-            if (path == "")
-            {
-
-                bool showDialog = false;
-
-                if (!File.Exists(Updater.appdata + "\\.mercraft\\javapath"))
-                {
-                    showDialog = true;
-                }
-                else
-                {
-                    //Read from the file
-                    string possiblePath = File.ReadAllText(Updater.appdata + "\\.mercraft\\javapath");
-                    if (File.Exists(possiblePath))
-                    {
-                        path = possiblePath;
-                    }
-                    else
-                    {
-                        showDialog = true;
-                    }
-                }
-
-                if (showDialog)
-                {
-                    OpenFileDialog O = new OpenFileDialog();
-                    O.InitialDirectory = ProgramFiles;
-                    O.CheckFileExists = true;
-                    O.Title = "Select javaw.exe";
-
-                    if (O.ShowDialog() == DialogResult.OK)
-                    {
-                        path = O.FileName;
-
-                        if (File.Exists(Updater.appdata + "\\.mercraft\\javapath"))
-                        {
-                            File.Delete(Updater.appdata + "\\.mercraft\\javapath");
-                            //Write to the file
-                        }
-                        File.WriteAllText(Updater.appdata + "\\.mercraft\\javapath", O.FileName);
-                    }
-
-
-
-                }
-            }
+            if (debug)
+                path = Path.Combine(JavaDetect.JavaPath.GetJavaBinaryPath(), "java.exe");
+            else
+                path = Path.Combine(JavaDetect.JavaPath.GetJavaBinaryPath(), "javaw.exe");
 
             return path;
         }
@@ -150,34 +53,63 @@ namespace MerCraft
         }
         public static void Launch(string U, string P)
         {
+            Run(U, P, null);
+        }
+        public static void LaunchAfterUpdate(LaunchForm LF, string U, string P)
+        {
+            Run(U, P, LF);
+        }
+        static bool Run(string U, string P, LaunchForm LF = null)
+        {
+            IntPtr originalHandle;
+            IntPtr mainHandle = IntPtr.Zero;
             try
             {
                 Process Java = null;
+                if (LF != null)
+                {
+                    LF.lblCurrentAction.Text = "Opening MerCraft...";
+                    LF.Close();
+                }
                 Java = Options.debug ? GetJavaProcess(U, P, true) : GetJavaProcess(U, P, false);
                 Java.Start();
+                while (mainHandle == IntPtr.Zero)
+                {
+                    Java.WaitForInputIdle(1 * 1000);
+                    Java.Refresh();
+
+                    if (Java.HasExited)
+                        return false;
+                    if (!Java.MainWindowTitle.Contains("Hello"))
+                        mainHandle = Java.MainWindowHandle;
+                }
+
+                GameForm gameForm = new GameForm();
+                gameForm.Show();
+                while (!gameForm.panel1.IsHandleCreated)
+                {
+                }
+                originalHandle = WinAPI.SetParent(mainHandle, gameForm.panel1.Handle);
+                int style = WinAPI.GetWindowLong(mainHandle, WinAPI.GWL_STYLE);
+                WinAPI.MoveWindow(mainHandle, 0, 0, gameForm.panel1.Width, gameForm.panel1.Height, true);
+                WinAPI.SetWindowLong(mainHandle, WinAPI.GWL_STYLE, (style & ~(int)WinAPI.WS.WS_SYSMENU));
+                WinAPI.SetWindowLong(mainHandle, WinAPI.GWL_STYLE, (style & ~(int)WinAPI.WS.WS_CAPTION));
+                gameForm.childHandle = mainHandle;
+
+                Program.M.Hide(); 
+            }
+            catch (InvalidOperationException ex)
+            {
+                //We're in debug!
             }
             catch (Exception ex)
             {
                 MessageBox.Show("You might not have java installed in the right place for MerCraft. Try asking Merbo about it.");
                 MessageBox.Show(ex.ToString());
                 Console.WriteLine(ex.ToString());
+                return false;
             }
-        }
-        public static void LaunchAfterUpdate(LaunchForm LF, string U, string P)
-        {
-            try
-            {
-                LF.lblCurrentAction.Text = "Opening MerCraft...";
-                LF.Close();
-                Process Java = null;
-                Java = Options.debug ? GetJavaProcess(U, P, true) : GetJavaProcess(U, P, false);
-                Java.Start();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("You might not have java installed in the right place for MerCraft. Try asking Merbo about it.");
-                Console.WriteLine(ex.ToString());
-            }
+            return true;
         }
     }
 }

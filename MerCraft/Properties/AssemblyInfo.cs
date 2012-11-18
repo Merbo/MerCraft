@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MerCraft")]
-[assembly: AssemblyDescription("merbosmagic.co.ccanization's spin on MineCraft.")]
+[assembly: AssemblyDescription("MerbosMagic Organization's spin on MineCraft.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("merbosmagic.co.ccanization")]
+[assembly: AssemblyCompany("MerbosMagic Organization")]
 [assembly: AssemblyProduct("MerCraft")]
-[assembly: AssemblyCopyright("Copyright © merbosmagic.co.ccanization 2012")]
+[assembly: AssemblyCopyright("Copyright © MerbosMagic Organization 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
