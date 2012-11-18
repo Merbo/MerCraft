@@ -147,5 +147,18 @@ namespace MerCraft
                 WinAPI.BringWindowToTop(childHandle);
             }
         }
+
+        /// <summary>
+        /// What happens when the form gets focus.
+        /// </summary>
+        /// <param name="sender">The sender. Will be of type form.</param>
+        /// <param name="e">EventArgs.</param>
+        private void GameForm_Enter(object sender, EventArgs e)
+        {
+            if (WinAPI.GetTopWindow(IntPtr.Zero) != childHandle)
+            {
+                WinAPI.BringWindowToTop(childHandle);
+            }
+        }
     }
 }
