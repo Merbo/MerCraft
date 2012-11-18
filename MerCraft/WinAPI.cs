@@ -69,7 +69,7 @@ namespace MerCraft
         /// <summary>
         /// Gets a window handle by its caption.
         /// </summary>
-        /// <param name="ZeroOnly">Always use InPtr.Zero here.</param>
+        /// <param name="ZeroOnly">Always use IntPtr.Zero here.</param>
         /// <param name="lpWindowName">Caption to find.</param>
         /// <returns>A handle to the first found matching window.</returns>
         [DllImport("user32.dll", EntryPoint = "FindWindow", SetLastError = true)]
@@ -105,7 +105,7 @@ namespace MerCraft
         /// <param name="hMenu">Handle to the menu.</param>
         /// <param name="uPosition">Position of the button.</param>
         /// <param name="uFlags">Removal flags.</param>
-        /// <returns></returns>
+        /// <returns>Successful</returns>
         [DllImport("user32.dll")]
         public static extern bool RemoveMenu(IntPtr hMenu, uint uPosition, uint uFlags);
 

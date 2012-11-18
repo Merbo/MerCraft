@@ -23,6 +23,11 @@ namespace MerCraft
         public Process javaProcess;
 
         /// <summary>
+        /// Whether or not we've tried to change the handle.
+        /// </summary>
+        public bool hasTriedHandle;
+
+        /// <summary>
         /// The form that will contain the game.
         /// </summary>
         public GameForm()
@@ -30,6 +35,7 @@ namespace MerCraft
             InitializeComponent();
             childHandle = IntPtr.Zero;
             javaProcess = null;
+            hasTriedHandle = false;
         }
 
         /// <summary>
@@ -52,7 +58,9 @@ namespace MerCraft
                 if (!javaProcess.HasExited)
                     javaProcess.Kill();
             }
-            Application.Exit();
+
+            if (!e.CloseReason.HasFlag(CloseReason.None))
+                Application.Exit();
         }
 
         /// <summary>
@@ -86,6 +94,16 @@ namespace MerCraft
                     Application.Exit();
                 }
             }
+
+
+            /*if (hasTriedHandle && childHandle != WinAPI.GetWindow(this.panel1.Handle, (uint)WinAPI.GW.GW_CHILD))
+            {
+                childHandle = IntPtr.Zero;
+                javaProcess.Kill();
+                Program.M.Show();
+                MessageBox.Show("Apparently MerCraft doesn't like launching.\nThis is sometimes caused if you have teamViewer's \"share application\" button enabled.");
+                this.Close();
+            }*/
         }
 
         /// <summary>

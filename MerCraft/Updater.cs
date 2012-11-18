@@ -203,7 +203,30 @@ namespace MerCraft
                 retText += "Download size: " + Math.Round((double)(Convert.ToDouble(e.TotalBytesToReceive) / 1000000), 2) + " MB" + Environment.NewLine;
                 retText += "Download progress: " + Math.Round((double)(Convert.ToDouble(e.BytesReceived) / 1000000), 2) + " MB (" + e.ProgressPercentage + "%)" + Environment.NewLine;
                 retText += "Download rate: " + (kbPerSecond > 1000 ? (kbPerSecond / 1000) + " MB/s" : kbPerSecond + " KB/s") + Environment.NewLine;
-                retText += "Time remaining: ~" + Math.Round(remainingTimeSeconds, 2) + " Seconds";
+                double remainingTime = double.PositiveInfinity;
+
+                string timeType = " Seconds";
+
+                if (remainingTimeSeconds < 60)
+                {
+                    remainingTime = remainingTimeSeconds;
+                    timeType = " Seconds";
+                }
+                else if (remainingTimeSeconds > 60 && remainingTimeSeconds < 3600)
+                {
+                    remainingTime = remainingTimeSeconds / 60;
+                    timeType = " Minutes";
+                }
+                else if (remainingTimeSeconds > 3600 && remainingTimeSeconds < 7200)
+                {
+                    remainingTime = remainingTimeSeconds / 3600;
+                    timeType = " Hours";
+                }
+                else
+                {
+                    timeType = " Millenia";
+                }
+                retText += "Time remaining: ~" + Math.Round(remainingTime, 2) + timeType;
 
                 LF.lblRate.Text = retText;
             }
