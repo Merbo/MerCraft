@@ -41,12 +41,12 @@
             this.panel1.Size = new System.Drawing.Size(800, 450);
             this.panel1.TabIndex = 0;
             this.panel1.Enter += new System.EventHandler(this.panel1_Enter);
+            this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
             this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
             // 
             // timer1
             // 
             this.timer1.Enabled = true;
-            this.timer1.Interval = 10 * 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // GameForm
@@ -59,6 +59,7 @@
             this.Text = "MerCraft";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GameForm_FormClosed);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GameForm_KeyDown);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GameForm_MouseClick);
             this.ResumeLayout(false);
 
         }

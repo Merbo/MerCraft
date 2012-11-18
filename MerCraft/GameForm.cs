@@ -94,16 +94,6 @@ namespace MerCraft
                     Application.Exit();
                 }
             }
-
-
-            /*if (hasTriedHandle && childHandle != WinAPI.GetWindow(this.panel1.Handle, (uint)WinAPI.GW.GW_CHILD))
-            {
-                childHandle = IntPtr.Zero;
-                javaProcess.Kill();
-                Program.M.Show();
-                MessageBox.Show("Apparently MerCraft doesn't like launching.\nThis is sometimes caused if you have teamViewer's \"share application\" button enabled.");
-                this.Close();
-            }*/
         }
 
         /// <summary>
@@ -125,6 +115,32 @@ namespace MerCraft
         /// <param name="sender">The sender. Will be of type panel.</param>
         /// <param name="e">EventArgs</param>
         private void panel1_Enter(object sender, EventArgs e)
+        {
+            if (WinAPI.GetTopWindow(IntPtr.Zero) != childHandle)
+            {
+                WinAPI.BringWindowToTop(childHandle);
+            }
+        }
+
+        /// <summary>
+        /// What happens when the panel gets clicked.
+        /// </summary>
+        /// <param name="sender">The sender. Will be of type panel.</param>
+        /// <param name="e">EventArgs</param>
+        private void panel1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (WinAPI.GetTopWindow(IntPtr.Zero) != childHandle)
+            {
+                WinAPI.BringWindowToTop(childHandle);
+            }
+        }
+
+        /// <summary>
+        /// What happens when the form gets clicked.
+        /// </summary>
+        /// <param name="sender">The sender. Will be of type form.</param>
+        /// <param name="e">EventArgs.</param>
+        private void GameForm_MouseClick(object sender, MouseEventArgs e)
         {
             if (WinAPI.GetTopWindow(IntPtr.Zero) != childHandle)
             {
