@@ -94,9 +94,7 @@ namespace MerCraft
                     Application.Exit();
                 }
                 else
-                {
                     WinAPI.BringWindowToTop(childHandle);
-                }
             }
         }
 
