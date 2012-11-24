@@ -93,6 +93,10 @@ namespace MerCraft
                     childHandle = IntPtr.Zero;
                     Application.Exit();
                 }
+                else
+                {
+                    WinAPI.BringWindowToTop(childHandle);
+                }
             }
         }
 

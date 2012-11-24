@@ -197,7 +197,7 @@ namespace MerCraft
                     kbPerSecond = (e.BytesReceived / 1000) / (DateTime.Now - now).Seconds;
                 }
                 if (kbPerSecond > 0)
-                    remainingTimeSeconds = (((e.TotalBytesToReceive - e.BytesReceived) / (kbPerSecond > 1000 ? 1000000 : 1000)) / kbPerSecond);
+                    remainingTimeSeconds = (((e.TotalBytesToReceive - e.BytesReceived) / 1000) / kbPerSecond);
 
                 retText += "Now downloading: " + (Options.SMP ? "http://173.48.92.80/MerCraft/ModPack.zip" : "http://173.48.92.80/MerCraft/ModPackSSP.zip") + Environment.NewLine;
                 retText += "Download size: " + Math.Round((double)(Convert.ToDouble(e.TotalBytesToReceive) / 1000000), 2) + " MB" + Environment.NewLine;
