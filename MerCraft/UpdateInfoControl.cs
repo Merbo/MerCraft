@@ -144,9 +144,9 @@ namespace MerCraft
         {
             //Calculations
             double elapsedTime_Seconds = (DateTime.Now - now).Seconds;
-            double elapsedTime_Minutes = 0;
-            double elapsedTime_Hours = 0;
-            double elapsedTime_Days = 0;
+            double elapsedTime_Minutes = (DateTime.Now - now).Minutes;
+            double elapsedTime_Hours = (DateTime.Now - now).Hours;
+            double elapsedTime_Days = (DateTime.Now - now).Days;
 
             if (elapsedTime_Seconds == 0)
                 elapsedTime_Minutes++;
