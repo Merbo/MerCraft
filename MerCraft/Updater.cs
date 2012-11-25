@@ -133,7 +133,6 @@ namespace MerCraft
             UpdateInfoControl UICSoundPack = new UpdateInfoControl("Music SoundPack Update Download");    
 
             LF = new LaunchForm();
-            LF.Height = UICModPack.Height;
             Us = U;
             Pa = P;          
             LF.panel1.Controls.Add(UICModPack);
@@ -142,17 +141,15 @@ namespace MerCraft
             string linkToModPack = Options.SMP ?
                 "http://173.48.92.80/MerCraft/ModPack.zip" :
                 "http://173.48.92.80/MerCraft/ModPackSSP.zip";
-            Task<bool> ModPackTask = UICModPack.DownloadAndExtractZip(linkToModPack, appdata + "\\.mercraft\\ModPack.zip", appdata + "\\.mercraft", true);
+            await UICModPack.DownloadAndExtractZip(linkToModPack, appdata + "\\.mercraft\\ModPack.zip", appdata + "\\.mercraft", true);
 
             if (Options.Sound)
             {
-                LF.Height += UICSoundPack.Height;
+                LF.panel1.Controls.Remove(UICModPack);
                 LF.panel1.Controls.Add(UICSoundPack);
                 string linkToSoundPack = "http://173.48.92.80/MerCraft/SoundPack.zip";
                 await UICSoundPack.DownloadAndExtractZip(linkToSoundPack, appdata + "\\.mercraft\\SoundPack.zip", appdata + "\\.mercraft\\ModPack\\.minecraft\\audiotori", true);
             }
-
-            await ModPackTask;
 
             if (!runningDownload)
                 if (CorrectJar())
