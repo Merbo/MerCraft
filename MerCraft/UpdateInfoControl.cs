@@ -201,9 +201,9 @@ namespace MerCraft
                 Math.Round(remainingTime_Minutes, 2) + " Minutes" : 
                 Math.Round(remainingTime_Seconds, 2) + " Seconds")));
             this.label9.Text = "Elapsed Time: " + (elapsedTime_Days >= 1 ?
-                elapsedTime_Days + " Days" : (elapsedTime_Hours >= 1 ?
-                elapsedTime_Hours + " Hours" : (elapsedTime_Minutes >= 1 ?
-                elapsedTime_Minutes + " Minutes" : 
+                elapsedTime_Days + " Days, " + elapsedTime_Hours + " Hours, " + elapsedTime_Minutes + " Minutes, " + elapsedTime_Seconds + " Seconds" : (elapsedTime_Hours >= 1 ?
+                elapsedTime_Hours + " Hours, " + elapsedTime_Minutes + " Minutes, " + elapsedTime_Seconds + " Seconds" : (elapsedTime_Minutes >= 1 ?
+                elapsedTime_Minutes + " Minutes, " + elapsedTime_Seconds + " Seconds" : 
                 elapsedTime_Seconds + " Seconds")));
         }
 
