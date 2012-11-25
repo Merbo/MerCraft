@@ -172,11 +172,11 @@ namespace MerCraft
             double remainingTime_Seconds = double.PositiveInfinity;
             if (elapsedTime_Seconds > 0 || elapsedTime_Minutes > 0 || elapsedTime_Hours > 0 || elapsedTime_Days > 0)
             {
-                elapsedTime_Hours += (elapsedTime_Days * 24);
-                elapsedTime_Minutes += (elapsedTime_Hours * 60);
-                elapsedTime_Seconds += (elapsedTime_Minutes * 60);
-                KBPerSecond = KBDownloaded / elapsedTime_Seconds;
-                MBPerSecond = MBDownloaded / elapsedTime_Seconds;
+                double eHours = elapsedTime_Hours + (elapsedTime_Days * 24);
+                double eMinutes = elapsedTime_Minutes + (elapsedTime_Hours * 60);
+                double eSeconds = elapsedTime_Seconds + (elapsedTime_Minutes * 60);
+                KBPerSecond = KBDownloaded / eSeconds;
+                MBPerSecond = MBDownloaded / eSeconds;
             }
             if (KBPerSecond > 0)
                 remainingTime_Seconds = KBToGo / KBPerSecond;
