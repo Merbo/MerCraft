@@ -103,7 +103,7 @@ namespace MerCraft
                 Process Java = null;
                 if (LF != null)
                 {
-                    LF.lblCurrentAction.Text = "Opening MerCraft...";
+                    //LF.lblCurrentAction.Text = "Opening MerCraft...";
                     
                     LF.Close();
                 }

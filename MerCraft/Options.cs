@@ -27,6 +27,8 @@ namespace MerCraft
         public static bool debug = false;
         public static bool SMP = true;
         public static bool SMPChanged = false;
+        public static bool Sound = false;
+        public static bool SoundChanged = false;
 
         /// <summary>
         /// Load up the options and apply them to the form.
@@ -66,6 +68,16 @@ namespace MerCraft
                             break;
                            
                     }
+                    string sound = Reader.ReadLine();
+                    switch (sound)
+                    {
+                        case "true":
+                            Sound = true;
+                            break;
+                        default:
+                            Sound = false;
+                            break;
+                    }
                     Reader.Close();
                     Reader = null;
                 }
@@ -102,21 +114,13 @@ namespace MerCraft
             Writer = new StreamWriter(file, Encoding.UTF8);
 
             if (radioButton1.Checked)
-            {
                 Writer.WriteLine("Vanilla");
-            }
             else if (radioButton2.Checked)
-            {
                 Writer.WriteLine("OptiFine");
-            }
             else if (radioButton3.Checked)
-            {
                 Writer.WriteLine("Shaders");
-            }
             else
-            {
                 Writer.WriteLine("Vanilla");
-            }
 
             if (checkBox1.Checked)
             {
@@ -140,20 +144,21 @@ namespace MerCraft
                 SMP = false;
             }
 
+            if (checkBox3.Checked)
+            {
+                Writer.WriteLine("true");
+                Sound = true;
+            }
+            else
+            {
+                Writer.WriteLine("false");
+                Sound = false;
+            }
+
             Writer.Close();
             Writer = null;
 
             this.Close();
-        }
-
-        /// <summary>
-        /// What happens when checkbox2 is clicked.
-        /// </summary>
-        /// <param name="sender">The object that caused this. Should be of type checkBox.</param>
-        /// <param name="e">The event arguments.</param>
-        private void checkBox2_Click(object sender, EventArgs e)
-        {
-            SMPChanged = true;
         }
 
         /// <summary>
@@ -163,6 +168,7 @@ namespace MerCraft
         /// <param name="e">Event Arguments.</param>
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
+            SMPChanged = true;
             if (!checkBox2.Checked)
             {
                 radioButton1.Checked = true;
@@ -176,5 +182,9 @@ namespace MerCraft
             }
         }
 
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            SoundChanged = true;
+        }
     }
 }

@@ -45,9 +45,7 @@ namespace MerCraft
                 if (Updater.UpToDate())
                 {
                     if (Updater.CorrectJar())
-                    {
                         Launcher.Launch(textBox1.Text, textBox2.Text);
-                    }
                 }
                 else
                 {
