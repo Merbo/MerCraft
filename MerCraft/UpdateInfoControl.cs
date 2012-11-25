@@ -144,7 +144,7 @@ namespace MerCraft
         {
             //Calculations
             double elapsedTime_Seconds = (DateTime.Now - now).Seconds;
-            double elapsedTime_Minutes = -1;
+            double elapsedTime_Minutes = 0;
             double elapsedTime_Hours = 0;
             double elapsedTime_Days = 0;
 
