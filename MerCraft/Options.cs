@@ -96,6 +96,7 @@ namespace MerCraft
                 }
                 checkBox1.Checked = debug ? true : false;
                 checkBox2.Checked = SMP ? true : false;
+                checkBox3.Checked = Sound ? true : false;
             }
         }
 
