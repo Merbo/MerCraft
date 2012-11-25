@@ -144,9 +144,22 @@ namespace MerCraft
         {
             //Calculations
             double elapsedTime_Seconds = (DateTime.Now - now).Seconds;
-            double elapsedTime_Minutes = elapsedTime_Seconds / 60;
-            double elapsedTime_Hours = elapsedTime_Minutes / 60;
-            double elapsedTime_Days = elapsedTime_Hours / 24;
+            double elapsedTime_Minutes = -1;
+            double elapsedTime_Hours = 0;
+            double elapsedTime_Days = 0;
+
+            if (elapsedTime_Seconds == 0)
+                elapsedTime_Minutes++;
+            if (elapsedTime_Minutes == 60)
+            {
+                elapsedTime_Minutes = 0;
+                elapsedTime_Hours++;
+            }
+            if (elapsedTime_Hours == 24)
+            {
+                elapsedTime_Hours = 0;
+                elapsedTime_Days++;
+            }
 
             double KBFileSize = e.TotalBytesToReceive / 1000;
             double MBFileSize = KBFileSize / 1000;
@@ -157,8 +170,11 @@ namespace MerCraft
             double KBPerSecond = 0;
             double MBPerSecond = 0;
             double remainingTime_Seconds = double.PositiveInfinity;
-            if (elapsedTime_Seconds > 0)
+            if (elapsedTime_Seconds > 0 || elapsedTime_Minutes > 0 || elapsedTime_Hours > 0 || elapsedTime_Days > 0)
             {
+                elapsedTime_Hours += (elapsedTime_Days * 24);
+                elapsedTime_Minutes += (elapsedTime_Hours * 60);
+                elapsedTime_Seconds += (elapsedTime_Minutes * 60);
                 KBPerSecond = KBDownloaded / elapsedTime_Seconds;
                 MBPerSecond = MBDownloaded / elapsedTime_Seconds;
             }
