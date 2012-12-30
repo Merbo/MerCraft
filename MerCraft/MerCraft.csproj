@@ -106,6 +106,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="FileIO.cs" />
     <Compile Include="GameForm.cs">
       <SubType>Form</SubType>

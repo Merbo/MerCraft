@@ -52,7 +52,10 @@ namespace MerCraft
             string downloadedZip = await downloadedZipTask;
 
             this.label2.Text = "Extracting zip file...";
-            Unzip(File.OpenRead(downloadedZip), outFolder);
+            var s = File.OpenRead(downloadedZip);
+            Unzip(s, outFolder);
+            s.Close();
+            s.Dispose();
 
             if (deleteZipWhenDone)
                 File.Delete(downloadedZip);
@@ -140,76 +143,55 @@ namespace MerCraft
             }
         }
 
+        private string SizeToHumanReadable(double size)
+        {
+            string[] units = { "B", "kB", "MB", "GB", "TB", "PB", "EB" /* , "ZB", "YB" */ };
+            int i = 0;
+            while(size >= 1024 && i < units.Length - 1)
+            {
+                size /= 1024;
+                i++;
+            }
+            return string.Format("{0:#.#} {1}", size, units[i]);
+        }
+
         private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             //Calculations
-            double elapsedTime_Seconds = (DateTime.Now - now).Seconds;
-            double elapsedTime_Minutes = (DateTime.Now - now).Minutes;
-            double elapsedTime_Hours = (DateTime.Now - now).Hours;
-            double elapsedTime_Days = (DateTime.Now - now).Days;
+            var elapsedTime = DateTime.Now - now;
 
-            if (elapsedTime_Seconds == 0)
-                elapsedTime_Minutes++;
-            if (elapsedTime_Minutes == 60)
+            double FileSize = e.TotalBytesToReceive;
+            double Downloaded = e.BytesReceived;
+            double ToGo = e.TotalBytesToReceive - e.BytesReceived;
+            double PerSecond = 0;
+            TimeSpan remainingTime = default(TimeSpan);
+            if (elapsedTime.TotalSeconds > 0)
             {
-                elapsedTime_Minutes = 0;
-                elapsedTime_Hours++;
+                PerSecond = Downloaded / elapsedTime.TotalSeconds;
             }
-            if (elapsedTime_Hours == 24)
-            {
-                elapsedTime_Hours = 0;
-                elapsedTime_Days++;
-            }
-
-            double KBFileSize = e.TotalBytesToReceive / 1000;
-            double MBFileSize = KBFileSize / 1000;
-            double KBDownloaded = e.BytesReceived / 1000;
-            double MBDownloaded = KBDownloaded / 1000;
-            double KBToGo = (e.TotalBytesToReceive - e.BytesReceived) / 1000;
-            double MBToGo = KBToGo / 1000;
-            double KBPerSecond = 0;
-            double MBPerSecond = 0;
-            double remainingTime_Seconds = double.PositiveInfinity;
-            if (elapsedTime_Seconds > 0 || elapsedTime_Minutes > 0 || elapsedTime_Hours > 0 || elapsedTime_Days > 0)
-            {
-                double eHours = elapsedTime_Hours + (elapsedTime_Days * 24);
-                double eMinutes = elapsedTime_Minutes + (elapsedTime_Hours * 60);
-                double eSeconds = elapsedTime_Seconds + (elapsedTime_Minutes * 60);
-                KBPerSecond = KBDownloaded / eSeconds;
-                MBPerSecond = MBDownloaded / eSeconds;
-            }
-            if (KBPerSecond > 0)
-                remainingTime_Seconds = KBToGo / KBPerSecond;
-            double remainingTime_Minutes = remainingTime_Seconds / 60;
-            double remainingTime_Hours = remainingTime_Minutes / 60;
-            double remainingTime_Days = remainingTime_Hours / 24;
+            if (PerSecond > 0)
+                remainingTime = TimeSpan.FromSeconds(ToGo / PerSecond);
 
             //Set GUI values
             this.progressBar1.Value = e.ProgressPercentage;
             this.label2.Text = "Now downloading: " + currentDownload;
-            this.label3.Text = "To " + downloadDestination;
-            this.label4.Text = e.ProgressPercentage + "% Complete";
-            this.label5.Text = "Size: " + (MBFileSize >= 1 ?
-                Math.Round(MBFileSize, 2) + " MB" : Math.Round(KBFileSize, 2) + " KB");
-            this.label6.Text = "Downloaded: " + (MBDownloaded >= 1 ?
-                Math.Round(MBDownloaded, 2) + " MB" : Math.Round(KBDownloaded, 2) + " KB");
-            this.label7.Text = "Download Speed: " + (MBPerSecond >= 1 ?
-                Math.Round(MBPerSecond, 2) + " MB/s" : Math.Round(KBPerSecond, 2) + " KB/s");
-            this.label8.Text = "Estimated Time Remaining: " + (remainingTime_Days >= 1 ?
-                Math.Round(remainingTime_Days, 2) + " Days" : (remainingTime_Hours >= 1 ?
-                Math.Round(remainingTime_Hours, 2) + " Hours" : (remainingTime_Minutes >= 1 ?
-                Math.Round(remainingTime_Minutes, 2) + " Minutes" : 
-                Math.Round(remainingTime_Seconds, 2) + " Seconds")));
-            this.label9.Text = "Elapsed Time: " + (elapsedTime_Days >= 1 ?
-                elapsedTime_Days + " Days, " + elapsedTime_Hours + " Hours, " + elapsedTime_Minutes + " Minutes, " + elapsedTime_Seconds + " Seconds" : (elapsedTime_Hours >= 1 ?
-                elapsedTime_Hours + " Hours, " + elapsedTime_Minutes + " Minutes, " + elapsedTime_Seconds + " Seconds" : (elapsedTime_Minutes >= 1 ?
-                elapsedTime_Minutes + " Minutes, " + elapsedTime_Seconds + " Seconds" : 
-                elapsedTime_Seconds + " Seconds")));
+            this.label3.Text = "to " + downloadDestination;
+            this.label4.Text = e.ProgressPercentage + "% complete";
+            this.label5.Text = "Size: " + SizeToHumanReadable(FileSize);
+            this.label6.Text = "Downloaded: " + SizeToHumanReadable(Downloaded);
+            this.label7.Text = "Download Speed: " + SizeToHumanReadable(PerSecond) + "/s";
+            this.label8.Text = "Estimated Time Remaining: " + remainingTime.ToHumanReadable();
+            this.label9.Text = "Elapsed Time: " + elapsedTime.ToHumanReadable();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             webClient.CancelAsync();
+        }
+
+        private void UpdateInfoControl_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
