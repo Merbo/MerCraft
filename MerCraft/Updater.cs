@@ -20,9 +20,8 @@ namespace MerCraft
     {
         public LaunchForm LF;
         public static string appdata = Environment.GetEnvironmentVariable("APPDATA");
-        public string Us, Pa, currentDownload, downloadDestination;
+        public string Us, Pa;
         public bool runningDownload;
-        DateTime now;
 
         public Updater()
         {
@@ -80,14 +79,7 @@ namespace MerCraft
         /// <returns>If MerCraft ModPack is up to date.</returns>
         public static bool UpToDate()
         {
-            if (Options.SMPChanged || Options.SoundChanged)
-            {
-                Options.SMPChanged = false;
-                Options.SoundChanged = false;
-                return false;
-            }
-
-            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://173.48.92.80/MerCraft/Default.aspx");
+            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://173.48.94.88/MerCraft/Versions/" + Program.M.PreferredVersion + "/Version.txt");
             myRequest.Method = "GET";
             WebResponse myResponse = myRequest.GetResponse();
             StreamReader sr = new StreamReader(myResponse.GetResponseStream(), System.Text.Encoding.UTF8);
@@ -99,13 +91,22 @@ namespace MerCraft
                 Directory.CreateDirectory(appdata + "\\.mercraft");
 
             if (!File.Exists(appdata + "\\.mercraft\\version"))
-                File.WriteAllText(appdata + "\\.mercraft\\version", ServerVersion);
+                File.WriteAllText(appdata + "\\.mercraft\\version", Program.M.PreferredVersion + "|" + ServerVersion);
             else
             {
                 string ClientVersion = File.ReadAllText(appdata + "\\.mercraft\\version");
 
+                if (!ClientVersion.Contains('|'))
+                    return false;
+
+                string McVersion = ClientVersion.Split('|')[0];
+                string LocalVersion = ClientVersion.Split('|')[1];
+
+                if (McVersion != Program.M.PreferredVersion)
+                    return false;
+
                 double C = 0.0;
-                double.TryParse(ClientVersion, out C);
+                double.TryParse(LocalVersion, out C);
 
                 double S = 0.1;
                 double.TryParse(ServerVersion, out S);
@@ -116,7 +117,7 @@ namespace MerCraft
                 }
                 else
                 {
-                    System.IO.File.WriteAllText(appdata + "\\.mercraft\\version", ServerVersion);
+                    System.IO.File.WriteAllText(appdata + "\\.mercraft\\version", Program.M.PreferredVersion + "|" + ServerVersion);
                 }
             }
             return false;
@@ -129,31 +130,86 @@ namespace MerCraft
         /// <param name="P">Password</param>
         public async void UpdateVersion(string U, string P)
         {
-            UpdateInfoControl UICModPack = new UpdateInfoControl("ModPack Update Download");
-            UpdateInfoControl UICSoundPack = new UpdateInfoControl("Music SoundPack Update Download");    
+            UpdateInfoControl UICModPack = new UpdateInfoControl("ModPack Update Download (MC " + Program.M.PreferredVersion + ")");
 
             LF = new LaunchForm();
             Us = U;
-            Pa = P;          
+            Pa = P;
             LF.panel1.Controls.Add(UICModPack);
             LF.Show();
-            
-            string linkToModPack = Options.SMP ?
-                "http://173.48.92.80/MerCraft/ModPack.zip" :
-                "http://173.48.92.80/MerCraft/ModPackSSP.zip";
-            await UICModPack.DownloadAndExtractZip(linkToModPack, appdata + "\\.mercraft\\ModPack.zip", appdata + "\\.mercraft", true);
 
-            if (Options.Sound)
-            {
-                LF.panel1.Controls.Remove(UICModPack);
-                LF.panel1.Controls.Add(UICSoundPack);
-                string linkToSoundPack = "http://173.48.92.80/MerCraft/SoundPack.zip";
-                await UICSoundPack.DownloadAndExtractZip(linkToSoundPack, appdata + "\\.mercraft\\SoundPack.zip", appdata + "\\.mercraft\\ModPack\\.minecraft\\audiotori", true);
-            }
+            string linkToModPack = "http://173.48.94.88/MerCraft/Versions/" + Program.M.PreferredVersion + "/ModPack.zip";
+
+            await MakeBackup();
+            await PrepareForUpdate();
+            await UICModPack.DownloadAndExtractZip(linkToModPack, appdata + "\\.mercraft\\ModPack.zip", appdata + "\\.mercraft", true);
+            await RestoreBackup();
 
             if (!runningDownload)
                 if (CorrectJar())
                     Launcher.LaunchAfterUpdate(LF, Us, Pa);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Always true.</returns>
+        public async Task<bool> MakeBackup()
+        {
+            //Relative to ModPack/.minecraft/
+            string[] purgeBlacklist =  {
+                "options.txt",
+                "optionsof.txt",
+                "saves/",
+                "stats/",
+                "schematics/",
+                "screenshots/",
+            };
+
+            await Task.Run(() =>
+            {
+                foreach (string s in purgeBlacklist)
+                {
+                    if (!Directory.Exists(appdata + "\\.mercraft\\backup"))
+                        Directory.CreateDirectory(appdata + "\\.mercraft\\backup");
+
+                    if (s.EndsWith("/"))
+                        if (Directory.Exists(appdata + "\\.mercraft\\ModPack\\.minecraft\\" + s.Replace("/", "")))
+                            FileIO.CopyDirectory(appdata + "\\.mercraft\\ModPack\\.minecraft\\" + s.Replace("/", ""), appdata + "\\.mercraft\\backup\\" + s.Replace("/", ""), true);
+                        else
+                            if (File.Exists(appdata + "\\.mercraft\\ModPack\\.minecraft\\" + s))
+                                File.Copy(appdata + "\\.mercraft\\ModPack\\.minecraft\\" + s, appdata + "\\.mercraft\\backup\\" + s);
+                }
+            });
+
+
+            return true;
+        }
+
+        public async Task<bool> PrepareForUpdate()
+        {
+            await Task.Run(() =>
+            {
+                if (Directory.Exists(appdata + "\\.mercraft\\ModPack"))
+                    Directory.Delete(appdata + "\\.mercraft\\ModPack", true);
+            });
+
+            return true;
+        }
+
+        public async Task<bool> RestoreBackup()
+        {
+            return await Task.Run<bool>(() =>
+            {
+                if (Directory.Exists(appdata + "\\.mercraft\\backup"))
+                {
+                    FileIO.CopyDirectory(appdata + "\\.mercraft\\backup", appdata + "\\.mercraft\\ModPack\\.minecraft", true);
+                    Directory.Delete(appdata + "\\.mercraft\\backup", true);
+                    return true;
+                }
+                else
+                    return false;
+            });
         }
     }
 }

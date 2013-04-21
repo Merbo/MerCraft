@@ -18,6 +18,11 @@
             <param name="overwriteexisting">Overwrite?</param>
             <returns>Successfyl</returns>
         </member>
+        <member name="T:MerCraft.GameForm">
+            <summary>
+            Form that the game launches in; Controller of WinAPI
+            </summary>
+        </member>
         <member name="F:MerCraft.GameForm.childHandle">
             <summary>
             Panel1's child. (MerCraft)
@@ -111,6 +116,11 @@
             the contents of this method with the code editor.
             </summary>
         </member>
+        <member name="F:MerCraft.GameForm.panel1">
+            <summary>
+            Panel to drop the game in
+            </summary>
+        </member>
         <member name="T:JavaDetect.JavaPath">
             <summary>
             Functions for java path detection
@@ -145,6 +155,41 @@
             </summary>
             <returns>Java version string.</returns>
             <exception cref="T:JavaDetect.JavaNotFoundException"/>
+        </member>
+        <member name="T:JavaDetect.JavaNotFoundException">
+            <summary>
+            Throw when Java is unavailable
+            </summary>
+        </member>
+        <member name="M:JavaDetect.JavaNotFoundException.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:JavaDetect.JavaNotFoundException.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">Error message</param>
+        </member>
+        <member name="M:JavaDetect.JavaNotFoundException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">Error message</param>
+            <param name="inner">Inner Exception</param>
+        </member>
+        <member name="M:JavaDetect.JavaNotFoundException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="info">Serialization info</param>
+            <param name="context">Streaming context</param>
+        </member>
+        <member name="T:MerCraft.MainForm">
+            <summary>
+            Main form
+            </summary>
         </member>
         <member name="M:MerCraft.MainForm.#ctor">
             <summary>
@@ -189,6 +234,16 @@
             the contents of this method with the code editor.
             </summary>
         </member>
+        <member name="F:MerCraft.MainForm.checkBox1">
+            <summary>
+            Turn off WinAPI checkbox
+            </summary>
+        </member>
+        <member name="P:MerCraft.MainForm.PreferredVersion">
+            <summary>
+            Version of MineCraft base selected 
+            </summary>
+        </member>
         <member name="M:MerCraft.Launcher.JavaProcessFileName(System.Boolean)">
             <summary>
             Get the filesname of the java process.
@@ -229,6 +284,11 @@
             <param name="LF">LaunchForm if we updated, null if not.</param>
             <returns>Successful</returns>
         </member>
+        <member name="T:MerCraft.LaunchForm">
+            <summary>
+            Form the game will launch in
+            </summary>
+        </member>
         <member name="M:MerCraft.LaunchForm.#ctor">
             <summary>
             Constructor.
@@ -251,9 +311,29 @@
             the contents of this method with the code editor.
             </summary>
         </member>
+        <member name="F:MerCraft.LaunchForm.panel1">
+            <summary>
+            Panel to drop update controls in
+            </summary>
+        </member>
+        <member name="T:MerCraft.Options">
+            <summary>
+            Options form
+            </summary>
+        </member>
         <member name="M:MerCraft.Options.#ctor">
             <summary>
             Constructor.
+            </summary>
+        </member>
+        <member name="F:MerCraft.Options.Jar">
+            <summary>
+            Jar file of MC
+            </summary>
+        </member>
+        <member name="F:MerCraft.Options.debug">
+            <summary>
+            Debug?
             </summary>
         </member>
         <member name="M:MerCraft.Options.Options_Load(System.Object,System.EventArgs)">
@@ -268,13 +348,6 @@
             What to do when button1 is clicked.
             </summary>
             <param name="sender">The object that caused this. Should be of type Button.</param>
-            <param name="e">Event Arguments.</param>
-        </member>
-        <member name="M:MerCraft.Options.checkBox2_CheckedChanged(System.Object,System.EventArgs)">
-            <summary>
-            What happens when checkbox2 is changed.
-            </summary>
-            <param name="sender">The sender of it. Usually a CheckBox type.</param>
             <param name="e">Event Arguments.</param>
         </member>
         <member name="F:MerCraft.Options.components">
@@ -294,6 +367,11 @@
             the contents of this method with the code editor.
             </summary>
         </member>
+        <member name="F:MerCraft.Options.checkBox1">
+            <summary>
+            Debug checkbox
+            </summary>
+        </member>
         <member name="F:MerCraft.Program.M">
             <summary>
             The main form of the application.
@@ -303,6 +381,40 @@
             <summary>
             The main entry point for the application.
             </summary>
+        </member>
+        <member name="T:MerCraft.UpdateInfoControl">
+            <summary>
+            Control used for updating
+            </summary>
+        </member>
+        <member name="F:MerCraft.UpdateInfoControl.webClient">
+            <summary>
+            Webclient used for downloads
+            </summary>
+        </member>
+        <member name="M:MerCraft.UpdateInfoControl.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="downloadName">Caption of download</param>
+        </member>
+        <member name="M:MerCraft.UpdateInfoControl.DownloadAndExtractZip(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Download a zip file and extract
+            </summary>
+            <param name="link">URL of zip</param>
+            <param name="downloadPath">Local URL for download location</param>
+            <param name="outFolder">Folder to extract to</param>
+            <param name="deleteZipWhenDone">Delete the zip after extraction?</param>
+            <returns></returns>
+        </member>
+        <member name="M:MerCraft.UpdateInfoControl.Download(System.String,System.String)">
+            <summary>
+            Download a file to a location
+            </summary>
+            <param name="link">URL to download</param>
+            <param name="downloadPath">Local file to save to</param>
+            <returns></returns>
         </member>
         <member name="F:MerCraft.UpdateInfoControl.components">
             <summary> 
@@ -340,6 +452,12 @@
             </summary>
             <param name="U">Username</param>
             <param name="P">Password</param>
+        </member>
+        <member name="M:MerCraft.Updater.MakeBackup">
+            <summary>
+            
+            </summary>
+            <returns>Always true.</returns>
         </member>
         <member name="M:MerCraft.WinAPI.SetParent(System.IntPtr,System.IntPtr)">
             <summary>
@@ -487,11 +605,6 @@
             <summary>
               Overrides the current thread's CurrentUICulture property for all
               resource lookups using this strongly typed resource class.
-            </summary>
-        </member>
-        <member name="P:MerCraft.Properties.Resources.ServerSpawn">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
             </summary>
         </member>
     </members>

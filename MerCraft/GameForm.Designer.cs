@@ -38,7 +38,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 450);
+            this.panel1.Size = new System.Drawing.Size(869, 495);
             this.panel1.TabIndex = 0;
             this.panel1.Enter += new System.EventHandler(this.panel1_Enter);
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
@@ -47,13 +47,14 @@
             // timer1
             // 
             this.timer1.Enabled = true;
+            this.timer1.Interval = 1500;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(869, 495);
             this.Controls.Add(this.panel1);
             this.Name = "GameForm";
             this.Text = "MerCraft";
@@ -67,6 +68,9 @@
 
         #endregion
 
+        /// <summary>
+        /// Panel to drop the game in
+        /// </summary>
         public System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Timer timer1;
     }

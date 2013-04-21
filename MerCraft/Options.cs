@@ -13,6 +13,9 @@ using System.IO;
 
 namespace MerCraft
 {
+    /// <summary>
+    /// Options form
+    /// </summary>
     public partial class Options : Form
     {
         /// <summary>
@@ -23,12 +26,15 @@ namespace MerCraft
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Jar file of MC
+        /// </summary>
         public static string Jar = "";
+
+        /// <summary>
+        /// Debug?
+        /// </summary>
         public static bool debug = false;
-        public static bool SMP = true;
-        public static bool SMPChanged = false;
-        public static bool Sound = false;
-        public static bool SoundChanged = false;
 
         /// <summary>
         /// Load up the options and apply them to the form.
@@ -54,30 +60,6 @@ namespace MerCraft
                             debug = false;
                             break;
                     }
-                    string smp = Reader.ReadLine();
-                    switch (smp)
-                    {
-                        case "true":
-                            SMP = true;
-                            break;
-                        case "false":
-                            SMP = false;
-                            break;
-                        default:
-                            SMP = true;
-                            break;
-                           
-                    }
-                    string sound = Reader.ReadLine();
-                    switch (sound)
-                    {
-                        case "true":
-                            Sound = true;
-                            break;
-                        default:
-                            Sound = false;
-                            break;
-                    }
                     Reader.Close();
                     Reader = null;
                 }
@@ -95,8 +77,6 @@ namespace MerCraft
                         break;
                 }
                 checkBox1.Checked = debug ? true : false;
-                checkBox2.Checked = SMP ? true : false;
-                checkBox3.Checked = Sound ? true : false;
             }
         }
 
@@ -134,58 +114,10 @@ namespace MerCraft
                 debug = false;
             }
 
-            if (checkBox2.Checked)
-            {
-                Writer.WriteLine("true");
-                SMP = true;
-            }
-            else
-            {
-                Writer.WriteLine("false");
-                SMP = false;
-            }
-
-            if (checkBox3.Checked)
-            {
-                Writer.WriteLine("true");
-                Sound = true;
-            }
-            else
-            {
-                Writer.WriteLine("false");
-                Sound = false;
-            }
-
             Writer.Close();
             Writer = null;
 
             this.Close();
-        }
-
-        /// <summary>
-        /// What happens when checkbox2 is changed.
-        /// </summary>
-        /// <param name="sender">The sender of it. Usually a CheckBox type.</param>
-        /// <param name="e">Event Arguments.</param>
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            SMPChanged = true;
-            if (!checkBox2.Checked)
-            {
-                radioButton1.Checked = true;
-                radioButton2.Enabled = false;
-                radioButton3.Enabled = false;
-            }
-            else
-            {
-                radioButton2.Enabled = true;
-                radioButton3.Enabled = true;
-            }
-        }
-
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
-        {
-            SoundChanged = true;
         }
     }
 }

@@ -11,7 +11,7 @@ using System.Threading;
 namespace MerCraft
 {
     class Launcher
-    { 
+    {
         public static string path;
 
         /// <summary>
@@ -104,39 +104,45 @@ namespace MerCraft
                 if (LF != null)
                 {
                     //LF.lblCurrentAction.Text = "Opening MerCraft...";
-                    
+
                     LF.Close();
                 }
                 Java = Options.debug ? GetJavaProcess(U, P, true) : GetJavaProcess(U, P, false);
                 Java.Start();
-                while (mainHandle == IntPtr.Zero)
+                if (!Program.M.checkBox1.Checked)
                 {
-                    Java.WaitForInputIdle(1 * 1000);
-                    Java.Refresh();
+                    while (mainHandle == IntPtr.Zero)
+                    {
+                        Java.WaitForInputIdle(1 * 1000);
+                        Java.Refresh();
 
-                    if (Java.HasExited)
-                        return false;
-                    if (!Java.MainWindowTitle.Contains("Hello"))
-                        mainHandle = Java.MainWindowHandle;
+                        if (Java.HasExited)
+                            return false;
+                        if (!Java.MainWindowTitle.Contains("Hello"))
+                            mainHandle = Java.MainWindowHandle;
+                    }
+
+                    GameForm gameForm = new GameForm();
+                    gameForm.Show();
+                    while (!gameForm.panel1.IsHandleCreated)
+                    {
+                    }
+                    originalHandle = WinAPI.SetParent(mainHandle, gameForm.panel1.Handle);
+                    int style = WinAPI.GetWindowLong(mainHandle, WinAPI.GWL_STYLE);
+                    WinAPI.MoveWindow(mainHandle, 0, 0, gameForm.panel1.Width, gameForm.panel1.Height, true);
+                    WinAPI.SetWindowLong(mainHandle, WinAPI.GWL_STYLE, (style & ~(int)WinAPI.WS.WS_SYSMENU));
+                    WinAPI.SetWindowLong(mainHandle, WinAPI.GWL_STYLE, (style & ~(int)WinAPI.WS.WS_CAPTION));
+                    gameForm.childHandle = mainHandle;
+                    gameForm.javaProcess = Java;
+                    gameForm.hasTriedHandle = true;
+                    Program.M.Hide();
                 }
-
-                GameForm gameForm = new GameForm();
-                gameForm.Show();
-                while (!gameForm.panel1.IsHandleCreated)
+                else
                 {
+                    Application.Exit();
                 }
-                originalHandle = WinAPI.SetParent(mainHandle, gameForm.panel1.Handle);
-                int style = WinAPI.GetWindowLong(mainHandle, WinAPI.GWL_STYLE);
-                WinAPI.MoveWindow(mainHandle, 0, 0, gameForm.panel1.Width, gameForm.panel1.Height, true);
-                WinAPI.SetWindowLong(mainHandle, WinAPI.GWL_STYLE, (style & ~(int)WinAPI.WS.WS_SYSMENU));
-                WinAPI.SetWindowLong(mainHandle, WinAPI.GWL_STYLE, (style & ~(int)WinAPI.WS.WS_CAPTION));
-                gameForm.childHandle = mainHandle;
-                gameForm.javaProcess = Java;
-                gameForm.hasTriedHandle = true;
-
-                Program.M.Hide(); 
             }
-            catch (InvalidOperationException ex)
+            catch (InvalidOperationException)
             {
                 //We're in debug!
             }

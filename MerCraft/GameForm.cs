@@ -10,6 +10,9 @@ using System.Diagnostics;
 
 namespace MerCraft
 {
+    /// <summary>
+    /// Form that the game launches in; Controller of WinAPI
+    /// </summary>
     public partial class GameForm : Form
     {
         /// <summary>
@@ -50,6 +53,7 @@ namespace MerCraft
                 if (WinAPI.GetWindow(this.panel1.Handle, (uint)WinAPI.GW.GW_CHILD) == childHandle)
                 {
                     WinAPI.DestroyWindow(childHandle);
+                    Application.Exit();
                 }
             }
 
@@ -57,6 +61,7 @@ namespace MerCraft
             {
                 if (!javaProcess.HasExited)
                     javaProcess.Kill();
+                Application.Exit();
             }
 
             if (!e.CloseReason.HasFlag(CloseReason.None))

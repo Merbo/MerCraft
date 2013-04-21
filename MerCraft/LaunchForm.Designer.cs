@@ -53,6 +53,9 @@
 
         #endregion
 
+        /// <summary>
+        /// Panel to drop update controls in
+        /// </summary>
         public System.Windows.Forms.Panel panel1;
 
     }

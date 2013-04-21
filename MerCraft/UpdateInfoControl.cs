@@ -14,13 +14,23 @@ using ICSharpCode.SharpZipLib.Core;
 
 namespace MerCraft
 {
+    /// <summary>
+    /// Control used for updating
+    /// </summary>
     public partial class UpdateInfoControl : UserControl
     {
+        /// <summary>
+        /// Webclient used for downloads
+        /// </summary>
         public WebClient webClient;
         private DateTime now;
         private string currentDownload;
         private string downloadDestination;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="downloadName">Caption of download</param>
         public UpdateInfoControl(string downloadName)
         {
             InitializeComponent();
@@ -30,6 +40,14 @@ namespace MerCraft
             this.label1.Text = downloadName;
         }
 
+        /// <summary>
+        /// Download a zip file and extract
+        /// </summary>
+        /// <param name="link">URL of zip</param>
+        /// <param name="downloadPath">Local URL for download location</param>
+        /// <param name="outFolder">Folder to extract to</param>
+        /// <param name="deleteZipWhenDone">Delete the zip after extraction?</param>
+        /// <returns></returns>
         public async Task<bool> DownloadAndExtractZip(string link, string downloadPath, string outFolder, bool deleteZipWhenDone = true)
         {
             bool ret = true;
@@ -60,10 +78,16 @@ namespace MerCraft
             return ret;
         }
 
+        /// <summary>
+        /// Download a file to a location
+        /// </summary>
+        /// <param name="link">URL to download</param>
+        /// <param name="downloadPath">Local file to save to</param>
+        /// <returns></returns>
         public async Task<string> Download(string link, string downloadPath)
         {
-            currentDownload = link;
-            downloadDestination = downloadPath;
+            this.currentDownload = link;
+            this.downloadDestination = downloadPath;
             string ret = downloadPath;
 
             //Make sure the path itself exists before we download the file to it
@@ -83,8 +107,8 @@ namespace MerCraft
                         Directory.CreateDirectory(path);
             }
 
-            now = DateTime.Now;
-            await webClient.DownloadFileTaskAsync(new Uri(link), downloadPath);
+            this.now = DateTime.Now;
+            await this.webClient.DownloadFileTaskAsync(new Uri(link), downloadPath);
 
             if (File.Exists(ret))
                 return ret;
@@ -126,7 +150,7 @@ namespace MerCraft
 
         private void DownloadComplete(object sender, AsyncCompletedEventArgs e)
         {
-            if (e.Cancelled)
+            if (!e.Cancelled)
             {
                 this.label1.Text += " ✓";
                 this.label7.Text = "Download complete";
@@ -209,7 +233,7 @@ namespace MerCraft
 
         private void button1_Click(object sender, EventArgs e)
         {
-            webClient.CancelAsync();
+            this.webClient.CancelAsync();
         }
     }
 }

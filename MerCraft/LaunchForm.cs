@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 namespace MerCraft
 {
+    /// <summary>
+    /// Form the game will launch in
+    /// </summary>
     public partial class LaunchForm : Form
     {
         /// <summary>

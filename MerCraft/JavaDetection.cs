@@ -130,14 +130,37 @@ namespace JavaDetect
         }
     }
 
+    /// <summary>
+    /// Throw when Java is unavailable
+    /// </summary>
     [System.Serializable]
     public class JavaNotFoundException : System.Exception
     {
-      public JavaNotFoundException() { }
-      public JavaNotFoundException( string message ) : base( message ) { }
-      public JavaNotFoundException( string message, System.Exception inner ) : base( message, inner ) { }
-      protected JavaNotFoundException( 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public JavaNotFoundException() { }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="message">Error message</param>
+        public JavaNotFoundException(string message) : base(message) { }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="message">Error message</param>
+        /// <param name="inner">Inner Exception</param>
+        public JavaNotFoundException(string message, System.Exception inner) : base(message, inner) { }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="info">Serialization info</param>
+        /// <param name="context">Streaming context</param>
+        protected JavaNotFoundException( 
 	    System.Runtime.Serialization.SerializationInfo info, 
-	    System.Runtime.Serialization.StreamingContext context ) : base( info, context ) { }
+	    System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 }
