@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace MerCraft
 {
+    /// <summary>
+    /// Allows Date/Time to become human readable
+    /// </summary>
     public static class DateTimeExtensions
     {
         /// <summary>
-        /// Returns a string containing the human readable version of this time span, i.e 4 days, 3 hours, 26 minutes and 13.4 seconds.
+        /// Turns a TimeSpan into a readable string
         /// </summary>
-        /// <param name="timeSpan"></param>
-        /// <returns></returns>
+        /// <param name="timeSpan">Timespan input</param>
+        /// <param name="showMilliseconds">Show milliseconds?</param>
+        /// <param name="showTicks">Show ticks?</param>
+        /// <returns>Readable string</returns>
         public static string ToHumanReadable(this TimeSpan timeSpan, bool showMilliseconds = false, bool showTicks = false)
         {
             StringBuilder sb = new StringBuilder();

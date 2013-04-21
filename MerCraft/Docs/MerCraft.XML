@@ -4,6 +4,20 @@
         <name>MerCraft</name>
     </assembly>
     <members>
+        <member name="T:MerCraft.DateTimeExtensions">
+            <summary>
+            Allows Date/Time to become human readable
+            </summary>
+        </member>
+        <member name="M:MerCraft.DateTimeExtensions.ToHumanReadable(System.TimeSpan,System.Boolean,System.Boolean)">
+            <summary>
+            Turns a TimeSpan into a readable string
+            </summary>
+            <param name="timeSpan">Timespan input</param>
+            <param name="showMilliseconds">Show milliseconds?</param>
+            <param name="showTicks">Show ticks?</param>
+            <returns>Readable string</returns>
+        </member>
         <member name="M:MerCraft.FileIO.Uninstall">
             <summary>
             Uninstalls mercraft by deleting it and stuff.
