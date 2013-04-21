@@ -156,6 +156,7 @@
             this.Controls.Add(this.progressBar1);
             this.Name = "UpdateInfoControl";
             this.Size = new System.Drawing.Size(397, 144);
+            this.Load += new System.EventHandler(this.UpdateInfoControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

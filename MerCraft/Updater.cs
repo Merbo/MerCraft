@@ -44,6 +44,7 @@ namespace MerCraft
                     Reader = new StreamReader(Updater.appdata + "\\.mercraft\\config");
                     J = Reader.ReadLine();
                     Reader.Close();
+                    Reader.Dispose();
                     Reader = null;
                 }
                 else
@@ -64,8 +65,9 @@ namespace MerCraft
                         break;
                 }
             }
-            catch (IOException)
+            catch (IOException Error)
             {
+                Console.WriteLine("IOException in CorrectJar: {0}", Error);
                 MessageBox.Show("IO Exception. Something else is probably using MerCraft's core files at the moment." + Environment.NewLine +
                     "Did you leave another copy of MerCraft open?");
                 return false;
@@ -82,10 +84,15 @@ namespace MerCraft
             HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://173.48.94.88/MerCraft/Versions/" + Program.M.PreferredVersion + "/Version.txt");
             myRequest.Method = "GET";
             WebResponse myResponse = myRequest.GetResponse();
-            StreamReader sr = new StreamReader(myResponse.GetResponseStream(), System.Text.Encoding.UTF8);
+            var s = myResponse.GetResponseStream();
+            StreamReader sr = new StreamReader(s, System.Text.Encoding.UTF8);
             string ServerVersion = sr.ReadToEnd();
+            s.Close();
+            s.Dispose();
             sr.Close();
+            sr.Dispose();
             myResponse.Close();
+            myResponse.Dispose();
 
             if (!Directory.Exists(appdata + "\\.mercraft"))
                 Directory.CreateDirectory(appdata + "\\.mercraft");
