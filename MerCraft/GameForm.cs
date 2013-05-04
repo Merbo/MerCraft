@@ -96,7 +96,14 @@ namespace MerCraft
                 if (WinAPI.GetWindow(this.panel1.Handle, (uint)WinAPI.GW.GW_CHILD) != childHandle)
                 {
                     childHandle = IntPtr.Zero;
-                    Application.Exit();
+                    try
+                    {
+                        Application.Exit();
+                    }
+                    catch (Exception)
+                    {
+                        Environment.Exit(0);
+                    }
                 }
                 else
                     WinAPI.BringWindowToTop(childHandle);

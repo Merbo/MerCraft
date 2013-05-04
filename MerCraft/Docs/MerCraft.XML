@@ -340,16 +340,6 @@
             Constructor.
             </summary>
         </member>
-        <member name="F:MerCraft.Options.Jar">
-            <summary>
-            Jar file of MC
-            </summary>
-        </member>
-        <member name="F:MerCraft.Options.debug">
-            <summary>
-            Debug?
-            </summary>
-        </member>
         <member name="M:MerCraft.Options.Options_Load(System.Object,System.EventArgs)">
             <summary>
             Load up the options and apply them to the form.

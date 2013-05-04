@@ -18,23 +18,22 @@ namespace MerCraft
     /// </summary>
     public partial class Options : Form
     {
+
+        public MerCraftConfig Config;
+
         /// <summary>
         /// Constructor.
         /// </summary>
         public Options()
         {
             InitializeComponent();
+
+            if (!Directory.Exists(Updater.appdata + "\\.mercraft"))
+                Directory.CreateDirectory(Updater.appdata + "\\.mercraft");
+            Config = new MerCraftConfig(Updater.appdata + "\\.mercraft\\config");
         }
 
-        /// <summary>
-        /// Jar file of MC
-        /// </summary>
-        public static string Jar = "";
-
-        /// <summary>
-        /// Debug?
-        /// </summary>
-        public static bool debug = false;
+        
 
         /// <summary>
         /// Load up the options and apply them to the form.
@@ -43,41 +42,30 @@ namespace MerCraft
         /// <param name="e">Event Arguments.</param>
         private void Options_Load(object sender, EventArgs e)
         {
-            StreamReader Reader = null;
-            if (Directory.Exists(Updater.appdata + "\\.mercraft"))
+            string Jar = Config.GetConfigVarString("Jar");
+            switch (Jar)
             {
-                if (File.Exists(Updater.appdata + "\\.mercraft\\config"))
-                {
-                    Reader = new StreamReader(Updater.appdata + "\\.mercraft\\config");
-                    Jar = Reader.ReadLine();
-                    string d = Reader.ReadLine();
-                    switch (d)
-                    {
-                        case "true":
-                            debug = true;
-                            break;
-                        default:
-                            debug = false;
-                            break;
-                    }
-                    Reader.Close();
-                    Reader = null;
-                }
-
-                switch (Jar)
-                {
-                    case "Vanilla":
-                        radioButton1.Checked = true;
-                        break;
-                    case "OptiFine":
-                        radioButton2.Checked = true;
-                        break;
-                    case "Shaders":
-                        radioButton3.Checked = true;
-                        break;
-                }
-                checkBox1.Checked = debug ? true : false;
+                case "Vanilla":
+                    radioButton1.Checked = true;
+                    break;
+                case "Optifine":
+                    radioButton2.Checked = true;
+                    break;
+                case "Shaders":
+                    radioButton3.Checked = true;
+                    break;
+                default:
+                    checkBox1.Checked = true;
+                    break;
             }
+
+            string MCVersion = Config.GetConfigVarString("MCVersion");
+            textBox1.Text = MCVersion == null ? "Not downloaded" : MCVersion;
+            string Version = Config.GetConfigVarString("Version");
+            textBox2.Text = Version == null ? "Not downloaded" : Version;
+
+            bool Debug = Config.GetConfigVarBool("Debug");
+            checkBox1.Checked = Debug;
         }
 
         /// <summary>
@@ -87,37 +75,161 @@ namespace MerCraft
         /// <param name="e">Event Arguments.</param>
         private void button1_Click(object sender, EventArgs e)
         {
-            StreamWriter Writer = null;
-            if (!Directory.Exists(Updater.appdata + "\\.mercraft"))
-                Directory.CreateDirectory(Updater.appdata + "\\.mercraft");
-            FileStream file = File.Open(Updater.appdata + "\\.mercraft\\config", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-
-            Writer = new StreamWriter(file, Encoding.UTF8);
-
             if (radioButton1.Checked)
-                Writer.WriteLine("Vanilla");
+                Config.SetConfigVar("Jar", "Vanilla");
             else if (radioButton2.Checked)
-                Writer.WriteLine("OptiFine");
+                Config.SetConfigVar("Jar", "Optifine");
             else if (radioButton3.Checked)
-                Writer.WriteLine("Shaders");
-            else
-                Writer.WriteLine("Vanilla");
+                Config.SetConfigVar("Jar", "Shaders");
 
-            if (checkBox1.Checked)
+            Config.SetConfigVar("Debug", checkBox1.Checked);
+
+            this.Hide();
+        }
+    }
+
+    public class MerCraftConfig
+    {
+        public string ConfigPath;
+        public MerCraftConfig(string FilePath)
+        {
+            ConfigPath = FilePath;
+        }
+
+        public bool GetConfigVarBool(string name)
+        {
+            StreamReader Reader = new StreamReader(File.Open(ConfigPath, FileMode.OpenOrCreate));
+            string fullConf = Reader.ReadToEnd();
+            Reader.Close();
+            Reader = null;
+
+            string[] AllOptions = fullConf.Replace("\r", "").Split('\n');
+            foreach (string Option in AllOptions)
             {
-                Writer.WriteLine("true");
-                debug = true;
-            }
-            else
-            {
-                Writer.WriteLine("false");
-                debug = false;
+                if (Option.Split(':')[0].Replace(" ", "") == name)
+                {
+                    string Value = Option.Split(':')[1].ToLower();
+                    return Value == "true" || Value == "yes" || Value == "on"; 
+                }
             }
 
+            return false;
+        }
+        public int GetConfigVarInt(string name)
+        {
+            StreamReader Reader = new StreamReader(File.Open(ConfigPath, FileMode.OpenOrCreate));
+            string fullConf = Reader.ReadToEnd();
+            Reader.Close();
+            Reader = null;
+
+            string[] AllOptions = fullConf.Replace("\r", "").Split('\n');
+            foreach (string Option in AllOptions)
+            {
+                if (Option.Split(':')[0].Replace(" ", "") == name)
+                {
+                    return Convert.ToInt32(Option.Split(':')[1]);
+                }
+            }
+
+            return 0;
+        }
+        public string GetConfigVarString(string name)
+        {
+            StreamReader Reader = new StreamReader(File.Open(ConfigPath, FileMode.OpenOrCreate));
+            string fullConf = Reader.ReadToEnd();
+            Reader.Close();
+            Reader = null;
+
+            string[] AllOptions = fullConf.Replace("\r", "").Split('\n');
+            foreach (string Option in AllOptions)
+            {
+                if (Option.Split(':')[0].Replace(" ", "") == name)
+                {
+                    return Option.Split(':')[1];
+                }
+            }
+
+            return null;
+        }
+        public float GetConfigVarFloat(string name)
+        {
+            StreamReader Reader = new StreamReader(File.Open(ConfigPath, FileMode.OpenOrCreate));
+            string fullConf = Reader.ReadToEnd();
+            Reader.Close();
+            Reader = null;
+
+            string[] AllOptions = fullConf.Replace("\r", "").Split('\n');
+            foreach (string Option in AllOptions)
+            {
+                if (Option.Split(':')[0].Replace(" ", "") == name)
+                {
+                    return Convert.ToSingle(Option.Split(':')[1]);
+                }
+            }
+
+            return 0.0f;
+        }
+        public double GetConfigVarDouble(string name)
+        {
+            StreamReader Reader = new StreamReader(File.Open(ConfigPath, FileMode.OpenOrCreate));
+            string fullConf = Reader.ReadToEnd();
+            Reader.Close();
+            Reader = null;
+
+            string[] AllOptions = fullConf.Replace("\r", "").Split('\n');
+            foreach (string Option in AllOptions)
+            {
+                if (Option.Split(':')[0].Replace(" ", "") == name)
+                {
+                    return Convert.ToDouble(Option.Split(':')[1]);
+                }
+            }
+
+            return 0.0;
+        }
+        public void SetConfigVar(string name, object value)
+        {
+            StreamWriter Writer = null;
+            StreamReader Reader = null;
+            string fullConf = null;
+            if (GetConfigVarString(name) != null)
+            {
+                Reader = new StreamReader(File.Open(ConfigPath, FileMode.OpenOrCreate));
+                fullConf = Reader.ReadToEnd();
+                Reader.Close();
+                Reader = null;
+                string Value = null;
+                string[] AllOptions = fullConf.Replace("\r", "").Split('\n');
+                foreach (string Option in AllOptions)
+                {
+                    if (Option.Split(':')[0].Replace(" ", "") == name)
+                    {
+                        Value = Option.Split(':')[1];
+                    }
+                }
+
+                fullConf = fullConf.Replace(name + ":" + Value, name + ":" + value);
+                fullConf += Environment.NewLine;
+
+                File.Delete(ConfigPath);
+                Writer = new StreamWriter(File.Open(ConfigPath, FileMode.OpenOrCreate));
+                Writer.Write(fullConf);
+                Writer.Close();
+                Writer = null;
+                return;
+            }
+
+            Reader = new StreamReader(File.Open(ConfigPath, FileMode.OpenOrCreate));
+            fullConf = Reader.ReadToEnd();
+            Reader.Close();
+            Reader = null;
+
+            fullConf += name + ":" + value + Environment.NewLine;
+
+            Writer = new StreamWriter(File.Open(ConfigPath, FileMode.OpenOrCreate));
+            Writer.Write(fullConf);
             Writer.Close();
             Writer = null;
-
-            this.Close();
         }
     }
 }

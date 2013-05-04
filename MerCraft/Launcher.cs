@@ -107,7 +107,7 @@ namespace MerCraft
 
                     LF.Close();
                 }
-                Java = Options.debug ? GetJavaProcess(U, P, true) : GetJavaProcess(U, P, false);
+                Java = Program.M.Opts.Config.GetConfigVarBool("Debug") ? GetJavaProcess(U, P, true) : GetJavaProcess(U, P, false);
                 Java.Start();
                 if (!Program.M.checkBox1.Checked)
                 {

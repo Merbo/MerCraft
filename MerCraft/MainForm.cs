@@ -18,12 +18,16 @@ namespace MerCraft
     /// </summary>
     public partial class MainForm : Form
     {
+
+        public Options Opts;
+
         /// <summary>
         /// Constructor.
         /// </summary>
         public MainForm()
         {
             InitializeComponent();
+            Opts = new Options();
         }
 
         /// <summary>
@@ -48,7 +52,7 @@ namespace MerCraft
         /// <param name="e">Event arguments.</param>
         private void button2_Click(object sender, EventArgs e)
         {
-            new Options().Show();
+            Opts.Show();
         }
 
         /// <summary>
@@ -60,6 +64,8 @@ namespace MerCraft
         {
             try
             {
+                this.Opts.Config.SetConfigVar("Username", textBox1.Text);
+
                 if (Updater.UpToDate())
                 {
                     if (Updater.CorrectJar())
@@ -121,7 +127,7 @@ namespace MerCraft
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://173.48.94.88/MerCraft/Versions/VersionList.txt");
+            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://173.48.90.99/MerCraft/Versions/VersionList.txt");
             myRequest.Method = "GET";
             WebResponse myResponse = myRequest.GetResponse();
             StreamReader sr = new StreamReader(myResponse.GetResponseStream(), System.Text.Encoding.UTF8);
@@ -132,6 +138,17 @@ namespace MerCraft
             this.comboBox1.Items.Clear();
             this.comboBox1.Items.AddRange(ServerVersions);
             this.comboBox1.SelectedIndex = this.comboBox1.Items.Count-1;
+
+            this.textBox1.Text = this.Opts.Config.GetConfigVarString("Username");
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this.Opts != null)
+            {
+                this.Opts.Close();
+                this.Opts = null;
+            }
         }
     }
 }

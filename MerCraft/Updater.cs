@@ -37,22 +37,11 @@ namespace MerCraft
         {
             try
             {
-                string J = "";
-                StreamReader Reader = null;
-                if (File.Exists(Updater.appdata + "\\.mercraft\\config"))
-                {
-                    Reader = new StreamReader(Updater.appdata + "\\.mercraft\\config");
-                    J = Reader.ReadLine();
-                    Reader.Close();
-                    Reader.Dispose();
-                    Reader = null;
-                }
-                else
-                    J = "Vanilla";
+                string Jar = Program.M.Opts.Config.GetConfigVarString("Jar");
 
                 if (File.Exists(appdata + "\\.mercraft\\ModPack\\bin\\minecraft.jar"))
                     File.Delete(appdata + "\\.mercraft\\ModPack\\bin\\minecraft.jar");
-                switch (J)
+                switch (Jar)
                 {
                     case "Vanilla":
                         File.Copy(appdata + "\\.mercraft\\ModPack\\bin\\MCJars\\minecraft_vanilla.jar", appdata + "\\.mercraft\\ModPack\\bin\\minecraft.jar");
@@ -81,7 +70,7 @@ namespace MerCraft
         /// <returns>If MerCraft ModPack is up to date.</returns>
         public static bool UpToDate()
         {
-            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://173.48.94.88/MerCraft/Versions/" + Program.M.PreferredVersion + "/Version.txt");
+            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://173.48.90.99/MerCraft/Versions/" + Program.M.PreferredVersion + "/Version.txt");
             myRequest.Method = "GET";
             WebResponse myResponse = myRequest.GetResponse();
             var s = myResponse.GetResponseStream();
@@ -97,37 +86,26 @@ namespace MerCraft
             if (!Directory.Exists(appdata + "\\.mercraft"))
                 Directory.CreateDirectory(appdata + "\\.mercraft");
 
-            if (!File.Exists(appdata + "\\.mercraft\\version"))
-                File.WriteAllText(appdata + "\\.mercraft\\version", Program.M.PreferredVersion + "|" + ServerVersion);
+            string ClientMCVersion = Program.M.Opts.Config.GetConfigVarString("MCVersion");
+            double ClientVersion = Program.M.Opts.Config.GetConfigVarDouble("Version");
+
+            if (ClientMCVersion != Program.M.PreferredVersion)
+            {
+                Program.M.Opts.Config.SetConfigVar("MCVersion", Program.M.PreferredVersion);
+                return false;
+            }
+            double S = 0.1;
+            double.TryParse(ServerVersion, out S);
+
+            if (ClientVersion >= S)
+            {
+                return true;
+            }
             else
             {
-                string ClientVersion = File.ReadAllText(appdata + "\\.mercraft\\version");
-
-                if (!ClientVersion.Contains('|'))
-                    return false;
-
-                string McVersion = ClientVersion.Split('|')[0];
-                string LocalVersion = ClientVersion.Split('|')[1];
-
-                if (McVersion != Program.M.PreferredVersion)
-                    return false;
-
-                double C = 0.0;
-                double.TryParse(LocalVersion, out C);
-
-                double S = 0.1;
-                double.TryParse(ServerVersion, out S);
-
-                if (C >= S)
-                {
-                    return true;
-                }
-                else
-                {
-                    System.IO.File.WriteAllText(appdata + "\\.mercraft\\version", Program.M.PreferredVersion + "|" + ServerVersion);
-                }
+                Program.M.Opts.Config.SetConfigVar("Version", S);
+                return false;
             }
-            return false;
         }
 
         /// <summary>
@@ -145,7 +123,7 @@ namespace MerCraft
             LF.panel1.Controls.Add(UICModPack);
             LF.Show();
 
-            string linkToModPack = "http://173.48.94.88/MerCraft/Versions/" + Program.M.PreferredVersion + "/ModPack.zip";
+            string linkToModPack = "http://173.48.90.99/MerCraft/Versions/" + Program.M.PreferredVersion + "/ModPack.zip";
 
             await MakeBackup();
             await PrepareForUpdate();
