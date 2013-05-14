@@ -28,6 +28,13 @@ namespace MerCraft
         {
             InitializeComponent();
             Opts = new Options();
+
+            // If not running on Windows NT, don't use the Windows API
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+            {
+                this.checkBox1.Visible = false;
+                this.checkBox1.Checked = true;
+            }
         }
 
         /// <summary>
