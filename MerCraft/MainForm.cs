@@ -157,5 +157,10 @@ namespace MerCraft
                 this.Opts = null;
             }
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(((LinkLabel)sender).Text);
+        }
     }
 }
