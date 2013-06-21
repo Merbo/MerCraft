@@ -36,6 +36,13 @@ namespace MerCraft
         {
             InitializeComponent();
             Opts = new Options();
+
+            // If not running on Windows NT, don't use the Windows API
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+            {
+                this.checkBox1.Visible = false;
+                this.checkBox1.Checked = true;
+            }
         }
 
         /// <summary>
@@ -215,6 +222,11 @@ namespace MerCraft
                 this.Opts.Close();
                 this.Opts = null;
             }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(((LinkLabel)sender).Text);
         }
     }
 }

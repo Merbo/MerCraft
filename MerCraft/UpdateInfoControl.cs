@@ -190,9 +190,7 @@ namespace MerCraft
             double PerSecond = 0;
             TimeSpan remainingTime = default(TimeSpan);
             if (elapsedTime.TotalSeconds > 0)
-            {
                 PerSecond = Downloaded / elapsedTime.TotalSeconds;
-            }
             if (PerSecond > 0)
                 remainingTime = TimeSpan.FromSeconds(ToGo / PerSecond);
 
