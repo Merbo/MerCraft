@@ -41,7 +41,7 @@ namespace MerCraft
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
             {
                 this.checkBox1.Visible = false;
-                this.checkBox1.Checked = true;
+                this.checkBox1.Checked = false;
             }
         }
 
