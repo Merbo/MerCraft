@@ -689,5 +689,20 @@
               Looks up a localized resource of type System.Drawing.Bitmap.
             </summary>
         </member>
+        <member name="P:MerCraft.Properties.Resources._2013_06_20_20_04_29">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:MerCraft.Properties.Resources._2013_06_20_21_14_43">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:MerCraft.Properties.Resources._2013_06_20_21_15_08">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
     </members>
 </doc>

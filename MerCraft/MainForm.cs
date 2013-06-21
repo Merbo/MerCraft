@@ -228,5 +228,26 @@ namespace MerCraft
         {
             System.Diagnostics.Process.Start(((LinkLabel)sender).Text);
         }
+
+        private int CurrentImage = 0;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            CurrentImage++;
+            switch (CurrentImage)
+            {
+                case 0:
+                    this.BackgroundImage = global::MerCraft.Properties.Resources._2013_06_20_19_32_31;
+                    break;
+                case 1:
+                    this.BackgroundImage = global::MerCraft.Properties.Resources._2013_06_20_20_04_29;
+                    break;
+                case 2:
+                    this.BackgroundImage = global::MerCraft.Properties.Resources._2013_06_20_21_14_43;
+                    break;
+                case 3:
+                    this.BackgroundImage = global::MerCraft.Properties.Resources._2013_06_20_21_15_08;
+                    break;
+            }
+        }
     }
 }

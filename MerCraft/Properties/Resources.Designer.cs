@@ -65,7 +65,37 @@ namespace MerCraft.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap _2013_06_20_19_32_31 {
             get {
-                object obj = ResourceManager.GetObject("2013-06-20_19.32.31", resourceCulture);
+                object obj = ResourceManager.GetObject("_2013_06_20_19_32_31", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _2013_06_20_20_04_29 {
+            get {
+                object obj = ResourceManager.GetObject("_2013_06_20_20_04_29", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _2013_06_20_21_14_43 {
+            get {
+                object obj = ResourceManager.GetObject("_2013_06_20_21_14_43", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _2013_06_20_21_15_08 {
+            get {
+                object obj = ResourceManager.GetObject("_2013_06_20_21_15_08", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
