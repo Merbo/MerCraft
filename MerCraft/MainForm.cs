@@ -232,8 +232,7 @@ namespace MerCraft
         private int CurrentImage = 0;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            CurrentImage++;
-            switch (CurrentImage)
+            switch (CurrentImage++)
             {
                 case 0:
                     this.BackgroundImage = global::MerCraft.Properties.Resources._2013_06_20_19_32_31;
@@ -246,6 +245,7 @@ namespace MerCraft
                     break;
                 case 3:
                     this.BackgroundImage = global::MerCraft.Properties.Resources._2013_06_20_21_15_08;
+                    CurrentImage = 0;
                     break;
             }
         }
