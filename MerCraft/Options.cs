@@ -211,6 +211,8 @@ namespace MerCraft
                 fullConf = fullConf.Replace(name + ":" + Value, name + ":" + value);
                 fullConf += Environment.NewLine;
 
+                fullConf = fullConf.Replace(Environment.NewLine + Environment.NewLine, Environment.NewLine);
+
                 File.Delete(ConfigPath);
                 Writer = new StreamWriter(File.Open(ConfigPath, FileMode.OpenOrCreate));
                 Writer.Write(fullConf);
@@ -225,6 +227,8 @@ namespace MerCraft
             Reader = null;
 
             fullConf += name + ":" + value + Environment.NewLine;
+
+            fullConf = fullConf.Replace(Environment.NewLine + Environment.NewLine, Environment.NewLine);
 
             Writer = new StreamWriter(File.Open(ConfigPath, FileMode.OpenOrCreate));
             Writer.Write(fullConf);

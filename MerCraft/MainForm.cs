@@ -127,7 +127,7 @@ namespace MerCraft
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://173.48.90.99/MerCraft/Versions/VersionList.txt");
+            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://mercraft.merbo.org/MerCraft/Versions/VersionList.txt");
             myRequest.Method = "GET";
             WebResponse myResponse = myRequest.GetResponse();
             StreamReader sr = new StreamReader(myResponse.GetResponseStream(), System.Text.Encoding.UTF8);

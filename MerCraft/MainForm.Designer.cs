@@ -150,13 +150,14 @@
             this.label3.Size = new System.Drawing.Size(243, 52);
             this.label3.TabIndex = 7;
             this.label3.Text = "MerbosMagic MerCraft\r\nCurrent developers: Merbo, Icedream, Triclops200\r\n\r\nhttp://" +
-    "173.48.90.99/MerCraft.aspx";
+    "mercraft.merbo.org/MerCraft.aspx";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.BackgroundImage = global::MerCraft.Properties.Resources._2013_06_20_19_32_31;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(853, 478);
             this.Controls.Add(this.label3);

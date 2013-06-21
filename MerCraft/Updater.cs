@@ -70,7 +70,7 @@ namespace MerCraft
         /// <returns>If MerCraft ModPack is up to date.</returns>
         public static bool UpToDate()
         {
-            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://173.48.90.99/MerCraft/Versions/" + Program.M.PreferredVersion + "/Version.txt");
+            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://mercraft.merbo.org/MerCraft/Versions/" + Program.M.PreferredVersion + "/Version.txt");
             myRequest.Method = "GET";
             WebResponse myResponse = myRequest.GetResponse();
             var s = myResponse.GetResponseStream();
@@ -123,7 +123,7 @@ namespace MerCraft
             LF.panel1.Controls.Add(UICModPack);
             LF.Show();
 
-            string linkToModPack = "http://173.48.90.99/MerCraft/Versions/" + Program.M.PreferredVersion + "/ModPack.zip";
+            string linkToModPack = "http://mercraft.merbo.org/MerCraft/Versions/" + Program.M.PreferredVersion + "/ModPack.zip";
 
             await MakeBackup();
             await PrepareForUpdate();
