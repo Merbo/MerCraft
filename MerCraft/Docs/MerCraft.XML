@@ -205,6 +205,16 @@
             Main form
             </summary>
         </member>
+        <member name="F:MerCraft.MainForm.Opts">
+            <summary>
+            The options system.
+            </summary>
+        </member>
+        <member name="F:MerCraft.MainForm.Online">
+            <summary>
+            Set to true as soon as MerCraft gets version data.
+            </summary>
+        </member>
         <member name="M:MerCraft.MainForm.#ctor">
             <summary>
             Constructor.
@@ -335,6 +345,11 @@
             Options form
             </summary>
         </member>
+        <member name="F:MerCraft.Options.Config">
+            <summary>
+            Our configuration.
+            </summary>
+        </member>
         <member name="M:MerCraft.Options.#ctor">
             <summary>
             Constructor.
@@ -375,6 +390,64 @@
             <summary>
             Debug checkbox
             </summary>
+        </member>
+        <member name="T:MerCraft.MerCraftConfig">
+            <summary>
+            Configuration system.
+            </summary>
+        </member>
+        <member name="F:MerCraft.MerCraftConfig.ConfigPath">
+            <summary>
+            The string to the config file.
+            </summary>
+        </member>
+        <member name="M:MerCraft.MerCraftConfig.#ctor(System.String)">
+            <summary>
+            Initialize a new config.
+            </summary>
+            <param name="FilePath">Path to the config file.</param>
+        </member>
+        <member name="M:MerCraft.MerCraftConfig.GetConfigVarBool(System.String)">
+            <summary>
+            Read a config variable.
+            </summary>
+            <param name="name">Variable name.</param>
+            <returns>ConVar.</returns>
+        </member>
+        <member name="M:MerCraft.MerCraftConfig.GetConfigVarInt(System.String)">
+            <summary>
+            Read a config variable.
+            </summary>
+            <param name="name">Variable name.</param>
+            <returns>ConVar.</returns>
+        </member>
+        <member name="M:MerCraft.MerCraftConfig.GetConfigVarString(System.String)">
+            <summary>
+            Read a config variable.
+            </summary>
+            <param name="name">Variable name.</param>
+            <returns>ConVar.</returns>
+        </member>
+        <member name="M:MerCraft.MerCraftConfig.GetConfigVarFloat(System.String)">
+            <summary>
+            Read a config variable.
+            </summary>
+            <param name="name">Variable name.</param>
+            <returns>ConVar.</returns>
+        </member>
+        <member name="M:MerCraft.MerCraftConfig.GetConfigVarDouble(System.String)">
+            <summary>
+            Read a config variable.
+            </summary>
+            <param name="name">Variable name.</param>
+            <returns>ConVar.</returns>
+        </member>
+        <member name="M:MerCraft.MerCraftConfig.SetConfigVar(System.String,System.Object)">
+            <summary>
+            Set a config variable.
+            </summary>
+            <param name="name">Variable name.</param>
+            <param name="value">Variable value.</param>
         </member>
         <member name="F:MerCraft.Program.M">
             <summary>
@@ -444,7 +517,7 @@
             </summary>
             <returns>If the jar used is correct.</returns>
         </member>
-        <member name="M:MerCraft.Updater.UpToDate">
+        <member name="M:MerCraft.Updater.UpToDate(System.String@,System.Double@,System.String@,System.Double@)">
             <summary>
             Determines if MerCraft ModPack is up to date.
             </summary>
@@ -609,6 +682,11 @@
             <summary>
               Overrides the current thread's CurrentUICulture property for all
               resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:MerCraft.Properties.Resources._2013_06_20_19_32_31">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
             </summary>
         </member>
     </members>

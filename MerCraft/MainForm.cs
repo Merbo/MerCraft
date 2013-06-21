@@ -19,7 +19,15 @@ namespace MerCraft
     public partial class MainForm : Form
     {
 
+        /// <summary>
+        /// The options system.
+        /// </summary>
         public Options Opts;
+
+        /// <summary>
+        /// Set to true as soon as MerCraft gets version data.
+        /// </summary>
+        public bool Online;
 
         /// <summary>
         /// Constructor.
@@ -37,6 +45,11 @@ namespace MerCraft
         {
             get
             {
+                if (!this.Online)
+                {
+                    return null;
+                }
+
                 return this.comboBox1.SelectedItem.ToString();
             }
             set
@@ -62,17 +75,37 @@ namespace MerCraft
         /// <param name="e">Event arguments.</param>
         private void button1_Click(object sender, EventArgs e)
         {
+            if (!this.Online)
+            {
+                MessageBox.Show("Please wait for MerCraft to grab the version data.");
+                return;
+            }
+
             try
             {
                 this.Opts.Config.SetConfigVar("Username", textBox1.Text);
+                this.Opts.Config.SetConfigVar("Password", textBox2.Text);
+                this.Opts.Config.SetConfigVar("WinAPI", checkBox1.Checked);
 
-                if (Updater.UpToDate())
+                string CurrentMCVersion = "", UpdateMCVersion = "";
+                double CurrentVersion = 0, UpdateVersion = 0;
+
+                if (Updater.UpToDate(out CurrentMCVersion, out CurrentVersion, out UpdateMCVersion, out UpdateVersion))
                 {
                     if (Updater.CorrectJar())
                         Launcher.Launch(textBox1.Text, textBox2.Text);
                 }
                 else
                 {
+                    if (UpdateMCVersion != "")
+                    {
+                        MessageBox.Show("MC Version Shift! New: " + UpdateMCVersion + "; Old: " + CurrentMCVersion);
+                    }
+                    else if (UpdateVersion != 0)
+                    {
+                        MessageBox.Show("MerCraft Update! New: " + UpdateVersion + "; Old: " + CurrentVersion);
+                    }
+
                     Updater U = new Updater();
                     U.UpdateVersion(textBox1.Text, textBox2.Text);
                 }
@@ -101,6 +134,12 @@ namespace MerCraft
         /// <param name="e">Event arguments.</param>
         private void button3_Click(object sender, EventArgs e)
         {
+            if (!this.Online)
+            {
+                MessageBox.Show("Please wait for MerCraft to grab the version data.");
+                return;
+            }
+
             try
             {
                 if (Directory.Exists(Updater.appdata + "\\.mercraft") &&
@@ -127,19 +166,46 @@ namespace MerCraft
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://mercraft.merbo.org/MerCraft/Versions/VersionList.txt");
-            myRequest.Method = "GET";
-            WebResponse myResponse = myRequest.GetResponse();
-            StreamReader sr = new StreamReader(myResponse.GetResponseStream(), System.Text.Encoding.UTF8);
-            string[] ServerVersions = sr.ReadToEnd().Replace("\r", "").Split('\n');
-            sr.Close();
-            myResponse.Close();
+            this.Online = false;
 
-            this.comboBox1.Items.Clear();
-            this.comboBox1.Items.AddRange(ServerVersions);
             this.comboBox1.SelectedIndex = this.comboBox1.Items.Count-1;
 
+            Thread VersionThread = new Thread(() =>
+            {
+                HttpWebRequest Req = (HttpWebRequest)WebRequest.Create("http://mercraft.merbo.org/MerCraft/Versions/VersionList.txt");
+                Req.Method = "GET";
+                WebResponse Res = Req.GetResponse();
+                StreamReader sr = new StreamReader(Res.GetResponseStream(), Encoding.UTF8);
+                string[] ServerVersions = sr.ReadToEnd().Replace("\r", "").Split('\n');
+                sr.Close();
+                Res.Close();
+
+                SetVersionList(ServerVersions);
+            });
+
+            VersionThread.IsBackground = true;
+            VersionThread.Start();
+
             this.textBox1.Text = this.Opts.Config.GetConfigVarString("Username");
+            this.textBox2.Text = this.Opts.Config.GetConfigVarString("Password");
+            this.checkBox1.Checked = this.Opts.Config.GetConfigVarBool("WinAPI");
+        }
+
+        private delegate void SetVersionListCallback(string[] Versions);
+        private void SetVersionList(string[] Versions)
+        {
+            if (this.comboBox1.InvokeRequired)
+            {
+                SetVersionListCallback d = new SetVersionListCallback(SetVersionList);
+                this.Invoke(d, new object[] { Versions });
+            }
+            else
+            {
+                this.comboBox1.Items.Clear();
+                this.comboBox1.Items.AddRange(Versions);
+                this.comboBox1.SelectedIndex = this.comboBox1.Items.Count-1;
+                this.Online = true;
+            }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

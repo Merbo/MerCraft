@@ -109,17 +109,18 @@ namespace MerCraft
                 }
                 Java = Program.M.Opts.Config.GetConfigVarBool("Debug") ? GetJavaProcess(U, P, true) : GetJavaProcess(U, P, false);
                 Java.Start();
-                if (!Program.M.checkBox1.Checked)
+                if (Program.M.Opts.Config.GetConfigVarBool("WinAPI"))
                 {
                     while (mainHandle == IntPtr.Zero)
                     {
-                        Java.WaitForInputIdle(1 * 1000);
+                        Java.WaitForInputIdle(1 * 100);
                         Java.Refresh();
 
                         if (Java.HasExited)
                             return false;
-                        if (!Java.MainWindowTitle.Contains("Hello"))
-                            mainHandle = Java.MainWindowHandle;
+                        if (Java.MainWindowTitle == "Hello")
+                            continue;
+                        mainHandle = Java.MainWindowHandle;
                     }
 
                     GameForm gameForm = new GameForm();

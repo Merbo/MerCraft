@@ -19,6 +19,9 @@ namespace MerCraft
     public partial class Options : Form
     {
 
+        /// <summary>
+        /// Our configuration.
+        /// </summary>
         public MerCraftConfig Config;
 
         /// <summary>
@@ -88,14 +91,30 @@ namespace MerCraft
         }
     }
 
+    /// <summary>
+    /// Configuration system.
+    /// </summary>
     public class MerCraftConfig
     {
+        /// <summary>
+        /// The string to the config file.
+        /// </summary>
         public string ConfigPath;
+
+        /// <summary>
+        /// Initialize a new config.
+        /// </summary>
+        /// <param name="FilePath">Path to the config file.</param>
         public MerCraftConfig(string FilePath)
         {
             ConfigPath = FilePath;
         }
 
+        /// <summary>
+        /// Read a config variable.
+        /// </summary>
+        /// <param name="name">Variable name.</param>
+        /// <returns>ConVar.</returns>
         public bool GetConfigVarBool(string name)
         {
             StreamReader Reader = new StreamReader(File.Open(ConfigPath, FileMode.OpenOrCreate));
@@ -109,12 +128,18 @@ namespace MerCraft
                 if (Option.Split(':')[0].Replace(" ", "") == name)
                 {
                     string Value = Option.Split(':')[1].ToLower();
-                    return Value == "true" || Value == "yes" || Value == "on"; 
+                    return Value == "true" || Value == "yes" || Value == "on" || Value == "1"; 
                 }
             }
 
             return false;
         }
+
+        /// <summary>
+        /// Read a config variable.
+        /// </summary>
+        /// <param name="name">Variable name.</param>
+        /// <returns>ConVar.</returns>
         public int GetConfigVarInt(string name)
         {
             StreamReader Reader = new StreamReader(File.Open(ConfigPath, FileMode.OpenOrCreate));
@@ -133,6 +158,12 @@ namespace MerCraft
 
             return 0;
         }
+
+        /// <summary>
+        /// Read a config variable.
+        /// </summary>
+        /// <param name="name">Variable name.</param>
+        /// <returns>ConVar.</returns>
         public string GetConfigVarString(string name)
         {
             StreamReader Reader = new StreamReader(File.Open(ConfigPath, FileMode.OpenOrCreate));
@@ -151,6 +182,12 @@ namespace MerCraft
 
             return null;
         }
+
+        /// <summary>
+        /// Read a config variable.
+        /// </summary>
+        /// <param name="name">Variable name.</param>
+        /// <returns>ConVar.</returns>
         public float GetConfigVarFloat(string name)
         {
             StreamReader Reader = new StreamReader(File.Open(ConfigPath, FileMode.OpenOrCreate));
@@ -169,6 +206,12 @@ namespace MerCraft
 
             return 0.0f;
         }
+
+        /// <summary>
+        /// Read a config variable.
+        /// </summary>
+        /// <param name="name">Variable name.</param>
+        /// <returns>ConVar.</returns>
         public double GetConfigVarDouble(string name)
         {
             StreamReader Reader = new StreamReader(File.Open(ConfigPath, FileMode.OpenOrCreate));
@@ -187,6 +230,12 @@ namespace MerCraft
 
             return 0.0;
         }
+
+        /// <summary>
+        /// Set a config variable.
+        /// </summary>
+        /// <param name="name">Variable name.</param>
+        /// <param name="value">Variable value.</param>
         public void SetConfigVar(string name, object value)
         {
             StreamWriter Writer = null;

@@ -68,7 +68,7 @@ namespace MerCraft
         /// Determines if MerCraft ModPack is up to date.
         /// </summary>
         /// <returns>If MerCraft ModPack is up to date.</returns>
-        public static bool UpToDate()
+        public static bool UpToDate(out string CurrentMCVersion, out double CurrentVersion, out string NewMCVersion, out double NewVersion)
         {
             HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://mercraft.merbo.org/MerCraft/Versions/" + Program.M.PreferredVersion + "/Version.txt");
             myRequest.Method = "GET";
@@ -91,6 +91,12 @@ namespace MerCraft
 
             if (ClientMCVersion != Program.M.PreferredVersion)
             {
+                CurrentMCVersion = ClientMCVersion;
+                NewMCVersion = Program.M.PreferredVersion;
+
+                NewVersion = 0;
+                CurrentVersion = 0;
+
                 Program.M.Opts.Config.SetConfigVar("MCVersion", Program.M.PreferredVersion);
                 return false;
             }
@@ -99,10 +105,22 @@ namespace MerCraft
 
             if (ClientVersion >= S)
             {
+                NewMCVersion = "";
+                CurrentMCVersion = "";
+
+                NewVersion = 0;
+                CurrentVersion = 0;
+
                 return true;
             }
             else
             {
+                NewMCVersion = "";
+                CurrentMCVersion = "";
+
+                NewVersion = S;
+                CurrentVersion = ClientVersion;
+
                 Program.M.Opts.Config.SetConfigVar("Version", S);
                 return false;
             }
