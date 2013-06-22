@@ -108,8 +108,8 @@ namespace JavaDetect
                     cver = Registry.LocalMachine
                     .OpenSubKey("Software")
                     .OpenSubKey("Wow6432Node")
-                    .OpenSubKey("JavaSoft").
-                    OpenSubKey("Java Development Kit");
+                    .OpenSubKey("JavaSoft")
+                    .OpenSubKey("Java Development Kit");
 
                 // JDK
                 if (cver == null)
