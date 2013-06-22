@@ -91,7 +91,10 @@ namespace MerCraft
             try
             {
                 this.Opts.Config.SetConfigVar("Username", textBox1.Text);
-                this.Opts.Config.SetConfigVar("Password", textBox2.Text);
+                if (this.checkBox2.Checked)
+                    this.Opts.Config.SetConfigVar("Password", textBox2.Text);
+                else
+                    this.Opts.Config.SetConfigVar("Password", "");
                 this.Opts.Config.SetConfigVar("WinAPI", checkBox1.Checked);
 
                 string CurrentMCVersion = "", UpdateMCVersion = "";
@@ -195,6 +198,10 @@ namespace MerCraft
 
             this.textBox1.Text = this.Opts.Config.GetConfigVarString("Username");
             this.textBox2.Text = this.Opts.Config.GetConfigVarString("Password");
+            if (this.textBox2.Text == "")
+                this.textBox2.Text = "Password";
+            else
+                this.checkBox2.Checked = true;
             this.checkBox1.Checked = this.Opts.Config.GetConfigVarBool("WinAPI");
         }
 

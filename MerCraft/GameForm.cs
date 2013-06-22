@@ -38,7 +38,6 @@ namespace MerCraft
             InitializeComponent();
             childHandle = IntPtr.Zero;
             javaProcess = null;
-            javaProcess.Exited += javaProcess_Exited;
             hasTriedHandle = false;
         }
 
@@ -191,7 +190,12 @@ namespace MerCraft
             }
         }
 
-        private void javaProcess_Exited(object sender, EventArgs e)
+        /// <summary>
+        /// Called when java dies.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void javaProcess_Exited(object sender, EventArgs e)
         {
             childHandle = IntPtr.Zero;
             try

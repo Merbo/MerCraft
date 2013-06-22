@@ -120,6 +120,13 @@
             <param name="sender">The sender. Will be of type form.</param>
             <param name="e">EventArgs.</param>
         </member>
+        <member name="M:MerCraft.GameForm.javaProcess_Exited(System.Object,System.EventArgs)">
+            <summary>
+            Called when java dies.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
         <member name="F:MerCraft.GameForm.components">
             <summary>
             Required designer variable.

@@ -135,6 +135,7 @@ namespace MerCraft
                     WinAPI.SetWindowLong(mainHandle, WinAPI.GWL_STYLE, (style & ~(int)WinAPI.WS.WS_CAPTION));
                     gameForm.childHandle = mainHandle;
                     gameForm.javaProcess = Java;
+                    gameForm.javaProcess.Exited += gameForm.javaProcess_Exited;
                     gameForm.hasTriedHandle = true;
                     Program.M.Hide();
                 }
