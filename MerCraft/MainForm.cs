@@ -207,7 +207,7 @@ namespace MerCraft
                 this.textBox2.Text = "Password";
             else
                 this.checkBox2.Checked = true;
-            this.checkBox1.Checked = this.Opts.Config.GetConfigVarBool("WinAPI");
+            this.checkBox1.Checked = this.Opts.Config.GetConfigVarBool("WinAPI") && Environment.OSVersion.Platform == PlatformID.Win32NT;
         }
 
         private delegate void SetVersionListCallback(string[] Versions);
