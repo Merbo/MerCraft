@@ -40,7 +40,7 @@ namespace MerCraft
         {
             Process Java = new Process();
 
-            string JPath = debug ? JavaProcessFileName(true) : JavaProcessFileName(false);
+            string JPath = JavaProcessFileName(debug);
 
             if (JPath != "")
                 Java.StartInfo.FileName = JPath;
