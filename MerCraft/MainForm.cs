@@ -302,22 +302,28 @@ namespace MerCraft
                 return;
             }
 
-            if (!textBox1Focused && !textBox2Focused && UserInfoChanged)
+            if (UserInfoChanged)
             {
-                CheckUserInfo(textBox1.Text, textBox2.Text);
-                UserInfoChanged = false;
+                if ((!textBox1Focused && !textBox2Focused) || (DateTime.Now - LastTextChange).Seconds > 3)
+                {
+                    CheckUserInfo(textBox1.Text, textBox2.Text);
+                    UserInfoChanged = false;
+                }
             }
         }
 
         private bool textBox1Focused = false, textBox2Focused = false;
         private bool UserInfoChanged = true;
+        private DateTime LastTextChange = DateTime.Now;
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            LastTextChange = DateTime.Now;
             UserInfoChanged = true;
         }
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
+            LastTextChange = DateTime.Now;
             UserInfoChanged = true;
         }
         private void textBox1_Enter(object sender, EventArgs e)
