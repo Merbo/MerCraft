@@ -51,7 +51,7 @@ namespace MerCraft
                 case "Vanilla":
                     radioButton1.Checked = true;
                     break;
-                case "Optifine":
+                case "OptiFine":
                     radioButton2.Checked = true;
                     break;
                 case "Shaders":
@@ -87,7 +87,7 @@ namespace MerCraft
             if (radioButton1.Checked)
                 Config.SetConfigVar("Jar", "Vanilla");
             else if (radioButton2.Checked)
-                Config.SetConfigVar("Jar", "Optifine");
+                Config.SetConfigVar("Jar", "OptiFine");
             else if (radioButton3.Checked)
                 Config.SetConfigVar("Jar", "Shaders");
 
