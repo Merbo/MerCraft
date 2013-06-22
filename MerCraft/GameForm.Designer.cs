@@ -40,6 +40,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(869, 495);
             this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             this.panel1.Enter += new System.EventHandler(this.panel1_Enter);
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
             this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
@@ -47,7 +48,7 @@
             // timer1
             // 
             this.timer1.Enabled = true;
-            this.timer1.Interval = 1500;
+            this.timer1.Interval = 10;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // GameForm

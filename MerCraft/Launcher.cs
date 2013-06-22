@@ -113,12 +113,12 @@ namespace MerCraft
                 {
                     while (mainHandle == IntPtr.Zero)
                     {
-                        Java.WaitForInputIdle(1 * 100);
+                        Java.WaitForInputIdle(10);
                         Java.Refresh();
 
                         if (Java.HasExited)
                             return false;
-                        if (Java.MainWindowTitle == "Hello")
+                        if (Java.MainWindowTitle != "Minecraft")
                             continue;
                         mainHandle = Java.MainWindowHandle;
                     }

@@ -113,6 +113,13 @@
             <param name="sender">The sender. Will be of type form.</param>
             <param name="e">EventArgs.</param>
         </member>
+        <member name="M:MerCraft.GameForm.panel1_Paint(System.Object,System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            What happens when panel1 is to draw.
+            </summary>
+            <param name="sender">The sender. Will be of type form.</param>
+            <param name="e">EventArgs.</param>
+        </member>
         <member name="F:MerCraft.GameForm.components">
             <summary>
             Required designer variable.

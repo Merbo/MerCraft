@@ -38,6 +38,7 @@ namespace MerCraft
             InitializeComponent();
             childHandle = IntPtr.Zero;
             javaProcess = null;
+            javaProcess.Exited += javaProcess_Exited;
             hasTriedHandle = false;
         }
 
@@ -52,6 +53,8 @@ namespace MerCraft
             {
                 if (WinAPI.GetWindow(this.panel1.Handle, (uint)WinAPI.GW.GW_CHILD) == childHandle)
                 {
+                    if (javaProcess != null && !javaProcess.HasExited)
+                        javaProcess.Kill();
                     WinAPI.DestroyWindow(childHandle);
                     Application.Exit();
                 }
@@ -172,6 +175,32 @@ namespace MerCraft
             if (WinAPI.GetTopWindow(IntPtr.Zero) != childHandle)
             {
                 WinAPI.BringWindowToTop(childHandle);
+            }
+        }
+
+        /// <summary>
+        /// What happens when panel1 is to draw.
+        /// </summary>
+        /// <param name="sender">The sender. Will be of type form.</param>
+        /// <param name="e">EventArgs.</param>
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            if (WinAPI.GetTopWindow(IntPtr.Zero) != childHandle)
+            {
+                WinAPI.BringWindowToTop(childHandle);
+            }
+        }
+
+        private void javaProcess_Exited(object sender, EventArgs e)
+        {
+            childHandle = IntPtr.Zero;
+            try
+            {
+                Application.Exit();
+            }
+            catch (Exception)
+            {
+                Environment.Exit(0);
             }
         }
     }
