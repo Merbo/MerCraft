@@ -32,15 +32,19 @@
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -92,11 +96,38 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Quality";
             // 
+            // label5
+            // 
+            this.label5.Enabled = false;
+            this.label5.Location = new System.Drawing.Point(150, 85);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(204, 32);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "Minecraft with Optifine graphic enhancements and shaders.";
+            // 
+            // label4
+            // 
+            this.label4.Enabled = false;
+            this.label4.Location = new System.Drawing.Point(150, 53);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(204, 32);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Minecraft with Optifine graphic enhancements.";
+            // 
+            // label3
+            // 
+            this.label3.Enabled = false;
+            this.label3.Location = new System.Drawing.Point(150, 21);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(204, 32);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Minecraft client without Optifine modifications.";
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(263, 168);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(109, 20);
+            this.button1.Size = new System.Drawing.Size(109, 66);
             this.button1.TabIndex = 5;
             this.button1.Text = "OK";
             this.button1.UseVisualStyleBackColor = true;
@@ -111,15 +142,6 @@
             this.checkBox1.TabIndex = 6;
             this.checkBox1.Text = "Debug";
             this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            this.label3.Enabled = false;
-            this.label3.Location = new System.Drawing.Point(150, 21);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(204, 32);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Minecraft client without Optifine modifications.";
             // 
             // label2
             // 
@@ -159,29 +181,62 @@
             this.textBox1.TabIndex = 11;
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // label4
+            // label6
             // 
-            this.label4.Enabled = false;
-            this.label4.Location = new System.Drawing.Point(150, 53);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(204, 32);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Minecraft with Optifine graphic enhancements.";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(16, 197);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(60, 13);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "Initial Heap";
             // 
-            // label5
+            // label7
             // 
-            this.label5.Enabled = false;
-            this.label5.Location = new System.Drawing.Point(150, 85);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(204, 32);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "Minecraft with Optifine graphic enhancements and shaders.";
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(16, 221);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(56, 13);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Max Heap";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "128M",
+            "256M",
+            "512M",
+            "1024M",
+            "2048M"});
+            this.comboBox1.Location = new System.Drawing.Point(145, 194);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(112, 21);
+            this.comboBox1.TabIndex = 15;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "128M",
+            "256M",
+            "512M",
+            "1024M",
+            "2048M",
+            "4096M"});
+            this.comboBox2.Location = new System.Drawing.Point(145, 213);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(112, 21);
+            this.comboBox2.TabIndex = 15;
             // 
             // Options
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 199);
+            this.ClientSize = new System.Drawing.Size(384, 246);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox2);
@@ -220,5 +275,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox2;
     }
 }

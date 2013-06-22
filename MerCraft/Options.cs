@@ -69,6 +69,12 @@ namespace MerCraft
 
             bool Debug = Config.GetConfigVarBool("Debug");
             checkBox1.Checked = Debug;
+
+            string InitHeap = Config.GetConfigVarString("InitHeap");
+            comboBox1.SelectedItem = InitHeap == null ? "256M" : Version;
+
+            string MaxHeap = Config.GetConfigVarString("MaxHeap");
+            comboBox2.SelectedItem = MaxHeap == null ? "1024M" : Version;
         }
 
         /// <summary>
@@ -86,6 +92,9 @@ namespace MerCraft
                 Config.SetConfigVar("Jar", "Shaders");
 
             Config.SetConfigVar("Debug", checkBox1.Checked);
+
+            Config.SetConfigVar("InitHeap", comboBox1.SelectedItem.ToString());
+            Config.SetConfigVar("MaxHeap", comboBox2.SelectedItem.ToString());
 
             this.Hide();
         }
