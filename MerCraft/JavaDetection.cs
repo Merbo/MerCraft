@@ -84,14 +84,16 @@ namespace JavaDetect
 
             // JRE
             if (cver == null)
+            {
                 cver = Registry.LocalMachine
                 .OpenSubKey("Software")
                 .OpenSubKey("JavaSoft");
-            if (cver != null)
-                cver = Registry.LocalMachine
-                .OpenSubKey("Software")
-                .OpenSubKey("JavaSoft")
-                .OpenSubKey("Java Runtime Environment");
+                if (cver != null)
+                    cver = Registry.LocalMachine
+                    .OpenSubKey("Software")
+                    .OpenSubKey("JavaSoft")
+                    .OpenSubKey("Java Runtime Environment");
+            }
 
             // 32-bit node on 64-bit systems
             if (Registry.LocalMachine
@@ -100,29 +102,33 @@ namespace JavaDetect
             {
                 // JRE
                 if (cver == null)
+                {
                     cver = Registry.LocalMachine
                     .OpenSubKey("Software")
                     .OpenSubKey("Wow6432Node")
                     .OpenSubKey("JavaSoft");
-                if (cver != null)
-                    cver = Registry.LocalMachine
-                    .OpenSubKey("Software")
-                    .OpenSubKey("Wow6432Node")
-                    .OpenSubKey("JavaSoft")
-                    .OpenSubKey("Java Development Kit");
+                    if (cver != null)
+                        cver = Registry.LocalMachine
+                        .OpenSubKey("Software")
+                        .OpenSubKey("Wow6432Node")
+                        .OpenSubKey("JavaSoft")
+                        .OpenSubKey("Java Development Kit");
+                }
 
                 // JDK
                 if (cver == null)
+                {
                     cver = Registry.LocalMachine
                     .OpenSubKey("Software")
                     .OpenSubKey("Wow6432Node")
                     .OpenSubKey("JavaSoft");
-                if (cver != null)
-                    cver = Registry.LocalMachine
-                    .OpenSubKey("Software")
-                    .OpenSubKey("Wow6432Node")
-                    .OpenSubKey("JavaSoft")
-                    .OpenSubKey("Java Runtime Environment");
+                    if (cver != null)
+                        cver = Registry.LocalMachine
+                        .OpenSubKey("Software")
+                        .OpenSubKey("Wow6432Node")
+                        .OpenSubKey("JavaSoft")
+                        .OpenSubKey("Java Runtime Environment");
+                }
             }
 
             // Final stage
