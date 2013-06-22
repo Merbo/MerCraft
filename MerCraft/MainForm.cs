@@ -293,11 +293,14 @@ namespace MerCraft
             }
         }
 
+        private int timer2Tick = 1;
         private void timer2_Tick(object sender, EventArgs e)
         {
             if (!this.Online)
             {
-                SetStatus("Please wait for MerCraft to fetch the version data.", Color.Yellow);
+                SetStatus("Please wait for MerCraft to fetch the version data" + new string('.', timer2Tick++), Color.Yellow);
+                if (timer2Tick > 3)
+                    timer2Tick = 1;
                 SetLaunchable(false);
                 return;
             }
