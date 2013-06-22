@@ -71,10 +71,10 @@ namespace MerCraft
             checkBox1.Checked = Debug;
 
             string InitHeap = Config.GetConfigVarString("InitHeap");
-            comboBox1.SelectedItem = InitHeap == null ? "256M" : Version;
+            comboBox1.SelectedIndex = comboBox1.FindString(InitHeap);
 
             string MaxHeap = Config.GetConfigVarString("MaxHeap");
-            comboBox2.SelectedItem = MaxHeap == null ? "1024M" : Version;
+            comboBox2.SelectedIndex = comboBox2.FindString(MaxHeap);
         }
 
         /// <summary>
