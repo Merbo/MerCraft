@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace MerCraft
@@ -19,6 +17,11 @@ namespace MerCraft
         [STAThread]
         static void Main()
         {
+
+#if DEBUG
+            Debugger.Launch();
+#endif
+
             // Java check
             try
             {
