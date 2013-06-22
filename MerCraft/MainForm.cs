@@ -375,18 +375,58 @@ namespace MerCraft
                     }
                     else if (ResponseText == "User not premium")
                     {
-                        SetStatus("Not premium, ready!\nMost servers will deny you access.\nThe MerbosMagic Network server, however,\n will allow you access.", Color.Yellow);
-                        SetLaunchable(true);
+                        SetStatus("Non premium minecraft, checking MerCraft...", Color.Yellow);
+                        SetLaunchable(false);
+                        CheckUserInfoMM(User, Pass);
                     }
                     else
                     {
                         ResponseSplit = ResponseText.Split(':');
                         SetLaunchable(true);
-                        SetStatus(ResponseSplit[2] + ", ready!", Color.Green);
+                        SetStatus(ResponseSplit[2] + ", ready!", Color.Lime);
                     }
                     sr.Close();
                     Res.Close();
                 });
+            UserInfoChecker.IsBackground = true;
+            UserInfoChecker.Start();
+        }
+
+        private void CheckUserInfoMM(string User, string Pass)
+        {
+            User = Uri.EscapeUriString(User);
+            Pass = Uri.EscapeUriString(Pass);
+
+            Thread UserInfoChecker = new Thread(() =>
+            {
+                SetLaunchable(false);
+                SetStatus("Sending request...", Color.Gray);
+
+                HttpWebRequest Req = (HttpWebRequest)WebRequest.Create("http://login.merbo.org/MerCraft/CheckUserPremium.aspx?user=" + User);
+                Req.Method = "GET";
+
+                SetStatus("Request sent, fetching response...", Color.Gray);
+
+                WebResponse Res = Req.GetResponse();
+
+                SetStatus("Reading response stream...", Color.Gray);
+
+                StreamReader sr = new StreamReader(Res.GetResponseStream(), Encoding.UTF8);
+                string ResponseText = sr.ReadToEnd().Replace("\r", "").Replace("\n", "");
+
+                if (ResponseText == "Bad login")
+                {
+                    SetStatus("Non premium minecraft, non premium MerCraft", Color.Red);
+                    SetLaunchable(false);
+                }
+                else
+                {
+                    SetStatus(ResponseText + ", ready!\nNon premium minecraft, premium MerCraft", Color.Lime);
+                    SetLaunchable(true);
+                }
+                sr.Close();
+                Res.Close();
+            });
             UserInfoChecker.IsBackground = true;
             UserInfoChecker.Start();
         }
