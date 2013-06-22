@@ -31,7 +31,7 @@
     <SuiteName>Games</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>default.htm</WebPage>
-    <ApplicationRevision>28</ApplicationRevision>
+    <ApplicationRevision>29</ApplicationRevision>
     <ApplicationVersion>5.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -232,12 +232,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\2013-06-20_19.32.31.png" />
+    <EmbeddedResource Include="Resources\2013-06-20_19.32.31.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\2013-06-20_20.04.29.png" />
-    <Content Include="Resources\2013-06-20_21.14.43.png" />
-    <Content Include="Resources\2013-06-20_21.15.08.png" />
+    <EmbeddedResource Include="Resources\2013-06-20_20.04.29.png" />
+    <EmbeddedResource Include="Resources\2013-06-20_21.14.43.png" />
+    <EmbeddedResource Include="Resources\2013-06-20_21.15.08.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
