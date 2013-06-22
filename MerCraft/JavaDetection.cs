@@ -70,20 +70,22 @@ namespace JavaDetect
         /// <exception cref="JavaNotFoundException" />
         public static RegistryKey GetJavaRegistry()
         {
-            RegistryKey cver;
+            RegistryKey cver = null;
 
             // JDK
             cver = Registry.LocalMachine
                 .OpenSubKey("Software")
-                .OpenSubKey("JavaSoft")
-                .OpenSubKey("Java Development Kit");
+                .OpenSubKey("JavaSoft");
+                if (cver != null)
+                    cver = cver.OpenSubKey("Java Development Kit");
 
             // JRE
-            if (cver == null)
-                cver = Registry.LocalMachine
-                .OpenSubKey("Software")
-                .OpenSubKey("JavaSoft")
-                .OpenSubKey("Java Runtime Environment");
+                if (cver == null)
+                    cver = Registry.LocalMachine
+                    .OpenSubKey("Software")
+                    .OpenSubKey("JavaSoft");
+                    if (cver != null)
+                        cver = cver.OpenSubKey("Java Runtime Environment");
 
             // 32-bit node on 64-bit systems
             if (Registry.LocalMachine
@@ -95,16 +97,18 @@ namespace JavaDetect
                     cver = Registry.LocalMachine
                     .OpenSubKey("Software")
                     .OpenSubKey("Wow6432Node")
-                    .OpenSubKey("JavaSoft")
-                    .OpenSubKey("Java Development Kit");
+                    .OpenSubKey("JavaSoft");
+                    if (cver != null)
+                        cver = cver.OpenSubKey("Java Development Kit");
 
                 // JDK
                 if (cver == null)
                     cver = Registry.LocalMachine
                     .OpenSubKey("Software")
                     .OpenSubKey("Wow6432Node")
-                    .OpenSubKey("JavaSoft")
-                    .OpenSubKey("Java Runtime Environment");
+                    .OpenSubKey("JavaSoft");
+                    if (cver != null)
+                        cver = cver.OpenSubKey("Java Development Kit");
             }
 
             // Final stage
