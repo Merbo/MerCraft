@@ -76,16 +76,22 @@ namespace JavaDetect
             cver = Registry.LocalMachine
                 .OpenSubKey("Software")
                 .OpenSubKey("JavaSoft");
-                if (cver != null)
-                    cver = cver.OpenSubKey("Java Development Kit");
+            if (cver != null)
+                cver = Registry.LocalMachine
+                .OpenSubKey("Software")
+                .OpenSubKey("JavaSoft")
+                .OpenSubKey("Java Development Kit");
 
             // JRE
-                if (cver == null)
-                    cver = Registry.LocalMachine
-                    .OpenSubKey("Software")
-                    .OpenSubKey("JavaSoft");
-                    if (cver != null)
-                        cver = cver.OpenSubKey("Java Runtime Environment");
+            if (cver == null)
+                cver = Registry.LocalMachine
+                .OpenSubKey("Software")
+                .OpenSubKey("JavaSoft");
+            if (cver != null)
+                cver = Registry.LocalMachine
+                .OpenSubKey("Software")
+                .OpenSubKey("JavaSoft")
+                .OpenSubKey("Java Runtime Environment");
 
             // 32-bit node on 64-bit systems
             if (Registry.LocalMachine
@@ -98,8 +104,12 @@ namespace JavaDetect
                     .OpenSubKey("Software")
                     .OpenSubKey("Wow6432Node")
                     .OpenSubKey("JavaSoft");
-                    if (cver != null)
-                        cver = cver.OpenSubKey("Java Development Kit");
+                if (cver != null)
+                    cver = Registry.LocalMachine
+                    .OpenSubKey("Software")
+                    .OpenSubKey("Wow6432Node")
+                    .OpenSubKey("JavaSoft").
+                    OpenSubKey("Java Development Kit");
 
                 // JDK
                 if (cver == null)
@@ -107,8 +117,12 @@ namespace JavaDetect
                     .OpenSubKey("Software")
                     .OpenSubKey("Wow6432Node")
                     .OpenSubKey("JavaSoft");
-                    if (cver != null)
-                        cver = cver.OpenSubKey("Java Development Kit");
+                if (cver != null)
+                    cver = Registry.LocalMachine
+                    .OpenSubKey("Software")
+                    .OpenSubKey("Wow6432Node")
+                    .OpenSubKey("JavaSoft")
+                    .OpenSubKey("Java Runtime Environment");
             }
 
             // Final stage
@@ -143,28 +157,37 @@ namespace JavaDetect
         /// <summary>
         /// Constructor.
         /// </summary>
-        public JavaNotFoundException() { }
+        public JavaNotFoundException()
+        {
+        }
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="message">Error message</param>
-        public JavaNotFoundException(string message) : base(message) { }
+        public JavaNotFoundException(string message) : base(message)
+        {
+        }
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="message">Error message</param>
         /// <param name="inner">Inner Exception</param>
-        public JavaNotFoundException(string message, System.Exception inner) : base(message, inner) { }
+        public JavaNotFoundException(string message, System.Exception inner) : base(message, inner)
+        {
+        }
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="info">Serialization info</param>
         /// <param name="context">Streaming context</param>
-        protected JavaNotFoundException( 
-	    System.Runtime.Serialization.SerializationInfo info, 
-	    System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        protected JavaNotFoundException(
+        System.Runtime.Serialization.SerializationInfo info,
+        System.Runtime.Serialization.StreamingContext context)
+            : base(info, context)
+        {
+        }
     }
 }
