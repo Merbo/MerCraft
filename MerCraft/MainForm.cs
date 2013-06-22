@@ -377,6 +377,7 @@ namespace MerCraft
                     {
                         SetStatus("Non premium minecraft, checking MerCraft...", Color.Yellow);
                         SetLaunchable(false);
+                        Thread.Sleep(1000);
                         CheckUserInfoMM(User, Pass);
                     }
                     else
