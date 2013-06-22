@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Core;
 
-namespace MerCraft
+namespace MerCraft.Controls
 {
     /// <summary>
     /// Control used for updating

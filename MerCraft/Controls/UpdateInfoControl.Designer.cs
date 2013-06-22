@@ -1,4 +1,4 @@
-﻿namespace MerCraft
+﻿namespace MerCraft.Controls
 {
     partial class UpdateInfoControl
     {

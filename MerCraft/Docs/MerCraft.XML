@@ -4,6 +4,23 @@
         <name>MerCraft</name>
     </assembly>
     <members>
+        <member name="F:MerCraft.Controls.ColoredProgressBar.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:MerCraft.Controls.ColoredProgressBar.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:MerCraft.Controls.ColoredProgressBar.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
         <member name="T:MerCraft.DateTimeExtensions">
             <summary>
             Allows Date/Time to become human readable
@@ -473,23 +490,23 @@
             The main entry point for the application.
             </summary>
         </member>
-        <member name="T:MerCraft.UpdateInfoControl">
+        <member name="T:MerCraft.Controls.UpdateInfoControl">
             <summary>
             Control used for updating
             </summary>
         </member>
-        <member name="F:MerCraft.UpdateInfoControl.webClient">
+        <member name="F:MerCraft.Controls.UpdateInfoControl.webClient">
             <summary>
             Webclient used for downloads
             </summary>
         </member>
-        <member name="M:MerCraft.UpdateInfoControl.#ctor(System.String)">
+        <member name="M:MerCraft.Controls.UpdateInfoControl.#ctor(System.String)">
             <summary>
             Constructor
             </summary>
             <param name="downloadName">Caption of download</param>
         </member>
-        <member name="M:MerCraft.UpdateInfoControl.DownloadAndExtractZip(System.String,System.String,System.String,System.Boolean)">
+        <member name="M:MerCraft.Controls.UpdateInfoControl.DownloadAndExtractZip(System.String,System.String,System.String,System.Boolean)">
             <summary>
             Download a zip file and extract
             </summary>
@@ -499,7 +516,7 @@
             <param name="deleteZipWhenDone">Delete the zip after extraction?</param>
             <returns></returns>
         </member>
-        <member name="M:MerCraft.UpdateInfoControl.Download(System.String,System.String)">
+        <member name="M:MerCraft.Controls.UpdateInfoControl.Download(System.String,System.String)">
             <summary>
             Download a file to a location
             </summary>
@@ -507,18 +524,18 @@
             <param name="downloadPath">Local file to save to</param>
             <returns></returns>
         </member>
-        <member name="F:MerCraft.UpdateInfoControl.components">
+        <member name="F:MerCraft.Controls.UpdateInfoControl.components">
             <summary> 
             Required designer variable.
             </summary>
         </member>
-        <member name="M:MerCraft.UpdateInfoControl.Dispose(System.Boolean)">
+        <member name="M:MerCraft.Controls.UpdateInfoControl.Dispose(System.Boolean)">
             <summary> 
             Clean up any resources being used.
             </summary>
             <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         </member>
-        <member name="M:MerCraft.UpdateInfoControl.InitializeComponent">
+        <member name="M:MerCraft.Controls.UpdateInfoControl.InitializeComponent">
             <summary> 
             Required method for Designer support - do not modify 
             the contents of this method with the code editor.

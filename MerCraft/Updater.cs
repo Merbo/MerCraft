@@ -11,6 +11,8 @@ using System.Collections;
 using System.IO;
 using System.Windows.Forms;
 
+using MerCraft.Controls;
+
 using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 

@@ -31,7 +31,7 @@
     <SuiteName>Games</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>default.htm</WebPage>
-    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationRevision>9</ApplicationRevision>
     <ApplicationVersion>5.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -105,6 +105,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ColoredProgressBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ColoredProgressBar.Designer.cs">
+      <DependentUpon>ColoredProgressBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="FileIO.cs" />
     <Compile Include="GameForm.cs">
@@ -135,14 +141,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UpdateInfoControl.cs">
+    <Compile Include="Controls\UpdateInfoControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UpdateInfoControl.Designer.cs">
+    <Compile Include="Controls\UpdateInfoControl.Designer.cs">
       <DependentUpon>UpdateInfoControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Updater.cs" />
     <Compile Include="WinAPI.cs" />
+    <EmbeddedResource Include="Controls\ColoredProgressBar.resx">
+      <DependentUpon>ColoredProgressBar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -169,7 +178,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UpdateInfoControl.resx">
+    <EmbeddedResource Include="Controls\UpdateInfoControl.resx">
       <DependentUpon>UpdateInfoControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

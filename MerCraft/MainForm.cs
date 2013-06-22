@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
 using System.Net;
+using System.Web;
 
 namespace MerCraft
 {
@@ -82,9 +83,10 @@ namespace MerCraft
         /// <param name="e">Event arguments.</param>
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!this.Online)
+            if (!textBox1Focused && !textBox2Focused && UserInfoChanged)
             {
-                MessageBox.Show("Please wait for MerCraft to grab the version data.");
+                CheckUserInfo(textBox1.Text, textBox2.Text);
+                UserInfoChanged = false;
                 return;
             }
 
@@ -144,9 +146,10 @@ namespace MerCraft
         /// <param name="e">Event arguments.</param>
         private void button3_Click(object sender, EventArgs e)
         {
-            if (!this.Online)
+            if (!textBox1Focused && !textBox2Focused && UserInfoChanged)
             {
-                MessageBox.Show("Please wait for MerCraft to grab the version data.");
+                CheckUserInfo(textBox1.Text, textBox2.Text);
+                UserInfoChanged = false;
                 return;
             }
 
@@ -176,6 +179,8 @@ namespace MerCraft
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            this.SetLaunchable(false);
+
             this.Online = false;
 
             this.comboBox1.SelectedIndex = this.comboBox1.Items.Count-1;
@@ -219,6 +224,37 @@ namespace MerCraft
                 this.comboBox1.Items.AddRange(Versions);
                 this.comboBox1.SelectedIndex = this.comboBox1.Items.Count-1;
                 this.Online = true;
+                SetStatus("Idle", Color.Gray);
+            }
+        }
+
+        private delegate void SetStatusCallback(string Status, Color LabelColor);
+        private void SetStatus(string Status, Color LabelColor)
+        {
+            if (this.label1.InvokeRequired)
+            {
+                SetStatusCallback d = new SetStatusCallback(SetStatus);
+                this.Invoke(d, new object[] { Status, LabelColor });
+            }
+            else
+            {
+                this.label1.ForeColor = LabelColor;
+                this.label1.Text = Status;
+            }
+        }
+
+        private delegate void SetLaunchableCallback(bool CanLaunch);
+        private void SetLaunchable(bool CanLaunch)
+        {
+            if (this.button1.InvokeRequired)
+            {
+                SetLaunchableCallback d = new SetLaunchableCallback(SetLaunchable);
+                this.Invoke(d, new object[] { CanLaunch });
+            }
+            else
+            {
+                this.button1.Enabled = CanLaunch;
+                this.button3.Enabled = CanLaunch;
             }
         }
 
@@ -255,6 +291,95 @@ namespace MerCraft
                     CurrentImage = 0;
                     break;
             }
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            if (!this.Online)
+            {
+                SetStatus("Please wait for MerCraft to fetch the version data.", Color.Yellow);
+                SetLaunchable(false);
+                return;
+            }
+
+            if (!textBox1Focused && !textBox2Focused && UserInfoChanged)
+            {
+                CheckUserInfo(textBox1.Text, textBox2.Text);
+                UserInfoChanged = false;
+            }
+        }
+
+        private bool textBox1Focused = false, textBox2Focused = false;
+        private bool UserInfoChanged = true;
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            UserInfoChanged = true;
+        }
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            UserInfoChanged = true;
+        }
+        private void textBox1_Enter(object sender, EventArgs e)
+        {
+            textBox1Focused = true;
+        }
+        private void textBox1_Leave(object sender, EventArgs e)
+        {
+            textBox1Focused = false;
+        }
+        private void textBox2_Enter(object sender, EventArgs e)
+        {
+            textBox2Focused = true;
+        }
+        private void textBox2_Leave(object sender, EventArgs e)
+        {
+            textBox2Focused = false;
+        }
+
+        private void CheckUserInfo(string User, string Pass)
+        {
+            User = Uri.EscapeUriString(User);
+            Pass = Uri.EscapeUriString(Pass);
+            Thread UserInfoChecker = new Thread(() =>
+                {
+                    SetLaunchable(false);
+                    SetStatus("Sending request...", Color.Gray);
+
+                    HttpWebRequest Req = (HttpWebRequest)WebRequest.Create("http://login.minecraft.net/?user=" + User + "&password=" + Pass + "&version=13");
+                    Req.Method = "GET";
+
+                    SetStatus("Request sent, fetching response...", Color.Gray);
+
+                    WebResponse Res = Req.GetResponse();
+
+                    SetStatus("Reading response stream...", Color.Gray);
+
+                    StreamReader sr = new StreamReader(Res.GetResponseStream(), Encoding.UTF8);
+                    string ResponseText = sr.ReadToEnd().Replace("\r", "").Replace("\n", "");
+                    string[] ResponseSplit = null;
+
+                    if (ResponseText == "Bad login")
+                    {
+                        SetStatus("Bad login", Color.Red);
+                        SetLaunchable(false);
+                    }
+                    else if (ResponseText == "User not premium")
+                    {
+                        SetStatus("Not premium, ready!\nMost servers will deny you access.\nThe MerbosMagic Network server, however,\n will allow you access.", Color.Yellow);
+                        SetLaunchable(true);
+                    }
+                    else
+                    {
+                        ResponseSplit = ResponseText.Split(':');
+                        SetLaunchable(true);
+                        SetStatus(ResponseSplit[2] + ", ready!", Color.Green);
+                    }
+                    sr.Close();
+                    Res.Close();
+                });
+            UserInfoChecker.IsBackground = true;
+            UserInfoChecker.Start();
         }
     }
 }
