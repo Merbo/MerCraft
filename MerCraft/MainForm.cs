@@ -179,6 +179,8 @@ namespace MerCraft
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            timer1_Tick(sender, new EventArgs());
+
             this.SetLaunchable(false);
 
             this.Online = false;
