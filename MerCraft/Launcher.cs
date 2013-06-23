@@ -148,6 +148,10 @@ namespace MerCraft
                             Application.Exit();
                         if (Java.MainWindowTitle != "Minecraft")
                             continue;
+
+                        WinAPI.SetClassLongPtr(Java.MainWindowHandle, WinAPI.GCL_HICON, global::MerCraft.Properties.Resources.LargeIcon.GetHicon());
+                        WinAPI.SetClassLongPtr(Java.MainWindowHandle, WinAPI.GCLP_HICONSM, global::MerCraft.Properties.Resources.SmallIcon.GetHicon()); 
+
                         WinAPI.SetWindowText(Java.MainWindowHandle, "MerCraft");
 
                         break;

@@ -31,7 +31,7 @@
     <SuiteName>Games</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>default.htm</WebPage>
-    <ApplicationRevision>31</ApplicationRevision>
+    <ApplicationRevision>32</ApplicationRevision>
     <ApplicationVersion>5.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -89,6 +89,9 @@
   <PropertyGroup />
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\MerCraft.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
@@ -148,6 +151,11 @@
     <Compile Include="Controls\UpdateInfoControl.Designer.cs">
       <DependentUpon>UpdateInfoControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Updater.cs" />
     <Compile Include="WinAPI.cs" />
     <EmbeddedResource Include="Controls\ColoredProgressBar.resx">
@@ -171,14 +179,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="Controls\UpdateInfoControl.resx">
       <DependentUpon>UpdateInfoControl.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -238,6 +241,11 @@
     <EmbeddedResource Include="Resources\2013-06-20_20.04.29.png" />
     <EmbeddedResource Include="Resources\2013-06-20_21.14.43.png" />
     <EmbeddedResource Include="Resources\2013-06-20_21.15.08.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\LargeIcon.bmp" />
+    <Content Include="Resources\MerCraft.ico" />
+    <Content Include="Resources\SmallIcon.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

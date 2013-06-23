@@ -137,6 +137,12 @@ namespace MerCraft
         [DllImport("user32.dll")]
         public static extern bool SetWindowText(IntPtr hWnd, string Text);
 
+        [DllImport("user32.dll")]
+        public static extern IntPtr LoadImage(IntPtr hModule, string Image, IMG ImageType, int Width = 0, int Height = 0, uint Mode = (uint)(0x00000040 | 0x00000010));
+
+        [DllImport("user32.dll")]
+        public static extern UIntPtr SetClassLongPtr(IntPtr hWnd, int nIndex, IntPtr newVal);
+
         /// <summary>
         /// Enum for Menu Flags.
         /// </summary>
@@ -172,10 +178,19 @@ namespace MerCraft
             GW_ENABLEDPOPUP = 6,
         };
 
+        public enum IMG : uint 
+        {
+            IMG_BITMAP = 0,
+            IMG_CURSOR = 2,
+            IMG_ICON = 1,
+        };
+
         /// <summary>
         /// More readable way to write -16. :)
         /// </summary>
         public static int GWL_STYLE = -16;
-        
+
+        public static int GCL_HICON = -14;
+        public static int GCLP_HICONSM = -34;
     }
 }
