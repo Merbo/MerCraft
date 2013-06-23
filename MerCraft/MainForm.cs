@@ -258,6 +258,20 @@ namespace MerCraft
             }
         }
 
+        private delegate void SetBGImageCallback(Image Img);
+        private void SetBGImage(Image Img)
+        {
+            if (this.InvokeRequired)
+            {
+                SetBGImageCallback d = new SetBGImageCallback(SetBGImage);
+                this.Invoke(d, new object[] { Img });
+            }
+            else
+            {
+                this.BackgroundImage = Img;
+            }
+        }
+
         private delegate void UsernameEditCallback(string User);
         private void UsernameEdit(string User)
         {
@@ -286,25 +300,25 @@ namespace MerCraft
             System.Diagnostics.Process.Start(((LinkLabel)sender).Text);
         }
 
-        private int CurrentImage = 0;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            switch (CurrentImage++)
-            {
-                case 0:
-                    this.BackgroundImage = global::MerCraft.Properties.Resources._2013_06_20_19_32_31;
-                    break;
-                case 1:
-                    this.BackgroundImage = global::MerCraft.Properties.Resources._2013_06_20_20_04_29;
-                    break;
-                case 2:
-                    this.BackgroundImage = global::MerCraft.Properties.Resources._2013_06_20_21_14_43;
-                    break;
-                case 3:
-                    this.BackgroundImage = global::MerCraft.Properties.Resources._2013_06_20_21_15_08;
-                    CurrentImage = 0;
-                    break;
-            }
+            Thread BackgroundImageThread = new Thread(() =>
+                {
+                    HttpWebRequest Req = (HttpWebRequest)WebRequest.Create("http://mercraft.merbo.org/MerCraft/GetRandomImage.aspx");
+                    Req.Method = "GET";
+
+                    WebResponse Res = Req.GetResponse();
+
+                    StreamReader sr = new StreamReader(Res.GetResponseStream(), Encoding.UTF8);
+                    string ResponseText = sr.ReadToEnd();
+
+                    WebClient wc = new WebClient();
+
+                    Image newImage = Image.FromStream(wc.OpenRead(ResponseText));
+                    this.SetBGImage(newImage);
+                });
+            BackgroundImageThread.IsBackground = true;
+            BackgroundImageThread.Start();
         }
 
         private int timer2Tick = 1;

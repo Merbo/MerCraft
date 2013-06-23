@@ -31,7 +31,7 @@
     <SuiteName>Games</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>default.htm</WebPage>
-    <ApplicationRevision>35</ApplicationRevision>
+    <ApplicationRevision>36</ApplicationRevision>
     <ApplicationVersion>5.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -233,14 +233,6 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2013-06-20_19.32.31.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\2013-06-20_20.04.29.png" />
-    <EmbeddedResource Include="Resources\2013-06-20_21.14.43.png" />
-    <EmbeddedResource Include="Resources\2013-06-20_21.15.08.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\LargeIcon.bmp" />
