@@ -258,6 +258,20 @@ namespace MerCraft
             }
         }
 
+        private delegate void UsernameEditCallback(string User);
+        private void UsernameEdit(string User)
+        {
+            if (this.textBox1.InvokeRequired)
+            {
+                UsernameEditCallback d = new UsernameEditCallback(UsernameEdit);
+                this.Invoke(d, new object[] { User });
+            }
+            else
+            {
+                this.textBox1.Text = User;
+            }
+        }
+
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (this.Opts != null)
@@ -384,6 +398,7 @@ namespace MerCraft
                     {
                         ResponseSplit = ResponseText.Split(':');
                         SetLaunchable(true);
+                        UsernameEdit(ResponseSplit[2]);
                         SetStatus(ResponseSplit[2] + ", ready!", Color.Lime);
                     }
                     sr.Close();
@@ -423,6 +438,7 @@ namespace MerCraft
                 else
                 {
                     SetStatus(ResponseText + ", ready!\nNon premium minecraft, premium MerCraft", Color.Lime);
+                    UsernameEdit(ResponseText);
                     SetLaunchable(true);
                 }
                 sr.Close();
