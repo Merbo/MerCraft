@@ -141,6 +141,9 @@ namespace MerCraft
         public static extern IntPtr LoadImage(IntPtr hModule, string Image, IMG ImageType, int Width = 0, int Height = 0, uint Mode = (uint)(0x00000040 | 0x00000010));
 
         [DllImport("user32.dll")]
+        public static extern uint SetClassLong(IntPtr hWnd, int nIndex, long newVal);
+
+        [DllImport("user32.dll")]
         public static extern UIntPtr SetClassLongPtr(IntPtr hWnd, int nIndex, IntPtr newVal);
 
         /// <summary>
