@@ -134,6 +134,9 @@ namespace MerCraft
         [DllImport("user32.dll")]
         public static extern IntPtr GetTopWindow(IntPtr OptHWnd);
 
+        [DllImport("user32.dll")]
+        public static extern bool SetWindowText(IntPtr hWnd, string Text);
+
         /// <summary>
         /// Enum for Menu Flags.
         /// </summary>

@@ -103,11 +103,9 @@ namespace MerCraft
                 Process Java = null;
                 if (LF != null)
                 {
-                    //LF.lblCurrentAction.Text = "Opening MerCraft...";
-
                     LF.Close();
                 }
-                Java = Program.M.Opts.Config.GetConfigVarBool("Debug") ? GetJavaProcess(U, P, true) : GetJavaProcess(U, P, false);
+                Java = GetJavaProcess(U, P, Program.M.Opts.Config.GetConfigVarBool("Debug"));
                 Java.Start();
                 if (Program.M.Opts.Config.GetConfigVarBool("WinAPI"))
                 {
@@ -117,7 +115,7 @@ namespace MerCraft
                         Java.Refresh();
 
                         if (Java.HasExited)
-                            return false;
+                            Application.Exit();
                         if (Java.MainWindowTitle != "Minecraft")
                             continue;
                         mainHandle = Java.MainWindowHandle;
@@ -141,6 +139,19 @@ namespace MerCraft
                 }
                 else
                 {
+                    while (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                    {
+                        Java.WaitForInputIdle(10);
+                        Java.Refresh();
+
+                        if (Java.HasExited)
+                            Application.Exit();
+                        if (Java.MainWindowTitle != "Minecraft")
+                            continue;
+                        WinAPI.SetWindowText(Java.MainWindowHandle, "MerCraft");
+
+                        break;
+                    }
                     Application.Exit();
                 }
             }
